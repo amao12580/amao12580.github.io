@@ -2,14 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://amao12580.github.io/post/a-new-start/</loc>
+    <loc>http://amao12580.github.io/about/index.html</loc>
     
-    <lastmod>2016-03-21T06:01:51.037Z</lastmod>
+    <lastmod>2016-03-21T09:09:59.285Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/</loc>
+    <loc>http://amao12580.github.io/post/2016/03/a-new-start/</loc>
+    
+    <lastmod>2016-03-21T08:56:54.948Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</loc>
     
     <lastmod>2016-03-21T06:01:01.885Z</lastmod>
     

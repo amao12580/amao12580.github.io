@@ -17,8 +17,8 @@
   
   <entry>
     <title>SQL查询提高篇：捋清连接查询的那些事儿</title>
-    <link href="http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/"/>
-    <id>http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/</id>
+    <link href="http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/"/>
+    <id>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</id>
     <published>2016-03-21T04:25:10.000Z</published>
     <updated>2016-03-21T06:01:01.885Z</updated>
     
@@ -55,10 +55,10 @@
   
   <entry>
     <title>从零开始blog with Hexo教程</title>
-    <link href="http://amao12580.github.io/post/a-new-start/"/>
-    <id>http://amao12580.github.io/post/a-new-start/</id>
+    <link href="http://amao12580.github.io/post/2016/03/a-new-start/"/>
+    <id>http://amao12580.github.io/post/2016/03/a-new-start/</id>
     <published>2016-03-21T03:22:36.603Z</published>
-    <updated>2016-03-21T06:01:51.037Z</updated>
+    <updated>2016-03-21T08:56:54.948Z</updated>
     
     <content type="html">&lt;p&gt;#写在前面&lt;/p&gt;
 &lt;p&gt;转眼间3月份也即将过去了，在接受了众多的理论输入以及实践之后，决定要将一些值得分享的事情记录下来，一方面是避免自己重复的掉坑，另一方面也希望通过blog的方式锻炼自己的文字能力。输入+沉淀+输出，形成一个知识技能闭环的过程。&lt;/p&gt;
