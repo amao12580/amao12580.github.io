@@ -1,29 +1,26 @@
 
  <!DOCTYPE HTML>
-<html lang="zh-cn">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   
-    <title>A new start. | Cat&#39;s Blog</title>
+    <title>SQL improve:elegant use join query | Cat&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Steven Cheng">
     
 
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+    <meta name="description" content="SQL查询提高篇：捋清连接查询的那些事儿">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A new start.">
-<meta property="og:url" content="http://amao12580.github.io/undefined/a-new-start/index.html">
+<meta property="og:title" content="SQL improve:elegant use join query">
+<meta property="og:url" content="http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/index.html">
 <meta property="og:site_name" content="Cat's Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-03-19T04:41:35.082Z">
+<meta property="og:description" content="SQL查询提高篇：捋清连接查询的那些事儿">
+<meta property="og:updated_time" content="2016-03-21T04:45:47.318Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A new start.">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="SQL improve:elegant use join query">
+<meta name="twitter:description" content="SQL查询提高篇：捋清连接查询的那些事儿">
 
     
     <link rel="alternative" href="/atom.xml" title="Cat&#39;s Blog" type="application/atom+xml">
@@ -51,7 +48,7 @@ Quick">
 				<h1 class="site-name"><a href="/" title="Cat&#39;s Blog">Cat&#39;s Blog</a></h1>
 				<h2 class="blog-motto">一饮一啄，莫非前定.</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -69,7 +66,7 @@ Quick">
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:amao12580.github.io">
 					</form>
 					
@@ -85,35 +82,38 @@ Quick">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/undefined/a-new-start/" title="A new start." itemprop="url">A new start.</a>
+      <a href="/post/SQL-improve-elegant-use-join-query/" title="SQL improve:elegant use join query" itemprop="url">SQL improve:elegant use join query</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Steven Cheng" target="_blank" itemprop="author">Steven Cheng</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-17T02:07:28.112Z" itemprop="datePublished"> Published 2016-03-17</time>
-    
-  </p>
+  <time datetime="2016-03-21T04:25:10.000Z" itemprop="datePublished"> 发表于 2016-03-21 12:25:10.000</time>
+  <time postupdated="2016-03-21T04:45:47.318Z" itemprop="dateModified"> 更新于 2016-03-21 12:45:47.318</time>
+</p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+		<ol>
+<li>left join</li>
+<li>right join</li>
+<li>inner join</li>
+<li>left outter join</li>
+<li>right outter join</li>
+<li>扩展阅读：union,union all</li>
+<li>性能对比</li>
+<li>Apache Hive如何支持连接查询语法</li>
+<li>主流RDBMS对语法的支持情况</li>
+<li>结合explain进行执行分析</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -121,9 +121,14 @@ Quick">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/life/">life</a>
+  <a class="article-category-link" href="/categories/Learning/">Learning</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/tech/">tech</a><a href="/tags/SQL/">SQL</a>
+  </div>
 
 </div>
 
@@ -131,7 +136,7 @@ Quick">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://amao12580.github.io/undefined/a-new-start/" data-title="A new start. | Cat&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/" data-title="SQL improve:elegant use join query | Cat&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -142,25 +147,42 @@ Quick">
    	       
 	</article>
 	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/post/a-new-start/"  title="A new start.">
+ <strong>下一篇：</strong><br/> 
+ <span>A new start.
+</span>
+</a>
+</div>
+
+</nav>
+
 	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="post/SQL-improve-elegant-use-join-query/" data-title="SQL improve:elegant use join query" data-url="http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/"></div>
+</section>
+
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+ 
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 <div class="github-card">
-<p class="asidetitle">Github Card</p>
+<p class="asidetitle">Github 名片</p>
 <div class="github-card" data-github="amao12580" data-width="220" data-height="119" data-theme="medium">
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
@@ -170,11 +192,15 @@ Quick">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
 		  
-			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+			<li><a href="/categories/Learning/" title="Learning">Learning<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/tutorial/" title="tutorial">tutorial<sup>1</sup></a></li>
 		  
 		
 		</ul>
@@ -182,9 +208,36 @@ Quick">
 
 
   
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/tech/" title="tech">tech<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -199,6 +252,12 @@ Quick">
             
           </li>
         
+          <li>
+            
+            	<a href="https://github.com/amao12580" target="_blank" title="GitHub">GitHub</a>
+            
+          </li>
+        
     </ul>
 </div>
 
@@ -206,11 +265,11 @@ Quick">
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
   <div class="weiboshow">
-  <p class="asidetitle">Weibo</p>
+  <p class="asidetitle">新浪微博</p>
     <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
 </div>
 
@@ -227,8 +286,8 @@ Quick">
 	
 	
 	<section class="info">
-		<p> Hello ,I&#39;m Larry Page in Google. <br/>
-			This is my blog,believe it or not.</p>
+		<p> Hello ,I&#39;m steven. This is my blog on GitHub. <br/>
+			Whenever you feel like criticizing any one, just remember that all the people in this world haven’t had the advantages that you’ve had.</p>
 	</section>
 	 
 	<div class="social-font" class="clearfix">
@@ -246,16 +305,25 @@ Quick">
 		
 		
 		
+		<a href="mailto:chengliangchengliang888@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
 	</div>
 			
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		© 2016
 		
 		<a href="/about" target="_blank" title="Steven Cheng">Steven Cheng</a>
 		
-		
+
+		<!-- 不蒜子统计 -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+本站总访问量<span id="busuanzi_value_site_pv"></span>,本站访客数<span id="busuanzi_value_site_uv"></span>，本文总阅读量<span id="busuanzi_value_page_pv"></span>
+</span>
+
 		</p>
 </div>
 </footer>
@@ -394,6 +462,18 @@ $(document).ready(function(){
 
 
 
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"amao12580"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
 
 
 
@@ -444,7 +524,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

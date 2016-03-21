@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://amao12580.github.io/"/>
-  <updated>2016-03-19T04:41:35.082Z</updated>
+  <updated>2016-03-21T04:45:47.318Z</updated>
   <id>http://amao12580.github.io/</id>
   
   <author>
@@ -16,31 +16,67 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>A new start.</title>
-    <link href="http://amao12580.github.io/undefined/a-new-start/"/>
-    <id>http://amao12580.github.io/undefined/a-new-start/</id>
-    <published>2016-03-17T02:07:28.112Z</published>
-    <updated>2016-03-19T04:41:35.082Z</updated>
+    <title>SQL improve:elegant use join query</title>
+    <link href="http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/"/>
+    <id>http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/</id>
+    <published>2016-03-21T04:25:10.000Z</published>
+    <updated>2016-03-21T04:45:47.318Z</updated>
     
-    <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo generate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo deploy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
+    <content type="html">&lt;ol&gt;
+&lt;li&gt;left join&lt;/li&gt;
+&lt;li&gt;right join&lt;/li&gt;
+&lt;li&gt;inner join&lt;/li&gt;
+&lt;li&gt;left outter join&lt;/li&gt;
+&lt;li&gt;right outter join&lt;/li&gt;
+&lt;li&gt;扩展阅读：union,union all&lt;/li&gt;
+&lt;li&gt;性能对比&lt;/li&gt;
+&lt;li&gt;Apache Hive如何支持连接查询语法&lt;/li&gt;
+&lt;li&gt;主流RDBMS对语法的支持情况&lt;/li&gt;
+&lt;li&gt;结合explain进行执行分析&lt;/li&gt;
+&lt;/ol&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      SQL查询提高篇：捋清连接查询的那些事儿
     
     </summary>
     
-      <category term="life" scheme="http://amao12580.github.io/categories/life/"/>
+      <category term="Learning" scheme="http://amao12580.github.io/categories/Learning/"/>
     
+    
+      <category term="tech" scheme="http://amao12580.github.io/tags/tech/"/>
+    
+      <category term="SQL" scheme="http://amao12580.github.io/tags/SQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>A new start.</title>
+    <link href="http://amao12580.github.io/post/a-new-start/"/>
+    <id>http://amao12580.github.io/post/a-new-start/</id>
+    <published>2016-03-21T03:22:36.603Z</published>
+    <updated>2016-03-21T04:45:25.933Z</updated>
+    
+    <content type="html">&lt;p&gt;#写在前面&lt;/p&gt;
+&lt;p&gt;转眼间3月份也即将过去了，在接受了众多的理论输入以及实践之后，决定要将一些值得分享的事情记录下来，一方面是避免自己重复的掉坑，另一方面也希望通过blog的方式锻炼自己的文字能力。输入+沉淀+输出，形成一个知识技能闭环的过程。&lt;/p&gt;
+&lt;p&gt;下面记录从零开始的blog with Hexo的搭建过程，有一些简单的问题，在文末也会给出答案。&lt;/p&gt;
+&lt;h2 id=&quot;1-你将要做什么？&quot;&gt;&lt;a href=&quot;#1-你将要做什么？&quot; class=&quot;headerlink&quot; title=&quot;1.你将要做什么？&quot;&gt;&lt;/a&gt;1.你将要做什么？&lt;/h2&gt;&lt;h3 id=&quot;1-1国内个人blog的现状&quot;&gt;&lt;a href=&quot;#1-1国内个人blog的现状&quot; class=&quot;headerlink&quot; title=&quot;1.1国内个人blog的现状&quot;&gt;&lt;/a&gt;1.1国内个人blog的现状&lt;/h3&gt;&lt;h3 id=&quot;1-2如何选择适合自己的blog平台&quot;&gt;&lt;a href=&quot;#1-2如何选择适合自己的blog平台&quot; class=&quot;headerlink&quot; title=&quot;1.2如何选择适合自己的blog平台&quot;&gt;&lt;/a&gt;1.2如何选择适合自己的blog平台&lt;/h3&gt;&lt;h3 id=&quot;1-3为什么是Hexo？&quot;&gt;&lt;a href=&quot;#1-3为什么是Hexo？&quot; class=&quot;headerlink&quot; title=&quot;1.3为什么是Hexo？&quot;&gt;&lt;/a&gt;1.3为什么是Hexo？&lt;/h3&gt;&lt;h2 id=&quot;2-如何做？&quot;&gt;&lt;a href=&quot;#2-如何做？&quot; class=&quot;headerlink&quot; title=&quot;2.如何做？&quot;&gt;&lt;/a&gt;2.如何做？&lt;/h2&gt;&lt;h3 id=&quot;2-1安装和配置NodeJS&quot;&gt;&lt;a href=&quot;#2-1安装和配置NodeJS&quot; class=&quot;headerlink&quot; title=&quot;2.1安装和配置NodeJS&quot;&gt;&lt;/a&gt;2.1安装和配置NodeJS&lt;/h3&gt;&lt;h3 id=&quot;2-2获取GitHub账号&quot;&gt;&lt;a href=&quot;#2-2获取GitHub账号&quot; class=&quot;headerlink&quot; title=&quot;2.2获取GitHub账号&quot;&gt;&lt;/a&gt;2.2获取GitHub账号&lt;/h3&gt;&lt;h3 id=&quot;2-2yourname-github-io&quot;&gt;&lt;a href=&quot;#2-2yourname-github-io&quot; class=&quot;headerlink&quot; title=&quot;2.2yourname.github.io&quot;&gt;&lt;/a&gt;2.2yourname.github.io&lt;/h3&gt;&lt;h3 id=&quot;2-3安装和配置windows-GitHub客户端&quot;&gt;&lt;a href=&quot;#2-3安装和配置windows-GitHub客户端&quot; class=&quot;headerlink&quot; title=&quot;2.3安装和配置windows GitHub客户端&quot;&gt;&lt;/a&gt;2.3安装和配置windows GitHub客户端&lt;/h3&gt;&lt;h3 id=&quot;2-4安装和配置Hexo&quot;&gt;&lt;a href=&quot;#2-4安装和配置Hexo&quot; class=&quot;headerlink&quot; title=&quot;2.4安装和配置Hexo&quot;&gt;&lt;/a&gt;2.4安装和配置Hexo&lt;/h3&gt;&lt;h3 id=&quot;2-5为什么是Jacman&quot;&gt;&lt;a href=&quot;#2-5为什么是Jacman&quot; class=&quot;headerlink&quot; title=&quot;2.5为什么是Jacman?&quot;&gt;&lt;/a&gt;2.5为什么是Jacman?&lt;/h3&gt;&lt;h3 id=&quot;2-6私人定制&quot;&gt;&lt;a href=&quot;#2-6私人定制&quot; class=&quot;headerlink&quot; title=&quot;2.6私人定制&quot;&gt;&lt;/a&gt;2.6私人定制&lt;/h3&gt;&lt;h3 id=&quot;2-7评论与访客统计&quot;&gt;&lt;a href=&quot;#2-7评论与访客统计&quot; class=&quot;headerlink&quot; title=&quot;2.7评论与访客统计&quot;&gt;&lt;/a&gt;2.7评论与访客统计&lt;/h3&gt;&lt;h3 id=&quot;2-8提高搜索引擎的评分&quot;&gt;&lt;a href=&quot;#2-8提高搜索引擎的评分&quot; class=&quot;headerlink&quot; title=&quot;2.8提高搜索引擎的评分&quot;&gt;&lt;/a&gt;2.8提高搜索引擎的评分&lt;/h3&gt;&lt;h3 id=&quot;2-9备份的重要性&quot;&gt;&lt;a href=&quot;#2-9备份的重要性&quot; class=&quot;headerlink&quot; title=&quot;2.9备份的重要性&quot;&gt;&lt;/a&gt;2.9备份的重要性&lt;/h3&gt;&lt;h2 id=&quot;3-可能遇到的问题及答案&quot;&gt;&lt;a href=&quot;#3-可能遇到的问题及答案&quot; class=&quot;headerlink&quot; title=&quot;3.可能遇到的问题及答案&quot;&gt;&lt;/a&gt;3.可能遇到的问题及答案&lt;/h2&gt;&lt;h2 id=&quot;4-总结&quot;&gt;&lt;a href=&quot;#4-总结&quot; class=&quot;headerlink&quot; title=&quot;4.总结&quot;&gt;&lt;/a&gt;4.总结&lt;/h2&gt;</content>
+    
+    <summary type="html">
+    
+      从零开始blog with Hexo教程
+    
+    </summary>
+    
+      <category term="tutorial" scheme="http://amao12580.github.io/categories/tutorial/"/>
+    
+    
+      <category term="Hexo" scheme="http://amao12580.github.io/tags/Hexo/"/>
+    
+      <category term="Jacman" scheme="http://amao12580.github.io/tags/Jacman/"/>
+    
+      <category term="Markdown" scheme="http://amao12580.github.io/tags/Markdown/"/>
     
   </entry>
   
