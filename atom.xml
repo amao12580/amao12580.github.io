@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://amao12580.github.io/"/>
-  <updated>2016-03-21T04:45:47.318Z</updated>
+  <updated>2016-03-21T04:47:49.469Z</updated>
   <id>http://amao12580.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/"/>
     <id>http://amao12580.github.io/post/SQL-improve-elegant-use-join-query/</id>
     <published>2016-03-21T04:25:10.000Z</published>
-    <updated>2016-03-21T04:45:47.318Z</updated>
+    <updated>2016-03-21T04:47:49.469Z</updated>
     
     <content type="html">&lt;ol&gt;
 &lt;li&gt;left join&lt;/li&gt;
@@ -45,7 +45,7 @@
       <category term="Learning" scheme="http://amao12580.github.io/categories/Learning/"/>
     
     
-      <category term="tech" scheme="http://amao12580.github.io/tags/tech/"/>
+      <category term="Tech" scheme="http://amao12580.github.io/tags/Tech/"/>
     
       <category term="SQL" scheme="http://amao12580.github.io/tags/SQL/"/>
     
@@ -56,7 +56,7 @@
     <link href="http://amao12580.github.io/post/a-new-start/"/>
     <id>http://amao12580.github.io/post/a-new-start/</id>
     <published>2016-03-21T03:22:36.603Z</published>
-    <updated>2016-03-21T04:45:25.933Z</updated>
+    <updated>2016-03-21T04:47:54.485Z</updated>
     
     <content type="html">&lt;p&gt;#写在前面&lt;/p&gt;
 &lt;p&gt;转眼间3月份也即将过去了，在接受了众多的理论输入以及实践之后，决定要将一些值得分享的事情记录下来，一方面是避免自己重复的掉坑，另一方面也希望通过blog的方式锻炼自己的文字能力。输入+沉淀+输出，形成一个知识技能闭环的过程。&lt;/p&gt;
@@ -69,7 +69,7 @@
     
     </summary>
     
-      <category term="tutorial" scheme="http://amao12580.github.io/categories/tutorial/"/>
+      <category term="Tutorial" scheme="http://amao12580.github.io/categories/Tutorial/"/>
     
     
       <category term="Hexo" scheme="http://amao12580.github.io/tags/Hexo/"/>
