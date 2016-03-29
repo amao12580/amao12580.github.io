@@ -85,9 +85,8 @@
     <h1 itemprop="name">记一次redis成功调优的过程</h1>
     
      
-           <p itemprop="description" >我们怎么使用Redis？公司目前主力开发的产品，是一个典型的平台电商型产品，包含了平台运营方、商家、消费者等角色。
-公司提供电商平台，同时负责系统维护和系统保障；商家与公司进行签约后，入驻平台，将商品投放到平台进行展示；平台依据商家签约信息，进行商品与消费者之间的兴趣推荐，消费者</p>
-        
+      <p itemprop="description" >在最后一步提到RDB定期存盘，解决方案存在问题，强行关闭，会导致redis的不过期数据也存在丢失风险，在这里建议有条件的，配置redis为1主1从，Master不进行任何形式的存盘，而Slave配置RDB和AOF方式的存盘，双保险。应用只连接Master即可。</p>
+      
     
     <time datetime="2016-03-23T08:09:12.000Z" itemprop="datePublished">2016-03-23</time>
   </a>
@@ -126,8 +125,17 @@
     <h1 itemprop="name">SQL查询提高篇：捋清连接查询的那些事儿</h1>
     
      
-      <p itemprop="description" >SQL improve:elegant use join query</p>
-      
+           <p itemprop="description" >实践出真知，我们一起动手来弄弄清楚连接查询的那些事儿。
+
+left join
+right join
+inner join
+left outter join
+right outter join
+扩展阅读：union,union all
+性能对比
+Apache Hive如何支持连接查</p>
+        
     
     <time datetime="2016-03-21T04:25:10.000Z" itemprop="datePublished">2016-03-21</time>
   </a>
