@@ -4,8 +4,32 @@
 
     
   <url>
+    <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
+    <lastmod>2016-03-29T10:00:20.157Z</lastmod>
+    <data>
+        <display>
+        <title>记一次redis成功调优的过程</title>
+        <pubTime>2016-03-23T08:09:12.000Z</pubTime>
+        
+        <tag>Redis</tag>
+         
+        <tag>Hash</tag>
+         
+        <tag>Sharding</tag>
+         
+         
+           
+             
+              <breadCrumb title="Record" url="http://amao12580.github.io/categories/Record/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://amao12580.github.io/post/2016/03/a-new-start/</loc>
-    <lastmod>2016-03-28T04:56:29.742Z</lastmod>
+    <lastmod>2016-03-28T06:35:32.547Z</lastmod>
     <data>
         <display>
         <title>从零开始Blogging with Hexo教程</title>
@@ -24,21 +48,6 @@
              
               <breadCrumb title="Tutorial" url="http://amao12580.github.io/categories/Tutorial/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
-    <lastmod>2016-03-23T08:09:12.386Z</lastmod>
-    <data>
-        <display>
-        <title>A successful redis tuning record</title>
-        <pubTime>2016-03-23T08:09:12.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
