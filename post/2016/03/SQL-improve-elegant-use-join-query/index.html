@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/index.html">
 <meta property="og:site_name" content="Cat's Blog">
 <meta property="og:description" content="有时为了得到完整的结果，我们需要从两个或更多的表中获取结果。我们就需要执行 join。">
-<meta property="og:updated_time" content="2016-03-30T10:36:29.583Z">
+<meta property="og:updated_time" content="2016-03-31T03:51:42.629Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL查询提高篇：捋清连接查询的那些事儿">
 <meta name="twitter:description" content="有时为了得到完整的结果，我们需要从两个或更多的表中获取结果。我们就需要执行 join。">
@@ -90,7 +90,7 @@
 		
   <p class="article-time">
   <time datetime="2016-03-21T04:25:10.000Z" itemprop="datePublished"> 发表于 2016-03-21 12:25:10.000</time>
-  <time postupdated="2016-03-30T10:36:29.583Z" itemprop="dateModified"> 更新于 2016-03-30 18:36:29.583</time>
+  <time postupdated="2016-03-31T03:51:42.629Z" itemprop="dateModified"> 更新于 2016-03-31 11:51:42.629</time>
 </p>
 </header>
 	<div class="article-content">
@@ -98,7 +98,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#练习题"><span class="toc-number">1.</span> <span class="toc-text">练习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#left-join-right-join"><span class="toc-number">1.1.</span> <span class="toc-text">left join/right join</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#练习题"><span class="toc-number">1.</span> <span class="toc-text">练习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#left-join-VS-right-join"><span class="toc-number">1.1.</span> <span class="toc-text">left join VS right join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inner-join"><span class="toc-number">1.2.</span> <span class="toc-text">inner join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#left-outter-join-VS-right-outter-join"><span class="toc-number">1.3.</span> <span class="toc-text">left outter join VS right outter join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#full-join"><span class="toc-number">1.4.</span> <span class="toc-text">full join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cross-join"><span class="toc-number">1.5.</span> <span class="toc-text">cross join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#union-union-all"><span class="toc-number">1.6.</span> <span class="toc-text">union,union all</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apache-Hive连接查询"><span class="toc-number">1.7.</span> <span class="toc-text">Apache Hive连接查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结合explain进行执行分析"><span class="toc-number">1.8.</span> <span class="toc-text">结合explain进行执行分析</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -183,8 +183,17 @@
 </tr>
 </tbody>
 </table>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>Question 1：查询所有用户的订单信息，订单信息不能为空，要求返回的字段有：用户姓名、手机号码、订单号、订单状态、订单金额。</p>
-<h3 id="left-join-right-join"><a href="#left-join-right-join" class="headerlink" title="left join/right join"></a>left join/right join</h3><p>正确的SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout</span><br><span class="line"> FROM `user` RIGHT JOIN `order` ON `user`.uid=`order`.uid</span><br><span class="line"></span><br><span class="line">等价于</span><br><span class="line"></span><br><span class="line">SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout</span><br><span class="line"> FROM `order` LEFT JOIN `user` ON `user`.uid=`order`.uid</span><br></pre></td></tr></table></figure></p>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><p>查询所有用户的订单信息，订单信息不能为空，要求返回的字段有：用户姓名、手机号码、订单号、订单状态、订单金额。</p>
+<h3 id="left-join-VS-right-join"><a href="#left-join-VS-right-join" class="headerlink" title="left join VS right join"></a>left join VS right join</h3><p>规律：</p>
+<ul>
+<li>A表 left join B表；则返回A表的所有符合条件(on条件、where条件)的记录。A表的字段不会为null，而B表没有对应记录时,字段值返回null。</li>
+<li><p>B表 left join A表；则返回B表的所有符合条件(on条件、where条件)的记录。B表的字段不会为null，而A表没有对应记录时,字段值返回null。</p>
+</li>
+<li><p>A表 left join B表 等价于 B表 right join A表.</p>
+</li>
+<li>A表 right join B表 等价于 B表 left join A表.</li>
+</ul>
+<p>正确的SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout</span><br><span class="line"> FROM `user` RIGHT JOIN `order` ON `user`.uid=`order`.uid</span><br><span class="line"></span><br><span class="line">等价于</span><br><span class="line"></span><br><span class="line">SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout</span><br><span class="line"> FROM `order` LEFT JOIN `user` ON `user`.uid=`order`.uid</span><br></pre></td></tr></table></figure></p>
 <p>结果集是：</p>
 <table>
 <thead>
@@ -264,17 +273,39 @@
 </tbody>
 </table>
 <p>可以看出错误的SQL语句中，查出了没有订单的用户“王五”</p>
-<ol>
-<li>inner join</li>
-<li>left outter join</li>
-<li>right outter join</li>
-<li>cross join</li>
-<li>扩展阅读：union,union all</li>
-<li>性能对比</li>
-<li>Apache Hive如何支持连接查询语法</li>
-<li>主流RDBMS对语法的支持情况</li>
-<li>结合explain进行执行分析</li>
-</ol>
+<h3 id="inner-join"><a href="#inner-join" class="headerlink" title="inner join"></a>inner join</h3><p>规律：</p>
+<ul>
+<li>A表 inner join B表；则返回A表和B表同时符合条件(on条件、where条件)的记录。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">两种写法，后者使用的居多</span><br><span class="line"></span><br><span class="line">SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout</span><br><span class="line"> FROM `order` INNER JOIN `user` ON `user`.uid=`order`.uid;</span><br><span class="line"></span><br><span class="line">等价于</span><br><span class="line"></span><br><span class="line">SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout</span><br><span class="line"> FROM `order`,`user` WHERE `user`.uid=`order`.uid;</span><br></pre></td></tr></table></figure>
+<h3 id="left-outter-join-VS-right-outter-join"><a href="#left-outter-join-VS-right-outter-join" class="headerlink" title="left outter join VS right outter join"></a>left outter join VS right outter join</h3><p>left join 是left outer join的简写，left join默认是outer属性的。</p>
+<p>在某些数据库(如Oracle)中， left join 称为 left outer join；相应的right join 称为 right outter join</p>
+<h3 id="full-join"><a href="#full-join" class="headerlink" title="full join"></a>full join</h3><ul>
+<li>在某些数据库中， FULL JOIN 称为 FULL OUTER JOIN。</li>
+<li>只要其中某个表存在匹配，FULL JOIN 关键字就会返回行，意思是只需要有一个以上的表满足条件即可。</li>
+<li><p>Oracle 、DB2、SQL Server、PostgreSQL 支持 Full JOIN，但是 MySQL 是不支持的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MySQL使用FULL JOIN报错</span><br><span class="line">[Err] 1054 - Unknown column &apos;order.uid&apos; in &apos;on clause&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MySQL可以通过 LEFT JOIN + UNION + RIGHT JOIN 的方式 来实现Full JOIN。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout</span><br><span class="line"> from `order` left join `user` on `user`.uid=`order`.uid</span><br><span class="line"> union</span><br><span class="line">select `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout</span><br><span class="line"> from `order` right join `user` on `user`.uid=`order`.uid;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="cross-join"><a href="#cross-join" class="headerlink" title="cross join"></a>cross join</h3><p>除了在FROM子句中使用逗号间隔连接的表外，SQL还支持另一种被称为交叉连接的操作，它们都返回被连接的两个表所有数据行的笛卡尔积，返回到的数据行数等于第一个表中符合查询条件的数据行数乘以第二个表中符合查询条件的数据行数。惟一的不同在于，交叉连接分开列名时，使用CROSS JOIN关键字而不是逗号。</p>
+<p>实际上，下面两个表达式是完全等价的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT  *  FROM  table1, table2 WHERE table1.name=table2.name;</span><br><span class="line">SELECT  *  FROM  table1  CROSS JOIN  table2 WHERE table1.name=table2.name;</span><br></pre></td></tr></table></figure></p>
+<p>在使用CROSS JOIN关键字交叉连接表时，因为生成的是两个表的笛卡尔积，因而不能使用ON关键字，只能在WHERE子句中定义搜索条件。</p>
+<p>事实上，直接使用CROSS JOIN很少得到想要的结果，但是，正如实例所示，作为查询的第一步，DBMS通常在FROM子句中，对连接的表进行CROSS JOIN，然后过滤得到的中间表。</p>
+<h3 id="union-union-all"><a href="#union-union-all" class="headerlink" title="union,union all"></a>union,union all</h3><p>在数据库中，union和union all关键字都是将两个结果集合并为一个，但这两者从使用和效率上来说都有所不同。</p>
+<p>union在进行表链接后会筛选掉重复的记录，所以在表链接后会对所产生的结果集进行排序运算，删除重复的记录再返回结果。</p>
+<p>如：<br> select <em> from test_union1<br>   union<br> select </em> from test_union2</p>
+<p>这个SQL在运行时先取出两个表的结果，再用排序空间进行排序删除重复的记录，最后返回结果集，如果表数据量大的话可能会导致用磁盘进行排序。而union all只是简单的将两个结果合并后就返回。这样，如果返回的两个结果集中有重复的数据，那么返回的结果集就会包含重复的数据了。从效率上说，union all要比union快很多，所以，如果可以确认合并的两个结果集中不包含重复的数据的话，那么就使用union all，</p>
+<p>如下：<br>select <em> from test_union1<br>union all<br>select </em> from test_union2</p>
+<p>使用 union 组合查询的结果集有两个最基本的规则：<br>1。所有查询中的列数和列的顺序必须相同。<br>2。数据类型必须兼容</p>
+<h3 id="Apache-Hive连接查询"><a href="#Apache-Hive连接查询" class="headerlink" title="Apache Hive连接查询"></a>Apache Hive连接查询</h3><p>Hive支持连接查询，但有一些条件必须遵守，比如只支持相等查询，其它查询如不等式查询则不支持，还支持外连接，左半连接查询。另外Hive支持多于两个表以上的连接查询。</p>
+<ul>
+<li><a href="http://blog.csdn.net/skywalker_only/article/details/39205973" target="_blank" rel="external">Hive学习之连接查询</a></li>
+<li><a href="http://shiyanjun.cn/archives/588.html" target="_blank" rel="external">Hive JOIN使用详解</a><h3 id="结合explain进行执行分析"><a href="#结合explain进行执行分析" class="headerlink" title="结合explain进行执行分析"></a>结合explain进行执行分析</h3></li>
+<li><a href="http://blog.csdn.net/mchdba/article/details/9190771" target="_blank" rel="external">MySQL EXPLAIN 命令详解学习</a></li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -341,7 +372,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#练习题"><span class="toc-number">1.</span> <span class="toc-text">练习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#left-join-right-join"><span class="toc-number">1.1.</span> <span class="toc-text">left join/right join</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#练习题"><span class="toc-number">1.</span> <span class="toc-text">练习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#left-join-VS-right-join"><span class="toc-number">1.1.</span> <span class="toc-text">left join VS right join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inner-join"><span class="toc-number">1.2.</span> <span class="toc-text">inner join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#left-outter-join-VS-right-outter-join"><span class="toc-number">1.3.</span> <span class="toc-text">left outter join VS right outter join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#full-join"><span class="toc-number">1.4.</span> <span class="toc-text">full join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cross-join"><span class="toc-number">1.5.</span> <span class="toc-text">cross join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#union-union-all"><span class="toc-number">1.6.</span> <span class="toc-text">union,union all</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apache-Hive连接查询"><span class="toc-number">1.7.</span> <span class="toc-text">Apache Hive连接查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结合explain进行执行分析"><span class="toc-number">1.8.</span> <span class="toc-text">结合explain进行执行分析</span></a></li></ol></li></ol>
  
   </div>
 

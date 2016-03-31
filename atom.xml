@@ -139,7 +139,7 @@
     <link href="http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/"/>
     <id>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</id>
     <published>2016-03-21T04:25:10.000Z</published>
-    <updated>2016-03-30T10:36:29.583Z</updated>
+    <updated>2016-03-31T03:51:42.629Z</updated>
     
     <content type="html">&lt;p&gt;数据库中的表可通过键将彼此联系起来。主键（Primary Key）是一个列，在这个列中的每一行的值都是唯一的。在表中，每个主键的值都是唯一的。这样做的目的是在不重复每个表中的所有数据的情况下，把表间的数据交叉捆绑在一起。&lt;/p&gt;
 &lt;p&gt;而在两个表之间建立关联关系，是不要求任何一个表的关联列(column)是主键的，这个关联列可以是任何类型的列，但是要求，两个表的关联列可以做关联关系的条件计算，为避免转换影响效率，两个关联列最好保持类型、长度一致。&lt;/p&gt;
@@ -222,8 +222,17 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h2 id=&quot;练习题&quot;&gt;&lt;a href=&quot;#练习题&quot; class=&quot;headerlink&quot; title=&quot;练习题&quot;&gt;&lt;/a&gt;练习题&lt;/h2&gt;&lt;p&gt;Question 1：查询所有用户的订单信息，订单信息不能为空，要求返回的字段有：用户姓名、手机号码、订单号、订单状态、订单金额。&lt;/p&gt;
-&lt;h3 id=&quot;left-join-right-join&quot;&gt;&lt;a href=&quot;#left-join-right-join&quot; class=&quot;headerlink&quot; title=&quot;left join/right join&quot;&gt;&lt;/a&gt;left join/right join&lt;/h3&gt;&lt;p&gt;正确的SQL语句：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; FROM `user` RIGHT JOIN `order` ON `user`.uid=`order`.uid&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;等价于&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; FROM `order` LEFT JOIN `user` ON `user`.uid=`order`.uid&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;练习题&quot;&gt;&lt;a href=&quot;#练习题&quot; class=&quot;headerlink&quot; title=&quot;练习题&quot;&gt;&lt;/a&gt;练习题&lt;/h2&gt;&lt;p&gt;查询所有用户的订单信息，订单信息不能为空，要求返回的字段有：用户姓名、手机号码、订单号、订单状态、订单金额。&lt;/p&gt;
+&lt;h3 id=&quot;left-join-VS-right-join&quot;&gt;&lt;a href=&quot;#left-join-VS-right-join&quot; class=&quot;headerlink&quot; title=&quot;left join VS right join&quot;&gt;&lt;/a&gt;left join VS right join&lt;/h3&gt;&lt;p&gt;规律：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A表 left join B表；则返回A表的所有符合条件(on条件、where条件)的记录。A表的字段不会为null，而B表没有对应记录时,字段值返回null。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;B表 left join A表；则返回B表的所有符合条件(on条件、where条件)的记录。B表的字段不会为null，而A表没有对应记录时,字段值返回null。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;A表 left join B表 等价于 B表 right join A表.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;A表 right join B表 等价于 B表 left join A表.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;正确的SQL语句：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; FROM `user` RIGHT JOIN `order` ON `user`.uid=`order`.uid&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;等价于&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; FROM `order` LEFT JOIN `user` ON `user`.uid=`order`.uid&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;结果集是：&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -303,17 +312,39 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;可以看出错误的SQL语句中，查出了没有订单的用户“王五”&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;inner join&lt;/li&gt;
-&lt;li&gt;left outter join&lt;/li&gt;
-&lt;li&gt;right outter join&lt;/li&gt;
-&lt;li&gt;cross join&lt;/li&gt;
-&lt;li&gt;扩展阅读：union,union all&lt;/li&gt;
-&lt;li&gt;性能对比&lt;/li&gt;
-&lt;li&gt;Apache Hive如何支持连接查询语法&lt;/li&gt;
-&lt;li&gt;主流RDBMS对语法的支持情况&lt;/li&gt;
-&lt;li&gt;结合explain进行执行分析&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h3 id=&quot;inner-join&quot;&gt;&lt;a href=&quot;#inner-join&quot; class=&quot;headerlink&quot; title=&quot;inner join&quot;&gt;&lt;/a&gt;inner join&lt;/h3&gt;&lt;p&gt;规律：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A表 inner join B表；则返回A表和B表同时符合条件(on条件、where条件)的记录。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;两种写法，后者使用的居多&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; FROM `order` INNER JOIN `user` ON `user`.uid=`order`.uid;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;等价于&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SELECT `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; FROM `order`,`user` WHERE `user`.uid=`order`.uid;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;left-outter-join-VS-right-outter-join&quot;&gt;&lt;a href=&quot;#left-outter-join-VS-right-outter-join&quot; class=&quot;headerlink&quot; title=&quot;left outter join VS right outter join&quot;&gt;&lt;/a&gt;left outter join VS right outter join&lt;/h3&gt;&lt;p&gt;left join 是left outer join的简写，left join默认是outer属性的。&lt;/p&gt;
+&lt;p&gt;在某些数据库(如Oracle)中， left join 称为 left outer join；相应的right join 称为 right outter join&lt;/p&gt;
+&lt;h3 id=&quot;full-join&quot;&gt;&lt;a href=&quot;#full-join&quot; class=&quot;headerlink&quot; title=&quot;full join&quot;&gt;&lt;/a&gt;full join&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;在某些数据库中， FULL JOIN 称为 FULL OUTER JOIN。&lt;/li&gt;
+&lt;li&gt;只要其中某个表存在匹配，FULL JOIN 关键字就会返回行，意思是只需要有一个以上的表满足条件即可。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Oracle 、DB2、SQL Server、PostgreSQL 支持 Full JOIN，但是 MySQL 是不支持的。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;MySQL使用FULL JOIN报错&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[Err] 1054 - Unknown column &amp;apos;order.uid&amp;apos; in &amp;apos;on clause&amp;apos;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;MySQL可以通过 LEFT JOIN + UNION + RIGHT JOIN 的方式 来实现Full JOIN。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;select `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; from `order` left join `user` on `user`.uid=`order`.uid&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; union&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;select `user`.`name`,`user`.mobile,`order`.order_id,`order`.`status`,`order`.amout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; from `order` right join `user` on `user`.uid=`order`.uid;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;cross-join&quot;&gt;&lt;a href=&quot;#cross-join&quot; class=&quot;headerlink&quot; title=&quot;cross join&quot;&gt;&lt;/a&gt;cross join&lt;/h3&gt;&lt;p&gt;除了在FROM子句中使用逗号间隔连接的表外，SQL还支持另一种被称为交叉连接的操作，它们都返回被连接的两个表所有数据行的笛卡尔积，返回到的数据行数等于第一个表中符合查询条件的数据行数乘以第二个表中符合查询条件的数据行数。惟一的不同在于，交叉连接分开列名时，使用CROSS JOIN关键字而不是逗号。&lt;/p&gt;
+&lt;p&gt;实际上，下面两个表达式是完全等价的。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;SELECT  *  FROM  table1, table2 WHERE table1.name=table2.name;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SELECT  *  FROM  table1  CROSS JOIN  table2 WHERE table1.name=table2.name;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在使用CROSS JOIN关键字交叉连接表时，因为生成的是两个表的笛卡尔积，因而不能使用ON关键字，只能在WHERE子句中定义搜索条件。&lt;/p&gt;
+&lt;p&gt;事实上，直接使用CROSS JOIN很少得到想要的结果，但是，正如实例所示，作为查询的第一步，DBMS通常在FROM子句中，对连接的表进行CROSS JOIN，然后过滤得到的中间表。&lt;/p&gt;
+&lt;h3 id=&quot;union-union-all&quot;&gt;&lt;a href=&quot;#union-union-all&quot; class=&quot;headerlink&quot; title=&quot;union,union all&quot;&gt;&lt;/a&gt;union,union all&lt;/h3&gt;&lt;p&gt;在数据库中，union和union all关键字都是将两个结果集合并为一个，但这两者从使用和效率上来说都有所不同。&lt;/p&gt;
+&lt;p&gt;union在进行表链接后会筛选掉重复的记录，所以在表链接后会对所产生的结果集进行排序运算，删除重复的记录再返回结果。&lt;/p&gt;
+&lt;p&gt;如：&lt;br&gt; select &lt;em&gt; from test_union1&lt;br&gt;   union&lt;br&gt; select &lt;/em&gt; from test_union2&lt;/p&gt;
+&lt;p&gt;这个SQL在运行时先取出两个表的结果，再用排序空间进行排序删除重复的记录，最后返回结果集，如果表数据量大的话可能会导致用磁盘进行排序。而union all只是简单的将两个结果合并后就返回。这样，如果返回的两个结果集中有重复的数据，那么返回的结果集就会包含重复的数据了。从效率上说，union all要比union快很多，所以，如果可以确认合并的两个结果集中不包含重复的数据的话，那么就使用union all，&lt;/p&gt;
+&lt;p&gt;如下：&lt;br&gt;select &lt;em&gt; from test_union1&lt;br&gt;union all&lt;br&gt;select &lt;/em&gt; from test_union2&lt;/p&gt;
+&lt;p&gt;使用 union 组合查询的结果集有两个最基本的规则：&lt;br&gt;1。所有查询中的列数和列的顺序必须相同。&lt;br&gt;2。数据类型必须兼容&lt;/p&gt;
+&lt;h3 id=&quot;Apache-Hive连接查询&quot;&gt;&lt;a href=&quot;#Apache-Hive连接查询&quot; class=&quot;headerlink&quot; title=&quot;Apache Hive连接查询&quot;&gt;&lt;/a&gt;Apache Hive连接查询&lt;/h3&gt;&lt;p&gt;Hive支持连接查询，但有一些条件必须遵守，比如只支持相等查询，其它查询如不等式查询则不支持，还支持外连接，左半连接查询。另外Hive支持多于两个表以上的连接查询。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/skywalker_only/article/details/39205973&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hive学习之连接查询&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://shiyanjun.cn/archives/588.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hive JOIN使用详解&lt;/a&gt;&lt;h3 id=&quot;结合explain进行执行分析&quot;&gt;&lt;a href=&quot;#结合explain进行执行分析&quot; class=&quot;headerlink&quot; title=&quot;结合explain进行执行分析&quot;&gt;&lt;/a&gt;结合explain进行执行分析&lt;/h3&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/mchdba/article/details/9190771&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MySQL EXPLAIN 命令详解学习&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </content>
     
     <summary type="html">
