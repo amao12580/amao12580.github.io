@@ -3,6 +3,28 @@
 
 
     
+  <url>
+    <loc>http://amao12580.github.io/post/2016/03/JOOQ-from-entry-to-improve/</loc>
+    <lastmod>2016-03-31T13:05:34.901Z</lastmod>
+    <data>
+        <display>
+        <title>JOOQ从入门到提高</title>
+        <pubTime>2016-03-23T08:08:09.754Z</pubTime>
+        
+        <tag>JOOQ</tag>
+         
+        <tag>SQL</tag>
+         
+         
+           
+             
+              <breadCrumb title="Learning" url="http://amao12580.github.io/categories/Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
     
   <url>
@@ -13,9 +35,9 @@
         <title>SQL查询提高篇：捋清连接查询的那些事儿</title>
         <pubTime>2016-03-21T04:25:10.000Z</pubTime>
         
-        <tag>Tech</tag>
-         
         <tag>SQL</tag>
+         
+        <tag>Tech</tag>
          
         <tag>Elegant</tag>
          
@@ -76,21 +98,6 @@
              
               <breadCrumb title="Tutorial" url="http://amao12580.github.io/categories/Tutorial/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://amao12580.github.io/post/2016/03/JOOQ-from-entry-to-improve/</loc>
-    <lastmod>2016-03-23T08:08:09.766Z</lastmod>
-    <data>
-        <display>
-        <title>JOOQ from entry to improve</title>
-        <pubTime>2016-03-23T08:08:09.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
