@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
+    
+    <lastmod>2016-04-20T10:27:57.287Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/index/index.html</loc>
     
-    <lastmod>2016-04-20T09:21:08.518Z</lastmod>
+    <lastmod>2016-04-20T09:56:21.567Z</lastmod>
     
   </url>
   
@@ -12,13 +19,6 @@
     <loc>http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/</loc>
     
     <lastmod>2016-04-08T10:18:13.630Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
-    
-    <lastmod>2016-04-02T10:51:14.650Z</lastmod>
     
   </url>
   
