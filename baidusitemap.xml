@@ -3,6 +3,7 @@
 
 
     
+    
   <url>
     <loc>http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/</loc>
     <lastmod>2016-04-08T10:18:13.630Z</lastmod>
@@ -65,9 +66,9 @@
         <title>JOOQ 3.6.1 使用总结：从入门到提高</title>
         <pubTime>2016-04-01T09:38:14.463Z</pubTime>
         
-        <tag>SQL</tag>
-         
         <tag>JOOQ</tag>
+         
+        <tag>SQL</tag>
          
         <tag>ARM</tag>
          
@@ -84,7 +85,6 @@
 
     
     
-    
   <url>
     <loc>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</loc>
     <lastmod>2016-03-31T03:51:42.629Z</lastmod>
@@ -93,9 +93,9 @@
         <title>SQL查询提高篇：捋清连接查询的那些事儿</title>
         <pubTime>2016-03-21T04:25:10.000Z</pubTime>
         
-        <tag>Tech</tag>
-         
         <tag>SQL</tag>
+         
+        <tag>Tech</tag>
          
         <tag>Elegant</tag>
          
