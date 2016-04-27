@@ -4,6 +4,35 @@
 
     
   <url>
+    <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker/</loc>
+    <lastmod>2016-04-27T05:09:20.104Z</lastmod>
+    <data>
+        <display>
+        <title>Nginx在Docker容器内进行编译安装</title>
+        <pubTime>2016-04-27T02:47:59.000Z</pubTime>
+        
+        <tag>Nginx</tag>
+         
+        <tag>Docker</tag>
+         
+        <tag>Alpine</tag>
+         
+        <tag>Centos</tag>
+         
+        <tag>Patch</tag>
+         
+         
+           
+             
+              <breadCrumb title="Record" url="http://amao12580.github.io/categories/Record/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
     <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
     <lastmod>2016-04-20T10:27:57.287Z</lastmod>
     <data>
@@ -28,7 +57,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/</loc>

@@ -12,25 +12,19 @@
     
 
     
-    <meta name="description" content="软件学习资源SQL查询优化总结1、应尽量避免在 where 子句中使用!=或&amp;lt;&amp;gt;操作符，否则将引擎放弃使用索引而进行全表扫描。
-2、对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。
-3、应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，如：
-select id from t w">
+    <meta name="description" content="软件Docker安装1.Follow：https://segmentfault.com/a/1190000002485231
+123456789101112131415ubuntu下，用以下这种脚本方式安装最方便，来源于sameersbn/docker-gitlab官方说明：sudo apt-get purge docker.iocurl -s https://get.docker.io/ubun">
 <meta property="og:type" content="website">
 <meta property="og:title" content="个人常用资源汇总">
 <meta property="og:url" content="http://amao12580.github.io/index/index.html">
 <meta property="og:site_name" content="Cat's Blog">
-<meta property="og:description" content="软件学习资源SQL查询优化总结1、应尽量避免在 where 子句中使用!=或&amp;lt;&amp;gt;操作符，否则将引擎放弃使用索引而进行全表扫描。
-2、对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。
-3、应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，如：
-select id from t w">
-<meta property="og:updated_time" content="2016-04-20T09:56:21.567Z">
+<meta property="og:description" content="软件Docker安装1.Follow：https://segmentfault.com/a/1190000002485231
+123456789101112131415ubuntu下，用以下这种脚本方式安装最方便，来源于sameersbn/docker-gitlab官方说明：sudo apt-get purge docker.iocurl -s https://get.docker.io/ubun">
+<meta property="og:updated_time" content="2016-04-21T09:37:28.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个人常用资源汇总">
-<meta name="twitter:description" content="软件学习资源SQL查询优化总结1、应尽量避免在 where 子句中使用!=或&amp;lt;&amp;gt;操作符，否则将引擎放弃使用索引而进行全表扫描。
-2、对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。
-3、应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，如：
-select id from t w">
+<meta name="twitter:description" content="软件Docker安装1.Follow：https://segmentfault.com/a/1190000002485231
+123456789101112131415ubuntu下，用以下这种脚本方式安装最方便，来源于sameersbn/docker-gitlab官方说明：sudo apt-get purge docker.iocurl -s https://get.docker.io/ubun">
 
     
     <link rel="alternative" href="/atom.xml" title="Cat&#39;s Blog" type="application/atom+xml">
@@ -99,13 +93,15 @@ select id from t w">
 		<a href="/about" title="Steven Cheng" target="_blank" itemprop="author">Steven Cheng</a>
 		
   <p class="article-time">
-  <time datetime="2016-04-20T09:56:21.567Z" itemprop="datePublished"> 发表于 2016-04-20 17:56:21.567</time>
-  <time postupdated="2016-04-20T09:56:21.567Z" itemprop="dateModified"> 更新于 2016-04-20 17:56:21.567</time>
+  <time datetime="2016-04-21T09:37:28.367Z" itemprop="datePublished"> 发表于 2016-04-21 17:37:28.367</time>
+  <time postupdated="2016-04-21T09:37:28.367Z" itemprop="dateModified"> 更新于 2016-04-21 17:37:28.367</time>
 </p>
 </header>
 	<div class="article-content">
 		
-		<h2 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h2><h2 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h2><h3 id="SQL查询优化总结"><a href="#SQL查询优化总结" class="headerlink" title="SQL查询优化总结"></a>SQL查询优化总结</h3><p>1、应尽量避免在 where 子句中使用!=或&lt;&gt;操作符，否则将引擎放弃使用索引而进行全表扫描。</p>
+		<h2 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h2><h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>1.Follow：<a href="https://segmentfault.com/a/1190000002485231" target="_blank" rel="external">https://segmentfault.com/a/1190000002485231</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ubuntu下，用以下这种脚本方式安装最方便，来源于sameersbn/docker-gitlab官方说明：</span><br><span class="line"></span><br><span class="line">sudo apt-get purge docker.io</span><br><span class="line">curl -s https://get.docker.io/ubuntu/ | sudo sh</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install lxc-docker --fix-missing</span><br><span class="line"></span><br><span class="line">### Docker Compose</span><br><span class="line"></span><br><span class="line">Compose 项目目前在[ Github ](https://github.com/docker/compose)上进行维护，目前最新版本是 1.2.0。</span><br><span class="line"></span><br><span class="line">Compose 定位是“defining and running complex applications with Docker”，前身是[ Fig](http://www.infoq.com/cn/articles/docker-build-development-environment-based-on-fig)，兼容 Fig 的模板文件。</span><br><span class="line">Dockerfile 可以让用户管理一个单独的应用容器；而 Compose 则允许用户在一个模板（YAML 格式）中定义一组相关联的应用容器（被称为一个 project，即项目），例如一个 Web 服务容器再加上后端的数据库服务容器等。</span><br><span class="line"></span><br><span class="line">该项目由 Python 编写，实际上调用了 Docker 提供的 API 来实现。</span><br></pre></td></tr></table></figure>
+<h2 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h2><h3 id="SQL查询优化总结"><a href="#SQL查询优化总结" class="headerlink" title="SQL查询优化总结"></a>SQL查询优化总结</h3><p>1、应尽量避免在 where 子句中使用!=或&lt;&gt;操作符，否则将引擎放弃使用索引而进行全表扫描。</p>
 <p>2、对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。</p>
 <p>3、应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，如：</p>
 <p>select id from t where num is null<br>可以在num上设置默认值0，确保表中num列没有null值，然后这样查询：</p>
@@ -146,7 +142,10 @@ select id from t w">
 <p>30、尽量避免大事务操作，提高系统并发能力。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">实战：验证以上总结。以下SQL段，可以直接放到Navicat中批量执行</span><br><span class="line"></span><br><span class="line">//已知在order表，int类型字段uid上，已存在normal类型的索引</span><br><span class="line"></span><br><span class="line">CREATE TABLE `order` (</span><br><span class="line">  `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT &apos;订单编号&apos;,</span><br><span class="line">  `uid` int(11) DEFAULT NULL COMMENT &apos;用户Id&apos;,</span><br><span class="line">  `amout` bigint(20) NOT NULL COMMENT &apos;订单金额(单位为分)&apos;,</span><br><span class="line">  `remark` varchar(50) DEFAULT &apos;&apos; COMMENT &apos;订单备注&apos;,</span><br><span class="line">  `status` tinyint(2) DEFAULT NULL COMMENT &apos;订单状态&apos;,</span><br><span class="line">  `order_time` datetime DEFAULT NULL COMMENT &apos;订单时间&apos;,</span><br><span class="line">  PRIMARY KEY (`order_id`),</span><br><span class="line">  KEY `order_uid_normal_index` (`uid`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid=185147;</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid !=185147;//不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid &gt;185147;</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid &lt;185147;</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid &gt;175147 and uid &lt;185147;</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid &lt;&gt;175147;//不等于符号导致，不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid in(185147,185148,185149);//in操作符，不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid not in(185147,185148,185149);//not in操作符，不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid between 185147 and 185149;</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid=185147 or uid=5147;//or操作符导致，不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid=185147 UNION all select * from `order` where uid=185148;</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid like &quot;%185%&quot;;//左%通配符，不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid like &quot;185%&quot;;//类型转换，不能使用索引。如果int是varchar类型则可以使用索引。</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid like &quot;%185&quot;;//左%通配符，不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid like &quot;185&quot;;//类型转换，不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where uid/2=100 ;//字段进行算术操作，不能使用索引</span><br><span class="line"></span><br><span class="line">EXPLAIN select order_id,uid,order_time from `order` where substring(uid,1,3)=&quot;abc&quot;;//字段进行函数操作，不能使用索引</span><br></pre></td></tr></table></figure>
 <h2 id="Referrence"><a href="#Referrence" class="headerlink" title="Referrence"></a>Referrence</h2><ul>
-<li><a href="http://tech.meituan.com/mysql-index.html" target="_blank" rel="external">美团点评技术团队：MySQL索引原理及慢查询优化</a></li>
+<li><p><a href="http://tech.meituan.com/mysql-index.html" target="_blank" rel="external">美团点评技术团队：MySQL索引原理及慢查询优化</a></p>
+</li>
+<li><p><a href="https://yeasy.gitbooks.io/docker_practice/content/compose/intro.html" target="_blank" rel="external">Docker —— 从入门到实践</a></p>
+</li>
 </ul>
   
 	</div>
