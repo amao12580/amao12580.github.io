@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://amao12580.github.io/"/>
-  <updated>2016-04-28T05:00:57.200Z</updated>
+  <updated>2016-04-28T05:06:58.618Z</updated>
   <id>http://amao12580.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/"/>
     <id>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</id>
     <published>2016-04-28T04:45:59.000Z</published>
-    <updated>2016-04-28T05:00:57.200Z</updated>
+    <updated>2016-04-28T05:06:58.618Z</updated>
     
     <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;本文中的配置文件，已经整理到了GitHub：&lt;a href=&quot;https://github.com/amao12580/docker&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/amao12580/docker&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文假设读者对Nginx、Docker已经有了比较深入的了解，并掌握了docker-compose工具的使用。&lt;/p&gt;
@@ -31,7 +31,7 @@
 &lt;li&gt;–with-http_realip_module        #获取真实IP模块&lt;/li&gt;
 &lt;li&gt;–with-http_sub_module           #修改原始请求URI模块&lt;/li&gt;
 &lt;li&gt;–with-http_flv_module           #对flv流媒体播放提供支持&lt;/li&gt;
-&lt;li&gt;–with-http_dav_module           #启用对[&lt;a href=&quot;https://idoseek.com/1800&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://idoseek.com/1800&lt;/a&gt; WebDav协议]的支持&lt;/li&gt;
+&lt;li&gt;–with-http_dav_module           #启用对&lt;a href=&quot;https://idoseek.com/1800&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;WebDav协议&lt;/a&gt;的支持&lt;/li&gt;
 &lt;li&gt;–with-http_gzip_static_module   #开启GZIP压缩，可以直接压缩html等静态资源。*.gz&lt;/li&gt;
 &lt;li&gt;–with-http_stub_status_module   #提供对nginx自身状态的监控功能&lt;/li&gt;
 &lt;li&gt;–with-http_addition_module      #过滤器模块， 在response数据的前/后添加文本&lt;/li&gt;
@@ -110,8 +110,7 @@
 &lt;li&gt;3.如果这时需要回退，可向原Nginx主进程发送HUP信号，它会重新启动工作进程， 仍使用旧版配置文件 。尔后可以将新版Nginx进程杀死（使用QUIT、TERM、或者KILL）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;docker kill –signal=”TERM” &lt;nginx container=&quot;&quot; name=&quot;&quot; or=&quot;&quot; id=&quot;&quot;&gt;&lt;/nginx&gt;&lt;/p&gt;
-&lt;p&gt;=== 热加载nginx.conf ===&lt;/p&gt;
-&lt;p&gt;如何热加载nginx.conf 而不需重启nginx？&lt;/p&gt;
+&lt;h2 id=&quot;热加载nginx-conf&quot;&gt;&lt;a href=&quot;#热加载nginx-conf&quot; class=&quot;headerlink&quot; title=&quot;热加载nginx.conf&quot;&gt;&lt;/a&gt;热加载nginx.conf&lt;/h2&gt;&lt;p&gt;如何热加载nginx.conf 而不需重启nginx？&lt;/p&gt;
 &lt;p&gt;docker exec -i -t &lt;nginx container=&quot;&quot; name=&quot;&quot; or=&quot;&quot; id=&quot;&quot;&gt; ./usr/local/nginx/sbin/nginx -s reload&lt;/nginx&gt;&lt;/p&gt;
 &lt;h2 id=&quot;高可用方案&quot;&gt;&lt;a href=&quot;#高可用方案&quot; class=&quot;headerlink&quot; title=&quot;高可用方案&quot;&gt;&lt;/a&gt;高可用方案&lt;/h2&gt;&lt;p&gt;使用Keepalived在多个nginx节点之间做互为主备配置，配置略过。&lt;/p&gt;
 &lt;h2 id=&quot;负载均衡&quot;&gt;&lt;a href=&quot;#负载均衡&quot; class=&quot;headerlink&quot; title=&quot;负载均衡&quot;&gt;&lt;/a&gt;负载均衡&lt;/h2&gt;&lt;p&gt;对后端tomcat的负载均衡，使用upstream，配置权重和max_fails等参数即可&lt;/p&gt;
