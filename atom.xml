@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://amao12580.github.io/"/>
-  <updated>2016-04-28T04:52:45.005Z</updated>
+  <updated>2016-04-28T05:00:57.200Z</updated>
   <id>http://amao12580.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/"/>
     <id>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</id>
     <published>2016-04-28T04:45:59.000Z</published>
-    <updated>2016-04-28T04:52:45.005Z</updated>
+    <updated>2016-04-28T05:00:57.200Z</updated>
     
     <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;本文中的配置文件，已经整理到了GitHub：&lt;a href=&quot;https://github.com/amao12580/docker&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/amao12580/docker&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文假设读者对Nginx、Docker已经有了比较深入的了解，并掌握了docker-compose工具的使用。&lt;/p&gt;
@@ -136,7 +136,7 @@
     
     <summary type="html">
     
-      Docker容器的出现，为应用运行环境一致性带来了很好的解决方案。同时也带来了远比虚拟机更好的体验，提供资源隔离(Linux namespace)和资源分配(Linux control group)的功能、应用可扩展性的功能，但是更加轻量级的运行。为了解决多容器的依赖性和互相调用，提供了docker-compose等工具进行容器编排。
+      Nginx在三高方面的的概览，以及解答如何更好的在Docker容器中使用Nginx。
     
     </summary>
     
