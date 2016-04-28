@@ -1,0 +1,756 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Nginx与Docker容器系列 &lt;02:在生产环境的实践&gt; | Cat&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Steven Cheng">
+    
+
+    
+    <meta name="description" content="Docker容器的出现，为应用运行环境一致性带来了很好的解决方案。同时也带来了远比虚拟机更好的体验，提供资源隔离(Linux namespace)和资源分配(Linux control group)的功能、应用可扩展性的功能，但是更加轻量级的运行。为了解决多容器的依赖性和互相调用，提供了docker-compose等工具进行容器编排。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx与Docker容器系列 <02:在生产环境的实践>">
+<meta property="og:url" content="http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/index.html">
+<meta property="og:site_name" content="Cat's Blog">
+<meta property="og:description" content="Docker容器的出现，为应用运行环境一致性带来了很好的解决方案。同时也带来了远比虚拟机更好的体验，提供资源隔离(Linux namespace)和资源分配(Linux control group)的功能、应用可扩展性的功能，但是更加轻量级的运行。为了解决多容器的依赖性和互相调用，提供了docker-compose等工具进行容器编排。">
+<meta property="og:updated_time" content="2016-04-28T04:52:45.005Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx与Docker容器系列 <02:在生产环境的实践>">
+<meta name="twitter:description" content="Docker容器的出现，为应用运行环境一致性带来了很好的解决方案。同时也带来了远比虚拟机更好的体验，提供资源隔离(Linux namespace)和资源分配(Linux control group)的功能、应用可扩展性的功能，但是更加轻量级的运行。为了解决多容器的依赖性和互相调用，提供了docker-compose等工具进行容器编排。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Cat&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Cat&#39;s Blog" title="Cat&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Cat&#39;s Blog">Cat&#39;s Blog</a></h1>
+				<h2 class="blog-motto">一饮一啄，莫非前定.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页 | Home</a></li>
+					
+						<li><a href="/index">索引 | Index</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">简介 | About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="https://www.google.com.hk/search" method="get" accept-charset="utf-8" target="_blank">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:amao12580.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/post/2016/04/Nginx-with-docker-part-two/" title="Nginx与Docker容器系列 &lt;02:在生产环境的实践&gt;" itemprop="url">Nginx与Docker容器系列 &lt;02:在生产环境的实践&gt;</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Steven Cheng" target="_blank" itemprop="author">Steven Cheng</a>
+		
+  <p class="article-time">
+  <time datetime="2016-04-28T04:45:59.000Z" itemprop="datePublished"> 发表于 2016-04-28 12:45:59.000</time>
+  <time postupdated="2016-04-28T04:52:45.005Z" itemprop="dateModified"> 更新于 2016-04-28 12:52:45.005</time>
+</p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#高性能"><span class="toc-number">1.1.</span> <span class="toc-text">高性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可扩展"><span class="toc-number">1.2.</span> <span class="toc-text">可扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关内容"><span class="toc-number">1.2.1.</span> <span class="toc-text">相关内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动静分离"><span class="toc-number">1.3.</span> <span class="toc-text">动静分离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后端版本热升级"><span class="toc-number">1.4.</span> <span class="toc-text">后端版本热升级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#兼容式热升级"><span class="toc-number">1.4.1.</span> <span class="toc-text">兼容式热升级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非兼容式热升级"><span class="toc-number">1.4.2.</span> <span class="toc-text">非兼容式热升级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自身热升级"><span class="toc-number">1.5.</span> <span class="toc-text">自身热升级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高可用方案"><span class="toc-number">1.6.</span> <span class="toc-text">高可用方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#负载均衡"><span class="toc-number">1.7.</span> <span class="toc-text">负载均衡</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设定负载均衡方式：RR模式"><span class="toc-number">2.</span> <span class="toc-text">设定负载均衡方式：RR模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对后端的健康管理"><span class="toc-number">2.1.</span> <span class="toc-text">对后端的健康管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自身的运行监控"><span class="toc-number">2.2.</span> <span class="toc-text">自身的运行监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">2.3.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文中的配置文件，已经整理到了GitHub：<a href="https://github.com/amao12580/docker" target="_blank" rel="external">https://github.com/amao12580/docker</a></p>
+<p>本文假设读者对Nginx、Docker已经有了比较深入的了解，并掌握了docker-compose工具的使用。</p>
+<h2 id="高性能"><a href="#高性能" class="headerlink" title="高性能"></a>高性能</h2><p>Nginx是一款面向性能设计的HTTP服务器，相较于Apache、lighttpd具有占有内存少，稳定性高等优势。与旧版本（&lt;=2.2）的Apache不同，nginx不采用每客户机一线程的设计模型，而是充分使用异步逻辑，削减了上下文调度开销，所以并发服务能力更强。整体采用模块化设计，有丰富的模块库和第三方模块库，配置灵活。 在Linux操作系统下，nginx使用epoll事件模型，得益于此，nginx在Linux操作系统下效率相当高。同时Nginx在OpenBSD或FreeBSD操作系统上采用类似于epoll的高效事件模型kqueue。nginx同时是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx 已经因为它的稳定性、丰富的功能集、示例配置文件和低系统资源的消耗而闻名了。</p>
+<h2 id="可扩展"><a href="#可扩展" class="headerlink" title="可扩展"></a>可扩展</h2><p>Nginx属于典型的微内核设计，其内核非常简洁和优雅，同时具有非常高的可扩展性。</p>
+<p>Nginx是纯C语言的实现，其可扩展性在于其模块化的设计。目前，Nginx已经有很多的第三方模块，大大扩展了自身的功能。nginx_lua_module可以将Lua语言嵌入到Nginx配置中，从而利用Lua极大增强了Nginx本身的编程能力，甚至可以不用配合其它脚本语言（如PHP或Python等），只靠Nginx本身就可以实现复杂业务的处理。</p>
+<ul>
+<li>–with-http_realip_module        #获取真实IP模块</li>
+<li>–with-http_sub_module           #修改原始请求URI模块</li>
+<li>–with-http_flv_module           #对flv流媒体播放提供支持</li>
+<li>–with-http_dav_module           #启用对[<a href="https://idoseek.com/1800" target="_blank" rel="external">https://idoseek.com/1800</a> WebDav协议]的支持</li>
+<li>–with-http_gzip_static_module   #开启GZIP压缩，可以直接压缩html等静态资源。*.gz</li>
+<li>–with-http_stub_status_module   #提供对nginx自身状态的监控功能</li>
+<li>–with-http_addition_module      #过滤器模块， 在response数据的前/后添加文本</li>
+<li>–with-pcre=                     #正则表达式解析支持，支持Rewrite重写规则</li>
+<li>–with-openssl=                  #(part 1) HTTPS访问支持，需同时配合公钥和CA证书</li>
+<li>–with-http_ssl_module           #(part 2) HTTPS访问支持，需同时配合公钥和CA证书</li>
+<li>–with-zlib=                     #gzip模块需要 zlib 库</li>
+<li>–add-module=/patch/nginx_upstream_check_module   #对后端服务器提供主动健康检查，自动failover</li>
+</ul>
+<p>这些模块，都是基于nginx源码编译安装并显式配置，才会生效，这要求我们的docker FROM镜像，需要支持C编译器环境。</p>
+<h3 id="相关内容"><a href="#相关内容" class="headerlink" title="相关内容"></a>相关内容</h3><p>OpenResty 的目标是让你的Web服务直接跑在 Nginx 服务内部，充分利用 Nginx 的非阻塞 I/O 模型，不仅仅对 HTTP 客户端请求,甚至于对远程后端诸如 MySQL、PostgreSQL、Memcached 以及 Redis 等都进行一致的高性能响应。</p>
+<p>Example:利用OpenResty的可编程特性，结合Redis，实现实时统计网站的PV、UV的功能，非常的简单。</p>
+<p>不局限于Redis等,甚至于Kafka也可以，只要SDK提供对Lua语言的支持即可，简直是运维的春天</p>
+<h2 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h2><p>动静分离，是指响应内容的动与静，分为动态计算的响应内容与静态不变的响应内容。如订单总数量计算是一个动态的，而网页logo图片是一个静态的。前者一般需要访问应用服务器，由程序来计算，而后者一般只需要nginx自身来处理。</p>
+<p>利用nginx提供的静态资源压缩传输、静态资源内存级缓存，我们可以将html文件、css文件、js文件等资源直接放在nginx所在的主机硬盘中，由nginx代理这些文件的get操作。</p>
+<p>受nginx代理的静态资源文件，应该具备如下特征：1.文件内容几乎不变化，如注册用户使用协议html，2.文件体积小，减轻压缩时对cpu的波动，以及缓存在内存的资源占用，3.文件属于热访问文件，比如Angular框架下的js文件。</p>
+<p>多个nginx节点，可以共享这些静态文件，利用网络磁盘共享技术，甚至可以在部署在多个物理机的nginx节点下进行共享。</p>
+<p>我们将可以直接将所有静态资源，按类型，放到文件夹：nginx/html/或nginx/static/下，这是立即生效的，不需要重启nginx。</p>
+<h2 id="后端版本热升级"><a href="#后端版本热升级" class="headerlink" title="后端版本热升级"></a>后端版本热升级</h2><h3 id="兼容式热升级"><a href="#兼容式热升级" class="headerlink" title="兼容式热升级"></a>兼容式热升级</h3><p>对于nginx后端部署的应用程序，需要进行版本升级时，我们可以这样做。</p>
+<ul>
+<li><p>1.前提假定</p>
+</li>
+<li><p>1.1假设应用程序的新版本接口，是100%兼容旧版本的，即任何旧版本客户端在调用旧版本应用程序与新版本应用程序是无区别的，包括请求内容和响应内容。</p>
+</li>
+<li><p>1.2假设nginx.conf中，upstream段，定义了3个tomcat服务器（A\B\C）。此时2个tomcat服务器运行着同一版本（即旧版本）的应用程序。</p>
+</li>
+</ul>
+<ul>
+<li><p>2.升级步骤</p>
+</li>
+<li><p>2.1选择在系统平峰期进行，避免流量冲击。</p>
+</li>
+<li><p>2.2正常关闭A tomcat，在合理配置nginx的前提下，nginx监测到A机crash，此时会将流量转移到B\C。若使用平均流量权重，此时若B\C 2个机器的流量会各升高50%。</p>
+</li>
+<li><p>2.3执行A tomcat的升级。</p>
+</li>
+<li><p>2.4启动A tomcat，nginx监测到A机up，会将流量重新分配，此时各节点的流量恢复正常态。</p>
+</li>
+<li><p>2.5依照以上步骤，再升级B\C节点。</p>
+</li>
+</ul>
+<p>整个过程不需要重启nginx，这意味着对外服务不需要中断。新版本可能存在不稳定，需要回退到旧版本，也是类似与以上步骤执行。</p>
+<h3 id="非兼容式热升级"><a href="#非兼容式热升级" class="headerlink" title="非兼容式热升级"></a>非兼容式热升级</h3><p>非兼容式升级，是指新版本应用程序，对客户端的版本的要求比旧版本应用程序要高。例如客户端版本为1.0，旧版本应用程序为1.5，新版本应用程序为1.6。假定1.6版本对1.0版本的客户端不再提供支持，而1.5版本是可以支持1.0版本的客户端的。<br>而1.5与1.6版本的客户端访问入口，都在同一个nginx的同一个端口。</p>
+<ul>
+<li><p>1.避免同时支持多个版本的客户端，需要有客户端强制升级的方案。</p>
+</li>
+<li><p>2.客户端与应用程序通讯，需要定义一个客户端当前版本号，且该数据需要支持被nginx解析到。</p>
+</li>
+<li><p>3.修改nginx配置，定义2个server节点，每个节点按照不同客户端版本路由到对应的后端应用程序中，即有一个客户端版本与后端应用程序版本的对照表。</p>
+</li>
+<li><p>4.nginx做一下热加载nginx.conf，在下文中有提及。</p>
+</li>
+</ul>
+<p>这种方案对于后端应用程序开发最为友好，只需要有不同分支版本进行并行维护即可，比如tag/V1.5/code、tag/V1.6/code，2个版本公有的bug修复时，需要做一个互相merge.</p>
+<h2 id="自身热升级"><a href="#自身热升级" class="headerlink" title="自身热升级"></a>自身热升级</h2><p>Nginx自身的热升级，是指对Nginx进行模块维护或版本维护。</p>
+<p>Nginx主进程在启动完成后会进入等待状态，负责响应各类系统消息，如SIGCHLD、SIGHUP、SIGUSR2等。</p>
+<ul>
+<li>TERM, INT: 立刻退出</li>
+<li>QUIT: 等待工作进程结束后再退出</li>
+<li>KILL: 强制终止进程</li>
+<li>HUP: 重新加载配置文件，使用新的配置启动工作进程，并逐步关闭旧进程。</li>
+<li>USR1: 重新打开日志文件</li>
+<li>USR2: 启动新的主进程，实现热升级</li>
+<li>WINCH: 逐步关闭工作进程</li>
+</ul>
+<p>在docker容器内热升级nginx的步骤：</p>
+<ul>
+<li>1.向主进程发送USR2信号，Nginx会启动一个新版本的master进程和工作进程，和旧版一起处理请求</li>
+</ul>
+<p>docker kill –signal=”USR2” <nginx container="" name="" or="" id=""></nginx></p>
+<ul>
+<li>2.向原Nginx主进程发送WINCH信号，它会逐步关闭旗下的工作进程（主进程不退出），这时所有请求都会由新版Nginx处理</li>
+</ul>
+<p>docker kill –signal=”WINCH” <nginx container="" name="" or="" id=""></nginx></p>
+<ul>
+<li>3.如果这时需要回退，可向原Nginx主进程发送HUP信号，它会重新启动工作进程， 仍使用旧版配置文件 。尔后可以将新版Nginx进程杀死（使用QUIT、TERM、或者KILL）</li>
+</ul>
+<p>docker kill –signal=”TERM” <nginx container="" name="" or="" id=""></nginx></p>
+<p>=== 热加载nginx.conf ===</p>
+<p>如何热加载nginx.conf 而不需重启nginx？</p>
+<p>docker exec -i -t <nginx container="" name="" or="" id=""> ./usr/local/nginx/sbin/nginx -s reload</nginx></p>
+<h2 id="高可用方案"><a href="#高可用方案" class="headerlink" title="高可用方案"></a>高可用方案</h2><p>使用Keepalived在多个nginx节点之间做互为主备配置，配置略过。</p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>对后端tomcat的负载均衡，使用upstream，配置权重和max_fails等参数即可</p>
+<h1 id="设定负载均衡方式：RR模式"><a href="#设定负载均衡方式：RR模式" class="headerlink" title="设定负载均衡方式：RR模式"></a>设定负载均衡方式：RR模式</h1><pre><code>upstream  xws  {
+    server 192.168.1.188:6080 weight=1 max_fails=5 fail_timeout=10s ;
+    server 192.168.1.188:7080 weight=1 max_fails=5 fail_timeout=10s ;
+    check interval=3000 rise=2 fall=5 timeout=1000 type=http;
+}
+</code></pre><h2 id="对后端的健康管理"><a href="#对后端的健康管理" class="headerlink" title="对后端的健康管理"></a>对后端的健康管理</h2><p>使用nginx_upstream_check_module功能增强补丁</p>
+<p>配置location,开放后端tomcat的健康状况访问。</p>
+<p><a href="http://192.168.2.200/xw_TomcatStatus/" target="_blank" rel="external">http://192.168.2.200/xw_TomcatStatus/</a></p>
+<h2 id="自身的运行监控"><a href="#自身的运行监控" class="headerlink" title="自身的运行监控"></a>自身的运行监控</h2><p>监控Nginx：<a href="http://192.168.2.200/xw_NginxStatus/" target="_blank" rel="external">http://192.168.2.200/xw_NginxStatus/</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><p>软件架构模式：<a href="http://colobu.com/2015/04/08/software-architecture-patterns/" target="_blank" rel="external">http://colobu.com/2015/04/08/software-architecture-patterns/</a></p>
+</li>
+<li><p>Nginx简介：<a href="http://www.rowkey.me/blog/2014/08/27/nginx-loabbalance/" target="_blank" rel="external">http://www.rowkey.me/blog/2014/08/27/nginx-loabbalance/</a></p>
+</li>
+<li><p>OpenResty + Redis 实时计算统计Web服务的UV &amp; PV ：<a href="http://www.wtoutiao.com/p/109IT70.html" target="_blank" rel="external">http://www.wtoutiao.com/p/109IT70.html</a></p>
+</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Record/">Record</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Nginx/">Nginx</a><a href="/tags/Docker/">Docker</a><a href="/tags/Patch/">Patch</a><a href="/tags/Keepalived/">Keepalived</a><a href="/tags/MicroKernel/">MicroKernel</a><a href="/tags/Failover/">Failover</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/" data-title="Nginx与Docker容器系列 &lt;02:在生产环境的实践&gt; | Cat&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/post/2016/04/Nginx-with-docker-part-one/"  title="Nginx与Docker容器系列 &lt;01:进行编译安装&gt;">
+ <strong>下一篇：</strong><br/> 
+ <span>Nginx与Docker容器系列 &lt;01:进行编译安装&gt;
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="post/2016/04/Nginx-with-docker-part-two/" data-title="Nginx与Docker容器系列 <02:在生产环境的实践>" data-url="http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#高性能"><span class="toc-number">1.1.</span> <span class="toc-text">高性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可扩展"><span class="toc-number">1.2.</span> <span class="toc-text">可扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关内容"><span class="toc-number">1.2.1.</span> <span class="toc-text">相关内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动静分离"><span class="toc-number">1.3.</span> <span class="toc-text">动静分离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后端版本热升级"><span class="toc-number">1.4.</span> <span class="toc-text">后端版本热升级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#兼容式热升级"><span class="toc-number">1.4.1.</span> <span class="toc-text">兼容式热升级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非兼容式热升级"><span class="toc-number">1.4.2.</span> <span class="toc-text">非兼容式热升级</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自身热升级"><span class="toc-number">1.5.</span> <span class="toc-text">自身热升级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高可用方案"><span class="toc-number">1.6.</span> <span class="toc-text">高可用方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#负载均衡"><span class="toc-number">1.7.</span> <span class="toc-text">负载均衡</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设定负载均衡方式：RR模式"><span class="toc-number">2.</span> <span class="toc-text">设定负载均衡方式：RR模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对后端的健康管理"><span class="toc-number">2.1.</span> <span class="toc-text">对后端的健康管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自身的运行监控"><span class="toc-number">2.2.</span> <span class="toc-text">自身的运行监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">2.3.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="amao12580" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Learning/" title="Learning">Learning<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Record/" title="Record">Record<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Tutorial/" title="Tutorial">Tutorial<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Docker/" title="Docker">Docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Patch/" title="Patch">Patch<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Load-balance/" title="Load balance">Load balance<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Redis/" title="Redis">Redis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ARM/" title="ARM">ARM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ORM/" title="ORM">ORM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Sharding/" title="Sharding">Sharding<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tomcat/" title="Tomcat">Tomcat<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Twemproxy/" title="Twemproxy">Twemproxy<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SSL/" title="SSL">SSL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hash/" title="Hash">Hash<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GitHub/" title="GitHub">GitHub<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tech/" title="Tech">Tech<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Elegant/" title="Elegant">Elegant<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Alpine/" title="Alpine">Alpine<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://segmentfault.com/blogs" target="_blank" title="专注高效地解决技术问题。内容质量的投票机制，合理区分答案与回馈信息，用户参与改进的维基化内容，帮你快捷地找到答案。">SegmentFault</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.jobbole.com/" target="_blank" title="伯乐在线">伯乐在线</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cnpolitics.org/" target="_blank" title="政见">政见</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dajia.qq.com/" target="_blank" title="大家">大家</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://imququ.com/" target="_blank" title="JerryQu 的小站">JerryQu 的小站</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m steven. This is my blog on GitHub. <br/>
+			Whenever you feel like criticizing any one, just remember that all the people in this world haven’t had the advantages that you’ve had.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/3201133445" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/amao12580" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:chengliangchengliang888@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		© 2016
+		
+		<a href="/about" target="_blank" title="Steven Cheng">Steven Cheng</a>
+		
+
+		<!-- 不蒜子统计 -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+本站总访问量<span id="busuanzi_value_site_pv"></span>,本站访客数<span id="busuanzi_value_site_uv"></span>，本文总阅读量<span id="busuanzi_value_page_pv"></span>
+</span>
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"amao12580"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-75497011-1', 'http://amao12580.github.io');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
