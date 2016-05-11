@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/index.html">
 <meta property="og:site_name" content="Cat's Blog">
 <meta property="og:description" content="Nginx在三高方面的的概览，以及解答如何更好的在Docker容器中使用Nginx。">
-<meta property="og:updated_time" content="2016-04-28T05:07:48.358Z">
+<meta property="og:updated_time" content="2016-05-11T04:53:05.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx与Docker容器系列 <02:在生产环境的实践>">
 <meta name="twitter:description" content="Nginx在三高方面的的概览，以及解答如何更好的在Docker容器中使用Nginx。">
@@ -90,7 +90,7 @@
 		
   <p class="article-time">
   <time datetime="2016-04-28T04:45:59.000Z" itemprop="datePublished"> 发表于 2016-04-28 12:45:59.000</time>
-  <time postupdated="2016-04-28T05:07:48.358Z" itemprop="dateModified"> 更新于 2016-04-28 13:07:48.358</time>
+  <time postupdated="2016-05-11T04:53:05.122Z" itemprop="dateModified"> 更新于 2016-05-11 12:53:05.122</time>
 </p>
 </header>
 	<div class="article-content">
@@ -190,7 +190,7 @@
 <li>3.如果这时需要回退，可向原Nginx主进程发送HUP信号，它会重新启动工作进程， 仍使用旧版配置文件 。尔后可以将新版Nginx进程杀死（使用QUIT、TERM、或者KILL）</li>
 </ul>
 <p>docker kill –signal=”TERM” <nginx container="" name="" or="" id=""></nginx></p>
-<h2 id="热加载nginx-conf"><a href="#热加载nginx-conf" class="headerlink" title="热加载nginx.conf"></a>热加载nginx.conf</h2><p>如何热加载nginx.conf 而不需重启nginx？</p>
+<h2 id="热加载nginx-conf"><a href="#热加载nginx-conf" class="headerlink" title="热加载nginx.conf"></a>热加载nginx.conf</h2><p>我们知道在upstream定义的tomcat节点，是属于文件性配置，如果需要上线新加节点，需要修改nginx.conf，然后需要重启Nginx读取新配置。如何热加载nginx.conf 而不需重启nginx？</p>
 <p>docker exec -i -t <nginx container="" name="" or="" id=""> ./usr/local/nginx/sbin/nginx -s reload</nginx></p>
 <h2 id="高可用方案"><a href="#高可用方案" class="headerlink" title="高可用方案"></a>高可用方案</h2><p>使用Keepalived在多个nginx节点之间做互为主备配置，配置略过。</p>
 <h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>对后端tomcat的负载均衡，使用upstream，配置权重和max_fails等参数即可</p>
@@ -246,6 +246,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/post/2016/05/Code-architecture-specification/" title="代码架构规范">
+  <strong>上一篇：</strong><br/>
+  <span>
+  代码架构规范</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/post/2016/04/Nginx-with-docker-part-one/"  title="Nginx与Docker容器系列 &lt;01:进行编译安装&gt;">
@@ -301,6 +309,10 @@
 		  
 		
 		  
+			<li><a href="/categories/Summary/" title="Summary">Summary<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/Tutorial/" title="Tutorial">Tutorial<sup>1</sup></a></li>
 		  
 		
@@ -330,7 +342,7 @@
 			
 		
 			
-				<li><a href="/tags/Load-balance/" title="Load balance">Load balance<sup>1</sup></a></li>
+				<li><a href="/tags/GitHub/" title="GitHub">GitHub<sup>1</sup></a></li>
 			
 		
 			
@@ -362,11 +374,11 @@
 			
 		
 			
-				<li><a href="/tags/Hash/" title="Hash">Hash<sup>1</sup></a></li>
+				<li><a href="/tags/Load-balance/" title="Load balance">Load balance<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/GitHub/" title="GitHub">GitHub<sup>1</sup></a></li>
+				<li><a href="/tags/Hash/" title="Hash">Hash<sup>1</sup></a></li>
 			
 		
 			
@@ -460,7 +472,7 @@
 	
 	<section class="info">
 		<p> Hello ,I&#39;m steven. This is my blog on GitHub. <br/>
-			Whenever you feel like criticizing any one, just remember that all the people in this world haven’t had the advantages that you’ve had.</p>
+			Talk is cheap，show me the code.</p>
 	</section>
 	 
 	<div class="social-font" class="clearfix">

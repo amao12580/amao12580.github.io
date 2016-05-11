@@ -3,28 +3,23 @@
 
 
     
+    
   <url>
-    <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</loc>
-    <lastmod>2016-04-29T11:21:33.062Z</lastmod>
+    <loc>http://amao12580.github.io/post/2016/05/Code-architecture-specification/</loc>
+    <lastmod>2016-05-11T11:24:49.012Z</lastmod>
     <data>
         <display>
-        <title>Nginx与Docker容器系列 <01:进行编译安装></title>
-        <pubTime>2016-04-27T02:47:59.000Z</pubTime>
+        <title>代码架构规范</title>
+        <pubTime>2016-05-11T10:38:31.000Z</pubTime>
         
-        <tag>Nginx</tag>
+        <tag>Architecture</tag>
          
-        <tag>Docker</tag>
-         
-        <tag>Alpine</tag>
-         
-        <tag>Centos</tag>
-         
-        <tag>Patch</tag>
+        <tag>Specification</tag>
          
          
            
              
-              <breadCrumb title="Record" url="http://amao12580.github.io/categories/Record/"/>
+              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
           
         </display>
     </data>
@@ -33,7 +28,7 @@
     
   <url>
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</loc>
-    <lastmod>2016-04-28T05:07:48.358Z</lastmod>
+    <lastmod>2016-05-11T04:53:05.122Z</lastmod>
     <data>
         <display>
         <title>Nginx与Docker容器系列 <02:在生产环境的实践></title>
@@ -61,6 +56,34 @@
     </url>
 
     
+    
+  <url>
+    <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</loc>
+    <lastmod>2016-05-03T02:06:30.043Z</lastmod>
+    <data>
+        <display>
+        <title>Nginx与Docker容器系列 <01:进行编译安装></title>
+        <pubTime>2016-04-27T02:47:59.000Z</pubTime>
+        
+        <tag>Nginx</tag>
+         
+        <tag>Docker</tag>
+         
+        <tag>Alpine</tag>
+         
+        <tag>Centos</tag>
+         
+        <tag>Patch</tag>
+         
+         
+           
+             
+              <breadCrumb title="Record" url="http://amao12580.github.io/categories/Record/"/>
+          
+        </display>
+    </data>
+    </url>
+
     
   <url>
     <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
@@ -141,7 +164,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</loc>

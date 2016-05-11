@@ -1,0 +1,650 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>代码架构规范 | Cat&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Steven Cheng">
+    
+
+    
+    <meta name="description" content="总结一些普适性经验.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码架构规范">
+<meta property="og:url" content="http://amao12580.github.io/post/2016/05/Code-architecture-specification/index.html">
+<meta property="og:site_name" content="Cat's Blog">
+<meta property="og:description" content="总结一些普适性经验.">
+<meta property="og:updated_time" content="2016-05-11T11:24:49.012Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码架构规范">
+<meta name="twitter:description" content="总结一些普适性经验.">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Cat&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Cat&#39;s Blog" title="Cat&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Cat&#39;s Blog">Cat&#39;s Blog</a></h1>
+				<h2 class="blog-motto">一饮一啄，莫非前定.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页 | Home</a></li>
+					
+						<li><a href="/index">索引 | Index</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">简介 | About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="https://www.google.com.hk/search" method="get" accept-charset="utf-8" target="_blank">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:amao12580.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/post/2016/05/Code-architecture-specification/" title="代码架构规范" itemprop="url">代码架构规范</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Steven Cheng" target="_blank" itemprop="author">Steven Cheng</a>
+		
+  <p class="article-time">
+  <time datetime="2016-05-11T10:38:31.000Z" itemprop="datePublished"> 发表于 2016-05-11 18:38:31.000</time>
+  <time postupdated="2016-05-11T11:24:49.012Z" itemprop="dateModified"> 更新于 2016-05-11 19:24:49.012</time>
+</p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原则"><span class="toc-number">1.</span> <span class="toc-text">原则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#命名规范"><span class="toc-number">1.1.</span> <span class="toc-text">命名规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#重要性"><span class="toc-number">1.1.1.</span> <span class="toc-text">重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何做？"><span class="toc-number">1.1.2.</span> <span class="toc-text">如何做？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合理的分层"><span class="toc-number">1.2.</span> <span class="toc-text">合理的分层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前轻后重"><span class="toc-number">1.3.</span> <span class="toc-text">前轻后重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小冗余"><span class="toc-number">1.4.</span> <span class="toc-text">最小冗余</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保持简单"><span class="toc-number">1.5.</span> <span class="toc-text">保持简单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单意味着快速"><span class="toc-number">1.5.1.</span> <span class="toc-text">简单意味着快速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单意味着灵活"><span class="toc-number">1.5.2.</span> <span class="toc-text">简单意味着灵活</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单意味着易扩展"><span class="toc-number">1.5.3.</span> <span class="toc-text">简单意味着易扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单意味着易重构"><span class="toc-number">1.5.4.</span> <span class="toc-text">简单意味着易重构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fast-fail"><span class="toc-number">1.6.</span> <span class="toc-text">Fast fail</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码即文档"><span class="toc-number">1.7.</span> <span class="toc-text">代码即文档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#合理的注释"><span class="toc-number">1.7.1.</span> <span class="toc-text">合理的注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键业务设计宣讲"><span class="toc-number">1.8.</span> <span class="toc-text">关键业务设计宣讲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小步快走"><span class="toc-number">1.9.</span> <span class="toc-text">小步快走</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#意味着版本迭代快速"><span class="toc-number">1.9.1.</span> <span class="toc-text">意味着版本迭代快速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#意味着版本迭代稳定"><span class="toc-number">1.9.2.</span> <span class="toc-text">意味着版本迭代稳定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#意味着部署回滚成本低"><span class="toc-number">1.9.3.</span> <span class="toc-text">意味着部署回滚成本低</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#技术选型"><span class="toc-number">2.</span> <span class="toc-text">技术选型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开源优先"><span class="toc-number">2.1.</span> <span class="toc-text">开源优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#稳定优先"><span class="toc-number">2.2.</span> <span class="toc-text">稳定优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#掌控度高优先"><span class="toc-number">2.3.</span> <span class="toc-text">掌控度高优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保留备选项"><span class="toc-number">2.4.</span> <span class="toc-text">保留备选项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#团队管理"><span class="toc-number">3.</span> <span class="toc-text">团队管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#保持信任"><span class="toc-number">3.1.</span> <span class="toc-text">保持信任</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保持怀疑"><span class="toc-number">3.2.</span> <span class="toc-text">保持怀疑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#持续考评"><span class="toc-number">3.3.</span> <span class="toc-text">持续考评</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分享中提高"><span class="toc-number">3.4.</span> <span class="toc-text">分享中提高</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#互相备份"><span class="toc-number">3.5.</span> <span class="toc-text">互相备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#互相支撑"><span class="toc-number">3.6.</span> <span class="toc-text">互相支撑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向上管理"><span class="toc-number">3.7.</span> <span class="toc-text">向上管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向下管理"><span class="toc-number">3.8.</span> <span class="toc-text">向下管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#了解队员的擅长与不足"><span class="toc-number">3.8.1.</span> <span class="toc-text">了解队员的擅长与不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#合理的任务分配"><span class="toc-number">3.8.2.</span> <span class="toc-text">合理的任务分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适度挑战性的任务"><span class="toc-number">3.8.3.</span> <span class="toc-text">适度挑战性的任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给出完成任务需要的资源"><span class="toc-number">3.8.4.</span> <span class="toc-text">给出完成任务需要的资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#激励中成长"><span class="toc-number">3.8.5.</span> <span class="toc-text">激励中成长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给出职业发展的机会"><span class="toc-number">3.8.6.</span> <span class="toc-text">给出职业发展的机会</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公开与公平中考评"><span class="toc-number">3.8.7.</span> <span class="toc-text">公开与公平中考评</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#接口"><span class="toc-number">4.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#版本控制"><span class="toc-number">4.1.</span> <span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流量控制"><span class="toc-number">4.2.</span> <span class="toc-text">流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审查与监控"><span class="toc-number">4.3.</span> <span class="toc-text">审查与监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#灰度发布"><span class="toc-number">4.4.</span> <span class="toc-text">灰度发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无状态"><span class="toc-number">4.5.</span> <span class="toc-text">无状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子化"><span class="toc-number">4.6.</span> <span class="toc-text">原子化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#APP"><span class="toc-number">5.</span> <span class="toc-text">APP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程控制权"><span class="toc-number">5.1.</span> <span class="toc-text">远程控制权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#展示为主"><span class="toc-number">5.2.</span> <span class="toc-text">展示为主</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#少的逻辑"><span class="toc-number">5.3.</span> <span class="toc-text">少的逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#适度安全"><span class="toc-number">5.4.</span> <span class="toc-text">适度安全</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h1><h2 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h2><h3 id="重要性"><a href="#重要性" class="headerlink" title="重要性"></a>重要性</h3><h3 id="如何做？"><a href="#如何做？" class="headerlink" title="如何做？"></a>如何做？</h3><h2 id="合理的分层"><a href="#合理的分层" class="headerlink" title="合理的分层"></a>合理的分层</h2><h2 id="前轻后重"><a href="#前轻后重" class="headerlink" title="前轻后重"></a>前轻后重</h2><h2 id="最小冗余"><a href="#最小冗余" class="headerlink" title="最小冗余"></a>最小冗余</h2><h2 id="保持简单"><a href="#保持简单" class="headerlink" title="保持简单"></a>保持简单</h2><h3 id="简单意味着快速"><a href="#简单意味着快速" class="headerlink" title="简单意味着快速"></a>简单意味着快速</h3><h3 id="简单意味着灵活"><a href="#简单意味着灵活" class="headerlink" title="简单意味着灵活"></a>简单意味着灵活</h3><h3 id="简单意味着易扩展"><a href="#简单意味着易扩展" class="headerlink" title="简单意味着易扩展"></a>简单意味着易扩展</h3><h3 id="简单意味着易重构"><a href="#简单意味着易重构" class="headerlink" title="简单意味着易重构"></a>简单意味着易重构</h3><h2 id="Fast-fail"><a href="#Fast-fail" class="headerlink" title="Fast fail"></a>Fast fail</h2><h2 id="代码即文档"><a href="#代码即文档" class="headerlink" title="代码即文档"></a>代码即文档</h2><h3 id="合理的注释"><a href="#合理的注释" class="headerlink" title="合理的注释"></a>合理的注释</h3><h2 id="关键业务设计宣讲"><a href="#关键业务设计宣讲" class="headerlink" title="关键业务设计宣讲"></a>关键业务设计宣讲</h2><h2 id="小步快走"><a href="#小步快走" class="headerlink" title="小步快走"></a>小步快走</h2><h3 id="意味着版本迭代快速"><a href="#意味着版本迭代快速" class="headerlink" title="意味着版本迭代快速"></a>意味着版本迭代快速</h3><h3 id="意味着版本迭代稳定"><a href="#意味着版本迭代稳定" class="headerlink" title="意味着版本迭代稳定"></a>意味着版本迭代稳定</h3><h3 id="意味着部署回滚成本低"><a href="#意味着部署回滚成本低" class="headerlink" title="意味着部署回滚成本低"></a>意味着部署回滚成本低</h3><h1 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h1><h2 id="开源优先"><a href="#开源优先" class="headerlink" title="开源优先"></a>开源优先</h2><h2 id="稳定优先"><a href="#稳定优先" class="headerlink" title="稳定优先"></a>稳定优先</h2><h2 id="掌控度高优先"><a href="#掌控度高优先" class="headerlink" title="掌控度高优先"></a>掌控度高优先</h2><h2 id="保留备选项"><a href="#保留备选项" class="headerlink" title="保留备选项"></a>保留备选项</h2><h1 id="团队管理"><a href="#团队管理" class="headerlink" title="团队管理"></a>团队管理</h1><h2 id="保持信任"><a href="#保持信任" class="headerlink" title="保持信任"></a>保持信任</h2><h2 id="保持怀疑"><a href="#保持怀疑" class="headerlink" title="保持怀疑"></a>保持怀疑</h2><h2 id="持续考评"><a href="#持续考评" class="headerlink" title="持续考评"></a>持续考评</h2><h2 id="分享中提高"><a href="#分享中提高" class="headerlink" title="分享中提高"></a>分享中提高</h2><h2 id="互相备份"><a href="#互相备份" class="headerlink" title="互相备份"></a>互相备份</h2><h2 id="互相支撑"><a href="#互相支撑" class="headerlink" title="互相支撑"></a>互相支撑</h2><h2 id="向上管理"><a href="#向上管理" class="headerlink" title="向上管理"></a>向上管理</h2><h2 id="向下管理"><a href="#向下管理" class="headerlink" title="向下管理"></a>向下管理</h2><h3 id="了解队员的擅长与不足"><a href="#了解队员的擅长与不足" class="headerlink" title="了解队员的擅长与不足"></a>了解队员的擅长与不足</h3><h3 id="合理的任务分配"><a href="#合理的任务分配" class="headerlink" title="合理的任务分配"></a>合理的任务分配</h3><h3 id="适度挑战性的任务"><a href="#适度挑战性的任务" class="headerlink" title="适度挑战性的任务"></a>适度挑战性的任务</h3><h3 id="给出完成任务需要的资源"><a href="#给出完成任务需要的资源" class="headerlink" title="给出完成任务需要的资源"></a>给出完成任务需要的资源</h3><h3 id="激励中成长"><a href="#激励中成长" class="headerlink" title="激励中成长"></a>激励中成长</h3><h3 id="给出职业发展的机会"><a href="#给出职业发展的机会" class="headerlink" title="给出职业发展的机会"></a>给出职业发展的机会</h3><h3 id="公开与公平中考评"><a href="#公开与公平中考评" class="headerlink" title="公开与公平中考评"></a>公开与公平中考评</h3><h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><h2 id="审查与监控"><a href="#审查与监控" class="headerlink" title="审查与监控"></a>审查与监控</h2><h2 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h2><h2 id="无状态"><a href="#无状态" class="headerlink" title="无状态"></a>无状态</h2><h2 id="原子化"><a href="#原子化" class="headerlink" title="原子化"></a>原子化</h2><h1 id="APP"><a href="#APP" class="headerlink" title="APP"></a>APP</h1><h2 id="远程控制权"><a href="#远程控制权" class="headerlink" title="远程控制权"></a>远程控制权</h2><h2 id="展示为主"><a href="#展示为主" class="headerlink" title="展示为主"></a>展示为主</h2><h2 id="少的逻辑"><a href="#少的逻辑" class="headerlink" title="少的逻辑"></a>少的逻辑</h2><h2 id="适度安全"><a href="#适度安全" class="headerlink" title="适度安全"></a>适度安全</h2>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Summary/">Summary</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Architecture/">Architecture</a><a href="/tags/Specification/">Specification</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://amao12580.github.io/post/2016/05/Code-architecture-specification/" data-title="代码架构规范 | Cat&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/post/2016/04/Nginx-with-docker-part-two/"  title="Nginx与Docker容器系列 &lt;02:在生产环境的实践&gt;">
+ <strong>下一篇：</strong><br/> 
+ <span>Nginx与Docker容器系列 &lt;02:在生产环境的实践&gt;
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="post/2016/05/Code-architecture-specification/" data-title="代码架构规范" data-url="http://amao12580.github.io/post/2016/05/Code-architecture-specification/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原则"><span class="toc-number">1.</span> <span class="toc-text">原则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#命名规范"><span class="toc-number">1.1.</span> <span class="toc-text">命名规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#重要性"><span class="toc-number">1.1.1.</span> <span class="toc-text">重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何做？"><span class="toc-number">1.1.2.</span> <span class="toc-text">如何做？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合理的分层"><span class="toc-number">1.2.</span> <span class="toc-text">合理的分层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前轻后重"><span class="toc-number">1.3.</span> <span class="toc-text">前轻后重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小冗余"><span class="toc-number">1.4.</span> <span class="toc-text">最小冗余</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保持简单"><span class="toc-number">1.5.</span> <span class="toc-text">保持简单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单意味着快速"><span class="toc-number">1.5.1.</span> <span class="toc-text">简单意味着快速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单意味着灵活"><span class="toc-number">1.5.2.</span> <span class="toc-text">简单意味着灵活</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单意味着易扩展"><span class="toc-number">1.5.3.</span> <span class="toc-text">简单意味着易扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单意味着易重构"><span class="toc-number">1.5.4.</span> <span class="toc-text">简单意味着易重构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fast-fail"><span class="toc-number">1.6.</span> <span class="toc-text">Fast fail</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码即文档"><span class="toc-number">1.7.</span> <span class="toc-text">代码即文档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#合理的注释"><span class="toc-number">1.7.1.</span> <span class="toc-text">合理的注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键业务设计宣讲"><span class="toc-number">1.8.</span> <span class="toc-text">关键业务设计宣讲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小步快走"><span class="toc-number">1.9.</span> <span class="toc-text">小步快走</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#意味着版本迭代快速"><span class="toc-number">1.9.1.</span> <span class="toc-text">意味着版本迭代快速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#意味着版本迭代稳定"><span class="toc-number">1.9.2.</span> <span class="toc-text">意味着版本迭代稳定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#意味着部署回滚成本低"><span class="toc-number">1.9.3.</span> <span class="toc-text">意味着部署回滚成本低</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#技术选型"><span class="toc-number">2.</span> <span class="toc-text">技术选型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开源优先"><span class="toc-number">2.1.</span> <span class="toc-text">开源优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#稳定优先"><span class="toc-number">2.2.</span> <span class="toc-text">稳定优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#掌控度高优先"><span class="toc-number">2.3.</span> <span class="toc-text">掌控度高优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保留备选项"><span class="toc-number">2.4.</span> <span class="toc-text">保留备选项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#团队管理"><span class="toc-number">3.</span> <span class="toc-text">团队管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#保持信任"><span class="toc-number">3.1.</span> <span class="toc-text">保持信任</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保持怀疑"><span class="toc-number">3.2.</span> <span class="toc-text">保持怀疑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#持续考评"><span class="toc-number">3.3.</span> <span class="toc-text">持续考评</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分享中提高"><span class="toc-number">3.4.</span> <span class="toc-text">分享中提高</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#互相备份"><span class="toc-number">3.5.</span> <span class="toc-text">互相备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#互相支撑"><span class="toc-number">3.6.</span> <span class="toc-text">互相支撑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向上管理"><span class="toc-number">3.7.</span> <span class="toc-text">向上管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向下管理"><span class="toc-number">3.8.</span> <span class="toc-text">向下管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#了解队员的擅长与不足"><span class="toc-number">3.8.1.</span> <span class="toc-text">了解队员的擅长与不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#合理的任务分配"><span class="toc-number">3.8.2.</span> <span class="toc-text">合理的任务分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适度挑战性的任务"><span class="toc-number">3.8.3.</span> <span class="toc-text">适度挑战性的任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给出完成任务需要的资源"><span class="toc-number">3.8.4.</span> <span class="toc-text">给出完成任务需要的资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#激励中成长"><span class="toc-number">3.8.5.</span> <span class="toc-text">激励中成长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给出职业发展的机会"><span class="toc-number">3.8.6.</span> <span class="toc-text">给出职业发展的机会</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公开与公平中考评"><span class="toc-number">3.8.7.</span> <span class="toc-text">公开与公平中考评</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#接口"><span class="toc-number">4.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#版本控制"><span class="toc-number">4.1.</span> <span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流量控制"><span class="toc-number">4.2.</span> <span class="toc-text">流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审查与监控"><span class="toc-number">4.3.</span> <span class="toc-text">审查与监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#灰度发布"><span class="toc-number">4.4.</span> <span class="toc-text">灰度发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无状态"><span class="toc-number">4.5.</span> <span class="toc-text">无状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子化"><span class="toc-number">4.6.</span> <span class="toc-text">原子化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#APP"><span class="toc-number">5.</span> <span class="toc-text">APP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程控制权"><span class="toc-number">5.1.</span> <span class="toc-text">远程控制权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#展示为主"><span class="toc-number">5.2.</span> <span class="toc-text">展示为主</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#少的逻辑"><span class="toc-number">5.3.</span> <span class="toc-text">少的逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#适度安全"><span class="toc-number">5.4.</span> <span class="toc-text">适度安全</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="amao12580" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Learning/" title="Learning">Learning<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Record/" title="Record">Record<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Summary/" title="Summary">Summary<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Tutorial/" title="Tutorial">Tutorial<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Docker/" title="Docker">Docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Patch/" title="Patch">Patch<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GitHub/" title="GitHub">GitHub<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Redis/" title="Redis">Redis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ARM/" title="ARM">ARM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ORM/" title="ORM">ORM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Sharding/" title="Sharding">Sharding<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tomcat/" title="Tomcat">Tomcat<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Twemproxy/" title="Twemproxy">Twemproxy<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SSL/" title="SSL">SSL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Load-balance/" title="Load balance">Load balance<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hash/" title="Hash">Hash<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tech/" title="Tech">Tech<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Elegant/" title="Elegant">Elegant<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Alpine/" title="Alpine">Alpine<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://segmentfault.com/blogs" target="_blank" title="专注高效地解决技术问题。内容质量的投票机制，合理区分答案与回馈信息，用户参与改进的维基化内容，帮你快捷地找到答案。">SegmentFault</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.jobbole.com/" target="_blank" title="伯乐在线">伯乐在线</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cnpolitics.org/" target="_blank" title="政见">政见</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dajia.qq.com/" target="_blank" title="大家">大家</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://imququ.com/" target="_blank" title="JerryQu 的小站">JerryQu 的小站</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m steven. This is my blog on GitHub. <br/>
+			Talk is cheap，show me the code.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/3201133445" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/amao12580" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:chengliangchengliang888@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		© 2016
+		
+		<a href="/about" target="_blank" title="Steven Cheng">Steven Cheng</a>
+		
+
+		<!-- 不蒜子统计 -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+本站总访问量<span id="busuanzi_value_site_pv"></span>,本站访客数<span id="busuanzi_value_site_uv"></span>，本文总阅读量<span id="busuanzi_value_page_pv"></span>
+</span>
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"amao12580"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-75497011-1', 'http://amao12580.github.io');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
