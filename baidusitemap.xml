@@ -3,13 +3,12 @@
 
 
     
-    
   <url>
     <loc>http://amao12580.github.io/post/2016/05/Code-architecture-specification/</loc>
-    <lastmod>2016-05-11T11:24:49.012Z</lastmod>
+    <lastmod>2016-05-13T10:30:07.284Z</lastmod>
     <data>
         <display>
-        <title>代码架构规范</title>
+        <title>架构规范总结</title>
         <pubTime>2016-05-11T10:38:31.000Z</pubTime>
         
         <tag>Architecture</tag>
@@ -25,6 +24,7 @@
     </data>
     </url>
 
+    
     
   <url>
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</loc>
@@ -190,7 +190,7 @@
 
     
   <url>
-    <loc>http://amao12580.github.io/post/2016/04/a-new-start/</loc>
+    <loc>http://amao12580.github.io/post/2016/04/A-new-start/</loc>
     <lastmod>2016-03-28T06:35:32.547Z</lastmod>
     <data>
         <display>
