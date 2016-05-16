@@ -3,6 +3,9 @@
 
 
     
+    
+    
+    
   <url>
     <loc>http://amao12580.github.io/post/2016/05/Code-architecture-specification/</loc>
     <lastmod>2016-05-13T10:30:07.284Z</lastmod>
@@ -24,7 +27,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</loc>
@@ -67,9 +69,9 @@
         
         <tag>Nginx</tag>
          
-        <tag>Docker</tag>
-         
         <tag>Alpine</tag>
+         
+        <tag>Docker</tag>
          
         <tag>Centos</tag>
          
@@ -121,9 +123,9 @@
         
         <tag>Nginx</tag>
          
-        <tag>Tomcat</tag>
-         
         <tag>Docker</tag>
+         
+        <tag>Tomcat</tag>
          
         <tag>SSL</tag>
          

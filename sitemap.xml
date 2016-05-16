@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/05/Code-architecture-specification/</loc>
+    <loc>http://amao12580.github.io/about/index.html</loc>
     
-    <lastmod>2016-05-13T10:30:07.284Z</lastmod>
+    <lastmod>2016-05-16T04:04:27.934Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/about/index.html</loc>
+    <loc>http://amao12580.github.io/categories/index.html</loc>
     
-    <lastmod>2016-05-13T10:28:50.956Z</lastmod>
+    <lastmod>2016-05-16T02:23:12.793Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/tags/index.html</loc>
+    
+    <lastmod>2016-05-16T02:18:37.835Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/Code-architecture-specification/</loc>
+    
+    <lastmod>2016-05-13T10:30:07.284Z</lastmod>
     
   </url>
   
