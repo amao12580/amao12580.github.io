@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
+    
+    <lastmod>2016-06-07T03:41:42.060Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/05/How-to-better-manage-the-technical-team/</loc>
     
-    <lastmod>2016-06-06T10:52:46.981Z</lastmod>
+    <lastmod>2016-06-07T02:58:01.422Z</lastmod>
     
   </url>
   
@@ -47,13 +54,6 @@
     <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
     
     <lastmod>2016-06-01T09:18:38.301Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    
-    <lastmod>2016-06-01T07:39:32.688Z</lastmod>
     
   </url>
   
