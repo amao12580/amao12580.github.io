@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
+    
+    <lastmod>2016-06-15T02:50:22.580Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
     
-    <lastmod>2016-06-13T02:20:29.515Z</lastmod>
+    <lastmod>2016-06-13T06:01:50.058Z</lastmod>
     
   </url>
   
@@ -26,13 +33,6 @@
     <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
     
     <lastmod>2016-06-12T02:25:04.330Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    
-    <lastmod>2016-06-07T03:41:42.060Z</lastmod>
     
   </url>
   
