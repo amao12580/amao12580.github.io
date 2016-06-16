@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/index/index.html</loc>
+    
+    <lastmod>2016-06-16T08:19:25.397Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
     
     <lastmod>2016-06-16T02:14:07.784Z</lastmod>
@@ -89,13 +96,6 @@
     <loc>http://amao12580.github.io/tags/index.html</loc>
     
     <lastmod>2016-05-17T07:42:01.384Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/index/index.html</loc>
-    
-    <lastmod>2016-05-17T07:41:54.280Z</lastmod>
     
   </url>
   
