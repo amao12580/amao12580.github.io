@@ -177,7 +177,7 @@
     <link href="http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/"/>
     <id>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</id>
     <published>2016-05-17T07:24:39.000Z</published>
-    <updated>2016-06-15T09:57:46.478Z</updated>
+    <updated>2016-06-16T02:14:07.784Z</updated>
     
     <content type="html">&lt;p&gt;结合小旺项目的重构经历来分析&lt;/p&gt;
 &lt;h1 id=&quot;小旺项目：5月份重构方案&quot;&gt;&lt;a href=&quot;#小旺项目：5月份重构方案&quot; class=&quot;headerlink&quot; title=&quot;小旺项目：5月份重构方案&quot;&gt;&lt;/a&gt;小旺项目：5月份重构方案&lt;/h1&gt;&lt;h2 id=&quot;转店-找店-拆表&quot;&gt;&lt;a href=&quot;#转店-找店-拆表&quot; class=&quot;headerlink&quot; title=&quot;转店/找店 拆表&quot;&gt;&lt;/a&gt;转店/找店 拆表&lt;/h2&gt;&lt;p&gt;参考：转店需求：transfer_requirement，字段requirement_id。转化为Service表的id。&lt;/p&gt;
