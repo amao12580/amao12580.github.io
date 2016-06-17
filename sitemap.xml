@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
+    
+    <lastmod>2016-06-17T05:34:12.274Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/index/index.html</loc>
     
     <lastmod>2016-06-16T08:19:25.397Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
     
     <lastmod>2016-06-16T02:14:07.784Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
-    
-    <lastmod>2016-06-15T08:58:27.395Z</lastmod>
     
   </url>
   
