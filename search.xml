@@ -59,11 +59,12 @@
 <p>Phantom Reads：<br>事务在操作过程中进行两次查询，第二次查询的结果包含了第一次查询中未出现的数据（这里并不要求两次查询的SQL语句相同）。这是因为在两次查询过程中有另外一个事务插入数据造成的。</p>
 <h4 id="原子性（Atomicity）"><a href="#原子性（Atomicity）" class="headerlink" title="原子性（Atomicity）"></a>原子性（Atomicity）</h4><p>不可拆分，组成事务的系列操作是一个整体，要么全执行，要么不执行，不允许部分执行。通过上面例子就是从 A 同学扣除钱和向 B 同学增加 100 是一起发生的，不可能出现扣除了 A 的钱，但没增加 B 的钱的情况。</p>
 <h4 id="一致性（Consistency）"><a href="#一致性（Consistency）" class="headerlink" title="一致性（Consistency）"></a>一致性（Consistency）</h4><p>一致性指的是语义上的一致性，即业务逻辑层面的一致。在事务开始之前和事务结束以后，数据库的完整性和状态没有被破坏，而在事务执行阶段，一致性是会被破坏的。这个怎么理解呢？就是 A、B 两人在转账钱的总和是 2,000，转账后两人的总和也必须是 2,000。不会因为这次转账事务破坏这个状态。如果帐户A上的钱减少了，而帐户B上的钱却没有增加(如在执行步骤3时失败)，那么我们认为此时数据处于不一致的状态。</p>
-<p>在事务处理的ACID属性中，一致性是最基本的属性，其它的三个属性都为了保证一致性而存在的。</p>
+<p>在事务处理的ACID属性中，一致性是最基本的属性，其它的三个属性都为了保证一致性而存在的。MySQL数据库innodb的事务，是通过redo log（innodb log)，undo log，锁机制，来维护这个一致性的。</p>
 <h4 id="隔离性（Isolation）"><a href="#隔离性（Isolation）" class="headerlink" title="隔离性（Isolation）"></a>隔离性（Isolation）</h4><p>多个事务在并发执行时，事务执行的中间状态是其他事务不可访问的。A 转出 100 但事务没有确认提交，这时候银行人员对其账号查询时，看到的应该还是 1,000，不是 900。</p>
 <h4 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h4><p>事务一旦提交生效，其结果将永久保存，不受任何故障影响。A 转账一但完成，那么 A 就是 900，B 就是 1,100，这个结果将永远保存在银行的数据库中，直到他们下次交易事务的发生。</p>
+<p>MySQL Innodb引擎采用 WAL（Write-Ahead Log）方式写入redo log，WAL通俗点说就是说在事务所有修改提交前需要将其对应的操作日志写入磁盘文件，以便出现意外可以恢复（所以redo log也叫做重放日志）,这样就达到了持久性的要求。此外鼎鼎大名的MongoDB（WiredTiger存储引擎）、SQLite也采用了WAL机制。</p>
+<p>为了减少日志刷盘造成写 IO，对日志刷盘操作做了大量的优化，MySQL使用组提交（Checkpoint机制）的刷盘方式来提高性能。</p>
 <p>redo log，undo log，WAL(write ahead log) and Checkpoint。</p>
-<p>MySQL数据库innodb的事务，是通过redo log（innodb log)，undo log，锁机制，来维护这个一致性的。</p>
 <h3 id="逻辑事务-VS-物理事务"><a href="#逻辑事务-VS-物理事务" class="headerlink" title="逻辑事务 VS 物理事务"></a>逻辑事务 VS 物理事务</h3><h3 id="编程式事务-VS-声明式事务"><a href="#编程式事务-VS-声明式事务" class="headerlink" title="编程式事务 VS 声明式事务"></a>编程式事务 VS 声明式事务</h3><h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><h4 id="默认隔离级别"><a href="#默认隔离级别" class="headerlink" title="默认隔离级别"></a>默认隔离级别</h4><h5 id="不同ORM框架的默认隔离级别"><a href="#不同ORM框架的默认隔离级别" class="headerlink" title="不同ORM框架的默认隔离级别"></a>不同ORM框架的默认隔离级别</h5><h5 id="不同DB-Proxy的默认隔离级别"><a href="#不同DB-Proxy的默认隔离级别" class="headerlink" title="不同DB Proxy的默认隔离级别"></a>不同DB Proxy的默认隔离级别</h5><h5 id="不同RDBMS的默认隔离级别"><a href="#不同RDBMS的默认隔离级别" class="headerlink" title="不同RDBMS的默认隔离级别"></a>不同RDBMS的默认隔离级别</h5><p>MySQL InnoDB Default：可重复读</p>
 <p>Oracle Default：读已提交</p>
 <p>不同存储引擎的默认隔离级别</p>
