@@ -62,10 +62,21 @@
 <p>在事务处理的ACID属性中，一致性是最基本的属性，其它的三个属性都为了保证一致性而存在的。MySQL数据库innodb的事务，是通过redo log（innodb log)，undo log，锁机制，来维护这个一致性的。</p>
 <h4 id="隔离性（Isolation）"><a href="#隔离性（Isolation）" class="headerlink" title="隔离性（Isolation）"></a>隔离性（Isolation）</h4><p>多个事务在并发执行时，事务执行的中间状态是其他事务不可访问的。A 转出 100 但事务没有确认提交，这时候银行人员对其账号查询时，看到的应该还是 1,000，不是 900。</p>
 <h4 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h4><p>事务一旦提交生效，其结果将永久保存，不受任何故障影响。A 转账一但完成，那么 A 就是 900，B 就是 1,100，这个结果将永远保存在银行的数据库中，直到他们下次交易事务的发生。</p>
-<p>MySQL Innodb引擎采用 WAL（Write-Ahead Log）方式写入redo log，WAL通俗点说就是说在事务所有修改提交前需要将其对应的操作日志写入磁盘文件，以便出现意外可以恢复（所以redo log也叫做重放日志）,这样就达到了持久性的要求。此外鼎鼎大名的MongoDB（WiredTiger存储引擎）、SQLite也采用了WAL机制。</p>
-<p>为了减少日志刷盘造成写 IO，对日志刷盘操作做了大量的优化，MySQL使用组提交（Checkpoint机制）的刷盘方式来提高性能。</p>
-<p>redo log，undo log，WAL(write ahead log) and Checkpoint。</p>
-<h3 id="逻辑事务-VS-物理事务"><a href="#逻辑事务-VS-物理事务" class="headerlink" title="逻辑事务 VS 物理事务"></a>逻辑事务 VS 物理事务</h3><h3 id="编程式事务-VS-声明式事务"><a href="#编程式事务-VS-声明式事务" class="headerlink" title="编程式事务 VS 声明式事务"></a>编程式事务 VS 声明式事务</h3><h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><h4 id="默认隔离级别"><a href="#默认隔离级别" class="headerlink" title="默认隔离级别"></a>默认隔离级别</h4><h5 id="不同ORM框架的默认隔离级别"><a href="#不同ORM框架的默认隔离级别" class="headerlink" title="不同ORM框架的默认隔离级别"></a>不同ORM框架的默认隔离级别</h5><h5 id="不同DB-Proxy的默认隔离级别"><a href="#不同DB-Proxy的默认隔离级别" class="headerlink" title="不同DB Proxy的默认隔离级别"></a>不同DB Proxy的默认隔离级别</h5><h5 id="不同RDBMS的默认隔离级别"><a href="#不同RDBMS的默认隔离级别" class="headerlink" title="不同RDBMS的默认隔离级别"></a>不同RDBMS的默认隔离级别</h5><p>MySQL InnoDB Default：可重复读</p>
+<h3 id="Redolog和Undolog"><a href="#Redolog和Undolog" class="headerlink" title="Redolog和Undolog"></a>Redolog和Undolog</h3><p>日志在内存里也是有缓存的，这里将其叫做log buffer。磁盘上的日志文件称为log file。log file一般是追加内容，可以认为是顺序写，顺序写的磁盘IO开销要小于随机写。</p>
+<p>Undo日志记录某数据被修改前的值，可以用来在事务失败时进行rollback；Redo日志记录某数据块被修改后的值，可以用来恢复未写入data file的已成功事务更新的数据。</p>
+<p>MySQL Innodb引擎采用 WAL（Write-Ahead Log）方式写入redo log，WAL通俗点说就是说在事务所有修改提交前需要将其对应的操作日志追加写入磁盘文件（AOF：append only file），以便出现意外可以恢复（所以redo log也叫做重放日志）,这样就达到了持久性的要求。此外鼎鼎大名的MongoDB（WiredTiger存储引擎）、SQLite也采用了WAL机制。</p>
+<p>为了减少日志刷盘造成写IO压力，Innodb引擎对日志刷盘操作做了大量的优化，使用组提交（Checkpoint机制）的刷盘方式来提高性能。</p>
+<h3 id="Checkpoint机制"><a href="#Checkpoint机制" class="headerlink" title="Checkpoint机制"></a>Checkpoint机制</h3><p>Checkpoint是为了定期将db buffer的内容刷新到data file。当遇到内存不足、db buffer已满等情况时，需要将db buffer中的内容/部分内容（特别是脏数据）转储到data file中。在转储时，会记录checkpoint发生的”时刻“。在故障回复时候，只需要redo/undo最近的一次checkpoint之后的操作。</p>
+<h3 id="逻辑事务-VS-物理事务"><a href="#逻辑事务-VS-物理事务" class="headerlink" title="逻辑事务 VS 物理事务"></a>逻辑事务 VS 物理事务</h3><p>在谈逻辑与物理时，经常说到“逻辑删除”/“物理删除”、“逻辑地址”/“物理地址”，那逻辑事务与物理事务又是什么呢？</p>
+<p>一般而言，所谓的数据库事务都是针对单个数据库的事务，即单库事务。而跨库事务，顾名思义，是指涉及多个数据库的事务，理论上也必须满足ACID属性。两者最核心的区别在于，单库事务一般是由数据库保证的，俗称物理事务，而跨库事务一般是由应用保证的，俗称逻辑事务。与单库事务相比，跨库事务执行成本高，稳定性差，管理也更复杂，但在某些场景下，尤其是分布式应用环境下，又是不得不使用的技术。</p>
+<p>再举个栗子，单库事务好比你从北京飞上海，到东航官网买张票就搞定了，而跨库事务好比北京飞纽约，到上海转机，就得买东航转上航的联票，出票就转由携程保证了。</p>
+<p>而在Spring中，事务分为物理事务和逻辑事务；<br>物理事务：就是底层数据库提供的事务支持，如JDBC或JTA提供的事务；<br>逻辑事务：是Spring管理的事务，不同于物理事务，逻辑事务提供更丰富的控制，而且如果想得到Spring事务管理的好处，必须使用逻辑事务，因此在Spring中如果没特别强调一般就是逻辑事务；</p>
+<p>物理事务和逻辑事务最大差别就在于事务传播行为，事务传播行为用于指定在多个事务方法间调用时，事务是如何在这些方法间传播的</p>
+<p>逻辑事务即支持非常低级别的控制，也有高级别解决方案：</p>
+<h4 id="低级别解决方案"><a href="#低级别解决方案" class="headerlink" title="低级别解决方案"></a>低级别解决方案</h4><p>工具类：使用工具类获取连接（会话）和释放连接（会话），如使用org.springframework.jdbc.datasource包中的ConnectionUtils类来获取和释放具有逻辑事务功能的连接。当然对集成第三方ORM框架也提供了类似的工具类，如对Hibernate提供了SessionFactoryUtils工具类，JPA的EntityManagerFactoryUtils等，其他工具类都是使用类似<em>*</em>Utils命名；</p>
+<h4 id="高级别解决方案"><a href="#高级别解决方案" class="headerlink" title="高级别解决方案"></a>高级别解决方案</h4><p>模板类：使用Spring提供的模板类，如JdbcTemplate、HibernateTemplate和JpaTemplate模板类等，而这些模板类内部其实是使用了低级别解决方案中的工具类来管理连接或会话；</p>
+<h3 id="编程式事务-VS-声明式事务"><a href="#编程式事务-VS-声明式事务" class="headerlink" title="编程式事务 VS 声明式事务"></a>编程式事务 VS 声明式事务</h3><p>Spring提供两种编程式事务支持：直接使用PlatformTransactionManager实现和使用TransactionTemplate模板类，用于支持逻辑事务管理。<br>如果采用编程式事务推荐使用TransactionTemplate模板类和高级别解决方案。</p>
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><h4 id="默认隔离级别"><a href="#默认隔离级别" class="headerlink" title="默认隔离级别"></a>默认隔离级别</h4><h5 id="不同ORM框架的默认隔离级别"><a href="#不同ORM框架的默认隔离级别" class="headerlink" title="不同ORM框架的默认隔离级别"></a>不同ORM框架的默认隔离级别</h5><h5 id="不同DB-Proxy的默认隔离级别"><a href="#不同DB-Proxy的默认隔离级别" class="headerlink" title="不同DB Proxy的默认隔离级别"></a>不同DB Proxy的默认隔离级别</h5><h5 id="不同RDBMS的默认隔离级别"><a href="#不同RDBMS的默认隔离级别" class="headerlink" title="不同RDBMS的默认隔离级别"></a>不同RDBMS的默认隔离级别</h5><p>MySQL InnoDB Default：可重复读</p>
 <p>Oracle Default：读已提交</p>
 <p>不同存储引擎的默认隔离级别</p>
 <h3 id="事务传播行为"><a href="#事务传播行为" class="headerlink" title="事务传播行为"></a>事务传播行为</h3><p>Spring 事务传播行为</p>
