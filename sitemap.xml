@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/index/index.html</loc>
+    
+    <lastmod>2016-06-24T07:15:58.979Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
     
-    <lastmod>2016-06-24T02:34:39.269Z</lastmod>
+    <lastmod>2016-06-24T03:49:24.333Z</lastmod>
     
   </url>
   
@@ -12,13 +19,6 @@
     <loc>http://amao12580.github.io/post/2016/06/LeetCode-training-3-elements-sum-zero/</loc>
     
     <lastmod>2016-06-23T07:37:48.228Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/index/index.html</loc>
-    
-    <lastmod>2016-06-22T06:15:00.714Z</lastmod>
     
   </url>
   
