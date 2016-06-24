@@ -141,14 +141,13 @@
     <link href="http://amao12580.github.io/post/2016/06/What-is-a-transaction/"/>
     <id>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</id>
     <published>2016-06-01T05:01:50.068Z</published>
-    <updated>2016-06-21T08:09:57.452Z</updated>
+    <updated>2016-06-24T02:34:39.269Z</updated>
     
-    <content type="html">&lt;p&gt;暂时未完成&lt;/p&gt;
-&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h2&gt;&lt;p&gt;写这篇文章的初衷是记录和总结关于事务的方方面面，还记得以前在面试高工时，被问到数据库事务的实现原理是什么？答了读写锁和表锁，以及myisam和innodb引擎在事务隔离级别的差异。当时面试官不是很满意，自然那家公司最终也没有谈成。面试完了，这个问题却一直萦绕在脑海中挥之不去，经过自己对存储引擎知识的补全，才知道原来事务是这样的妙不可言。如果读者需要对数据库事务进行系统的学习，我推荐一本书&lt;a href=&quot;https://www.amazon.cn/MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-%E5%A7%9C%E6%89%BF%E5%B0%A7/dp/B00ETOV48K/ref=sr_1_1?s=digital-text&amp;amp;ie=UTF8&amp;amp;qid=1465707176&amp;amp;sr=1-1&amp;amp;keywords=MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%EF%BC%9AInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《MySQL技术内幕  InnoDB存储引擎 第2版》&lt;/a&gt;。&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h2&gt;&lt;p&gt;写这篇文章的初衷是记录和总结关于事务的方方面面，还记得以前在面试高工时，被问到数据库事务的实现原理是什么？答了读写锁和表锁，以及myisam和innodb引擎在事务隔离级别的差异。当时面试官不是很满意，自然那家公司最终也没有谈成。面试完了，这个问题却一直萦绕在脑海中挥之不去，经过自己对存储引擎知识的补全，才知道原来事务是这样的妙不可言。如果读者需要对数据库事务进行系统的学习，我推荐一本书&lt;a href=&quot;https://www.amazon.cn/MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-%E5%A7%9C%E6%89%BF%E5%B0%A7/dp/B00ETOV48K/ref=sr_1_1?s=digital-text&amp;amp;ie=UTF8&amp;amp;qid=1465707176&amp;amp;sr=1-1&amp;amp;keywords=MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%EF%BC%9AInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《MySQL技术内幕  InnoDB存储引擎 第2版》&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;讨论传统关系型数据库内的事务，以及如何与NoSQL领域结合进行事务化。&lt;/p&gt;
 &lt;h2 id=&quot;什么是事务？&quot;&gt;&lt;a href=&quot;#什么是事务？&quot; class=&quot;headerlink&quot; title=&quot;什么是事务？&quot;&gt;&lt;/a&gt;什么是事务？&lt;/h2&gt;&lt;p&gt;数据库事务（简称：事务）是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。这是使用Google Search以“事务”为关键字查找时，第一条是wikipedia给出的描述。通俗地讲，事务就是通过一系列操作来完成一件事情，在进行这些操作的过程中，要么这些操作完全执行，要么这些操作全不执行，不存在中间状态，事务分为事务执行阶段和事务提交阶段。&lt;/p&gt;
 &lt;h3 id=&quot;与文件系统的差异&quot;&gt;&lt;a href=&quot;#与文件系统的差异&quot; class=&quot;headerlink&quot; title=&quot;与文件系统的差异&quot;&gt;&lt;/a&gt;与文件系统的差异&lt;/h3&gt;&lt;p&gt;以MySQL数据库系统为例，数据被按页（16K）存储在磁盘中，如何组织数据的存储格式，由存储引擎来定义。在数据被插入或修改时，为了提高TPS，规避磁盘写入缓慢的问题，MySQL会将新数据页缓冲到内存（Insert Buffer），达到一定时间，或者积累的数据达到一定量级后，会由Master Thread刷入磁盘，同时清空缓冲区（CheckPoint机制）。在数据需要读取时，先从磁盘按页读取，如果有配置缓冲池，这些取出的数据还会在内存中留一个副本（FIX），只要数据不进行修改，下次读取时就会冲缓冲池命中了，大大加快了访问速度。&lt;/p&gt;
-&lt;p&gt;看到这里，我们不经有疑问，在内存与磁盘上，读、写、组织数据，这不是文件系统在干的事情吗？的确，在NTFS、Ext4等文件系统中，这些功能都是被支持的。数据库系统是基于文件系统的，按照不同文件系统(包括不同的操作系统内存分配算法)，在底层调用了不同的API进行数据的读、写、组织。但它最重要的特性是事务的支持，允许有限个的数据库操作进行逻辑单元化，解决文件系统访问无状态的问题。同时也是由于事务一致性的支持，数据库系统相较于文件系统的性能普遍是下降的，隔离级别的支持越高（更强的一致性），性能下降越是厉害。&lt;/p&gt;
+&lt;p&gt;看到这里，我们不经有疑问，在内存与磁盘上，读、写、组织数据，这不是文件系统在干的事情吗？的确，在NTFS、Ext4等文件系统中，这些功能都是被支持的。数据库系统是基于文件系统（Base-on-disk）的，按照不同文件系统(包括不同的操作系统内存分配算法)，在底层调用了不同的API进行数据的读、写、组织。但它最重要的特性是事务的支持，允许有限个的数据库操作进行逻辑单元化，解决文件系统访问无状态的问题。同时也是由于事务一致性的支持，数据库系统相较于文件系统的性能普遍是下降的，隔离级别的支持越高（更强的一致性），性能下降越是厉害。&lt;/p&gt;
 &lt;h2 id=&quot;本地事务&quot;&gt;&lt;a href=&quot;#本地事务&quot; class=&quot;headerlink&quot; title=&quot;本地事务&quot;&gt;&lt;/a&gt;本地事务&lt;/h2&gt;&lt;p&gt;不同的数据库系统有不同的事务行为。有些数据库系统根本不支持事务。有些数据库系统支持事务，但是不支持双向提交（2PC）协议。这类事务被称为支持本地事务。有些数据库系统既支持本地事务，又支持 2PC。这类事务被称为支持分布式事务，或者全局事务。全局事务也被称为 XA 事务，因为它们包含 XAResource接口。&lt;/p&gt;
 &lt;h3 id=&quot;ACID&quot;&gt;&lt;a href=&quot;#ACID&quot; class=&quot;headerlink&quot; title=&quot;ACID&quot;&gt;&lt;/a&gt;ACID&lt;/h3&gt;&lt;p&gt;一般说到事务，就会想到它的特性— ACID，那么什么是 ACID 呢？我们先用一个现实中的例子来说明：AB 两同学在同一家银行ZSBANK的账号都有 1,000 块钱，A 通过ZSBANK银行转账向 B 转了 100 块钱，这个事务分为两个操作,即从 A 同学账号扣除 100，向 B 同学账号增加 100。&lt;/p&gt;
 &lt;p&gt;对于应用层程序的同一个线程X来说，逻辑伪码如下：&lt;/p&gt;
@@ -164,10 +163,15 @@
 &lt;p&gt;在事务处理的ACID属性中，一致性是最基本的属性，其它的三个属性都为了保证一致性而存在的。MySQL数据库innodb的事务，是通过redo log（innodb log)，undo log，锁机制，来维护这个一致性的。&lt;/p&gt;
 &lt;h4 id=&quot;隔离性（Isolation）&quot;&gt;&lt;a href=&quot;#隔离性（Isolation）&quot; class=&quot;headerlink&quot; title=&quot;隔离性（Isolation）&quot;&gt;&lt;/a&gt;隔离性（Isolation）&lt;/h4&gt;&lt;p&gt;多个事务在并发执行时，事务执行的中间状态是其他事务不可访问的。A 转出 100 但事务没有确认提交，这时候银行人员对其账号查询时，看到的应该还是 1,000，不是 900。&lt;/p&gt;
 &lt;h4 id=&quot;持久性（Durability）&quot;&gt;&lt;a href=&quot;#持久性（Durability）&quot; class=&quot;headerlink&quot; title=&quot;持久性（Durability）&quot;&gt;&lt;/a&gt;持久性（Durability）&lt;/h4&gt;&lt;p&gt;事务一旦提交生效，其结果将永久保存，不受任何故障影响。A 转账一但完成，那么 A 就是 900，B 就是 1,100，这个结果将永远保存在银行的数据库中，直到他们下次交易事务的发生。&lt;/p&gt;
-&lt;h3 id=&quot;Redolog和Undolog&quot;&gt;&lt;a href=&quot;#Redolog和Undolog&quot; class=&quot;headerlink&quot; title=&quot;Redolog和Undolog&quot;&gt;&lt;/a&gt;Redolog和Undolog&lt;/h3&gt;&lt;p&gt;日志在内存里也是有缓存的，这里将其叫做log buffer。磁盘上的日志文件称为log file。log file一般是追加内容，可以认为是顺序写，顺序写的磁盘IO开销要小于随机写。&lt;/p&gt;
-&lt;p&gt;Undo日志记录某数据被修改前的值，可以用来在事务失败时进行rollback；Redo日志记录某数据块被修改后的值，可以用来恢复未写入data file的已成功事务更新的数据。&lt;/p&gt;
-&lt;p&gt;MySQL Innodb引擎采用 WAL（Write-Ahead Log）方式写入redo log，WAL通俗点说就是说在事务所有修改提交前需要将其对应的操作日志追加写入磁盘文件（AOF：append only file），以便出现意外可以恢复（所以redo log也叫做重放日志）,这样就达到了持久性的要求。此外鼎鼎大名的MongoDB（WiredTiger存储引擎）、SQLite也采用了WAL机制。&lt;/p&gt;
-&lt;p&gt;为了减少日志刷盘造成写IO压力，Innodb引擎对日志刷盘操作做了大量的优化，使用组提交（Checkpoint机制）的刷盘方式来提高性能。&lt;/p&gt;
+&lt;h3 id=&quot;4种Log&quot;&gt;&lt;a href=&quot;#4种Log&quot; class=&quot;headerlink&quot; title=&quot;4种Log&quot;&gt;&lt;/a&gt;4种Log&lt;/h3&gt;&lt;p&gt;4种Log指的是：redo log、undo log、bin log 、relay log&lt;/p&gt;
+&lt;p&gt;日志在内存里也是有缓存的，这里将其叫做log buffer。磁盘上的日志文件称为log file。log file一般是追加内容，可以认为是顺序写，顺序写的磁盘IO开销要小于随机写。&lt;/p&gt;
+&lt;p&gt;Undo log记录某数据被修改前的值，可以用来在事务失败时进行rollback；redo log记录某数据块被修改后的值（按页记录），可以用来恢复未写入data file的已成功事务更新的数据。undo log和redo log 都有持久化的要求，两者的共同协作实现了事务持久化要求，不论是否遭遇宕机，数据库实例在启动时都会检查是否存在数据不一致，这与redis启动时检查AOF文件是类似的。&lt;/p&gt;
+&lt;p&gt;Undo log除了在rollback事务时用到，另外还在MVCC机制中使用，它按页记录了每一个事务版本在开始时需要用到的数据版本，因此同样的数据页，在undo log中可能存在多个版本，因此undo log需要支持随机读（redo log不需要）。在事务提交后，undo log对应的数据页不再有用了，但不会被立即清除，MySQL内部线程架构中，有Purge Thread专门对它进行定时清理。具体触发清理的机制是比较复杂的。&lt;/p&gt;
+&lt;p&gt;MySQL Innodb引擎采用 WAL（Write-Ahead Log）方式写入redo log，WAL通俗点说就是说在事务所有数据修改提交前，需要先将其对应的操作日志追加写入磁盘文件（AOF：append only file），以便出现意外可以恢复（所以redo log也叫做重放日志）,这样就达到了持久性的要求。此外鼎鼎大名的MongoDB（WiredTiger存储引擎）、SQLite也采用了WAL机制。&lt;/p&gt;
+&lt;p&gt;Bin log的提出主要是面向于MySQL的Replication架构，在多个MySQL节点间，需要一种机制对节点间的数据进行同步。例如在Master-Slave模式下，Master节点每次对数据库进行一次修改操作（DML SQL），就记录这些SQL语句到Master节点本机的bin log文件中，Slave节点会定期访问Master节点的bin log，并按照上次最后一次读取的position值，读取后续的字节，读取后的字节先放在Slave节点的本地relay log中（AOF），由Slave本机的SQL线程重放到Slave实例，重放时Slave也会记录bin log，至此就完成了同步。Redis也采用了类似的多节点数据增量同步方案，详情请查阅&lt;a href=&quot;http://www.distorage.com/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8A%80%E6%9C%AF%E7%B3%BB%E5%88%97-gossip%E7%AE%97%E6%B3%95/?utm_source=tuicool&amp;amp;utm_medium=referral&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Gossip算法&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;Master节点也可以触发强制Slave进行一次同步，如果Slave节点下面不再挂其他MySQL节点，Slave节点可以关闭bin log，这依据Master-Slave的配置来决定。&lt;/p&gt;
+&lt;p&gt;Bin log与redo log的主要不同体现在，redo log只记录由Innodb存储引擎产生的事务重放日志，它是按数据页进行存储的。而bin log记录了所有类型的存储引擎执行的DML SQL语句。最后一点是，redo log总是在事务进行中持续顺序写入磁盘，而bin log只在DML SQL提交后写入一次。如果没有使用事务，执行DML SQL时，bin log file会产生日志，而redo log file无变化。&lt;/p&gt;
+&lt;p&gt;为了减少日志刷盘造成写IO压力，Innodb对redo log和bin log的刷盘操作做了大量优化，使用组提交（Group commit）的刷盘方式来提高性能，同是使用prepare lock保证redo log和bin log的顺序一致性（prepare_commit_mutex 配置项）。&lt;/p&gt;
 &lt;h3 id=&quot;Checkpoint机制&quot;&gt;&lt;a href=&quot;#Checkpoint机制&quot; class=&quot;headerlink&quot; title=&quot;Checkpoint机制&quot;&gt;&lt;/a&gt;Checkpoint机制&lt;/h3&gt;&lt;p&gt;Checkpoint是为了定期将db buffer的内容刷新到data file。当遇到内存不足、db buffer已满等情况时，需要将db buffer中的内容/部分内容（特别是脏数据）转储到data file中。在转储时，会记录checkpoint发生的”时刻“。在故障回复时候，只需要redo/undo最近的一次checkpoint之后的操作。&lt;/p&gt;
 &lt;h3 id=&quot;逻辑事务-VS-物理事务&quot;&gt;&lt;a href=&quot;#逻辑事务-VS-物理事务&quot; class=&quot;headerlink&quot; title=&quot;逻辑事务 VS 物理事务&quot;&gt;&lt;/a&gt;逻辑事务 VS 物理事务&lt;/h3&gt;&lt;p&gt;在谈逻辑与物理时，经常说到“逻辑删除”/“物理删除”、“逻辑地址”/“物理地址”，那逻辑事务与物理事务又是什么呢？&lt;/p&gt;
 &lt;p&gt;一般而言，所谓的数据库事务都是针对单个数据库的事务，即单库事务。而跨库事务，顾名思义，是指涉及多个数据库的事务，理论上也必须满足ACID属性。两者最核心的区别在于，单库事务一般是由数据库保证的，俗称物理事务，而跨库事务一般是由应用保证的，俗称逻辑事务。与单库事务相比，跨库事务执行成本高，稳定性差，管理也更复杂，但在某些场景下，尤其是分布式应用环境下，又是不得不使用的技术。&lt;/p&gt;
@@ -200,6 +204,8 @@
       <category term="Summary" scheme="http://amao12580.github.io/categories/Summary/"/>
     
     
+      <category term="Redis" scheme="http://amao12580.github.io/tags/Redis/"/>
+    
       <category term="Transaction" scheme="http://amao12580.github.io/tags/Transaction/"/>
     
       <category term="Spring" scheme="http://amao12580.github.io/tags/Spring/"/>
@@ -215,6 +221,10 @@
       <category term="RelayLog" scheme="http://amao12580.github.io/tags/RelayLog/"/>
     
       <category term="Checkpoint" scheme="http://amao12580.github.io/tags/Checkpoint/"/>
+    
+      <category term="Gossip" scheme="http://amao12580.github.io/tags/Gossip/"/>
+    
+      <category term="Replication" scheme="http://amao12580.github.io/tags/Replication/"/>
     
   </entry>
   
