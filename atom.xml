@@ -69,9 +69,9 @@
       <category term="CodeReview" scheme="http://amao12580.github.io/categories/CodeReview/"/>
     
     
-      <category term="MySQL" scheme="http://amao12580.github.io/tags/MySQL/"/>
-    
       <category term="SQL" scheme="http://amao12580.github.io/tags/SQL/"/>
+    
+      <category term="MySQL" scheme="http://amao12580.github.io/tags/MySQL/"/>
     
   </entry>
   
@@ -206,7 +206,7 @@
     <link href="http://amao12580.github.io/post/2016/06/What-is-a-transaction/"/>
     <id>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</id>
     <published>2016-06-01T05:01:50.068Z</published>
-    <updated>2016-07-04T07:31:01.357Z</updated>
+    <updated>2016-07-14T06:24:14.128Z</updated>
     
     <content type="html">&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h2&gt;&lt;p&gt;写这篇文章的初衷是记录和总结关于事务的方方面面，还记得以前在面试高工时，被问到数据库事务的实现原理是什么？答了读写锁和表锁，以及myisam和innodb引擎在事务隔离级别的差异。当时面试官不是很满意，自然那家公司最终也没有谈成。面试完了，这个问题却一直萦绕在脑海中挥之不去，经过自己对存储引擎知识的补全，才知道原来事务是这样的妙不可言。如果读者需要对数据库事务进行系统的学习，我推荐一本书&lt;a href=&quot;https://www.amazon.cn/MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-%E5%A7%9C%E6%89%BF%E5%B0%A7/dp/B00ETOV48K/ref=sr_1_1?s=digital-text&amp;amp;ie=UTF8&amp;amp;qid=1465707176&amp;amp;sr=1-1&amp;amp;keywords=MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%EF%BC%9AInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《MySQL技术内幕  InnoDB存储引擎 第2版》&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;讨论传统关系型数据库内的事务，以及如何与NoSQL领域结合进行事务化。&lt;/p&gt;
