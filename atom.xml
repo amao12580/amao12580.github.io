@@ -4,9 +4,9 @@
   <subtitle>一饮一啄，莫非前定.</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://amao12580.github.io/"/>
+  <link href="https://www.kisscat.pro/"/>
   <updated>2016-07-25T06:09:59.526Z</updated>
-  <id>http://amao12580.github.io/</id>
+  <id>https://www.kisscat.pro/</id>
   
   <author>
     <name>Steven Cheng</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>开源贡献 - 升级Solr中文分词器 mmseg4j-solr</title>
-    <link href="http://amao12580.github.io/post/2016/07/mmseg4j-solr-compatible-solr-6-1/"/>
-    <id>http://amao12580.github.io/post/2016/07/mmseg4j-solr-compatible-solr-6-1/</id>
+    <link href="https://www.kisscat.pro/post/2016/07/mmseg4j-solr-compatible-solr-6-1/"/>
+    <id>https://www.kisscat.pro/post/2016/07/mmseg4j-solr-compatible-solr-6-1/</id>
     <published>2016-07-25T04:43:45.943Z</published>
     <updated>2016-07-25T06:09:59.526Z</updated>
     
@@ -54,21 +54,21 @@
     
     </summary>
     
-      <category term="Record" scheme="http://amao12580.github.io/categories/Record/"/>
+      <category term="Record" scheme="https://www.kisscat.pro/categories/Record/"/>
     
     
-      <category term="Solr" scheme="http://amao12580.github.io/tags/Solr/"/>
+      <category term="Solr" scheme="https://www.kisscat.pro/tags/Solr/"/>
     
-      <category term="Mmseg4j-solr" scheme="http://amao12580.github.io/tags/Mmseg4j-solr/"/>
+      <category term="Mmseg4j-solr" scheme="https://www.kisscat.pro/tags/Mmseg4j-solr/"/>
     
-      <category term="Open-Source-Contribution" scheme="http://amao12580.github.io/tags/Open-Source-Contribution/"/>
+      <category term="Open-Source-Contribution" scheme="https://www.kisscat.pro/tags/Open-Source-Contribution/"/>
     
   </entry>
   
   <entry>
     <title>MySQL集锦 - IN 真会导致全表扫描吗？</title>
-    <link href="http://amao12580.github.io/post/2016/07/MySQL-in-operator-must-lead-to-full-scan/"/>
-    <id>http://amao12580.github.io/post/2016/07/MySQL-in-operator-must-lead-to-full-scan/</id>
+    <link href="https://www.kisscat.pro/post/2016/07/MySQL-in-operator-must-lead-to-full-scan/"/>
+    <id>https://www.kisscat.pro/post/2016/07/MySQL-in-operator-must-lead-to-full-scan/</id>
     <published>2016-07-04T06:47:12.807Z</published>
     <updated>2016-07-05T02:07:14.562Z</updated>
     
@@ -116,19 +116,19 @@
     
     </summary>
     
-      <category term="CodeReview" scheme="http://amao12580.github.io/categories/CodeReview/"/>
+      <category term="CodeReview" scheme="https://www.kisscat.pro/categories/CodeReview/"/>
     
     
-      <category term="SQL" scheme="http://amao12580.github.io/tags/SQL/"/>
+      <category term="SQL" scheme="https://www.kisscat.pro/tags/SQL/"/>
     
-      <category term="MySQL" scheme="http://amao12580.github.io/tags/MySQL/"/>
+      <category term="MySQL" scheme="https://www.kisscat.pro/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>LeetCode刷题 - 求三个和为零的整数组合</title>
-    <link href="http://amao12580.github.io/post/2016/06/LeetCode-training-3-elements-sum-zero/"/>
-    <id>http://amao12580.github.io/post/2016/06/LeetCode-training-3-elements-sum-zero/</id>
+    <link href="https://www.kisscat.pro/post/2016/06/LeetCode-training-3-elements-sum-zero/"/>
+    <id>https://www.kisscat.pro/post/2016/06/LeetCode-training-3-elements-sum-zero/</id>
     <published>2016-06-22T04:16:03.400Z</published>
     <updated>2016-06-30T10:23:13.579Z</updated>
     
@@ -165,19 +165,19 @@
     
     </summary>
     
-      <category term="LeetCode" scheme="http://amao12580.github.io/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="https://www.kisscat.pro/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://amao12580.github.io/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="https://www.kisscat.pro/tags/LeetCode/"/>
     
-      <category term="Training" scheme="http://amao12580.github.io/tags/Training/"/>
+      <category term="Training" scheme="https://www.kisscat.pro/tags/Training/"/>
     
   </entry>
   
   <entry>
     <title>如何更开心的写博客？</title>
-    <link href="http://amao12580.github.io/post/2016/06/How-to-better-write-the-blog/"/>
-    <id>http://amao12580.github.io/post/2016/06/How-to-better-write-the-blog/</id>
+    <link href="https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/"/>
+    <id>https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/</id>
     <published>2016-06-17T07:50:56.023Z</published>
     <updated>2016-06-20T05:21:53.065Z</updated>
     
@@ -210,25 +210,25 @@
     
     </summary>
     
-      <category term="Tutorial" scheme="http://amao12580.github.io/categories/Tutorial/"/>
+      <category term="Tutorial" scheme="https://www.kisscat.pro/categories/Tutorial/"/>
     
     
-      <category term="GitHub" scheme="http://amao12580.github.io/tags/GitHub/"/>
+      <category term="GitHub" scheme="https://www.kisscat.pro/tags/GitHub/"/>
     
-      <category term="Git" scheme="http://amao12580.github.io/tags/Git/"/>
+      <category term="Git" scheme="https://www.kisscat.pro/tags/Git/"/>
     
-      <category term="Windows" scheme="http://amao12580.github.io/tags/Windows/"/>
+      <category term="Windows" scheme="https://www.kisscat.pro/tags/Windows/"/>
     
-      <category term="Powershell" scheme="http://amao12580.github.io/tags/Powershell/"/>
+      <category term="Powershell" scheme="https://www.kisscat.pro/tags/Powershell/"/>
     
-      <category term="Gulp" scheme="http://amao12580.github.io/tags/Gulp/"/>
+      <category term="Gulp" scheme="https://www.kisscat.pro/tags/Gulp/"/>
     
   </entry>
   
   <entry>
     <title>消息系统的架构演进之路</title>
-    <link href="http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/"/>
-    <id>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</id>
+    <link href="https://www.kisscat.pro/post/2016/06/Message-system-architecture-evolution/"/>
+    <id>https://www.kisscat.pro/post/2016/06/Message-system-architecture-evolution/</id>
     <published>2016-06-01T05:18:41.875Z</published>
     <updated>2016-06-12T02:31:38.775Z</updated>
     
@@ -242,12 +242,12 @@
     
     </summary>
     
-      <category term="Summary" scheme="http://amao12580.github.io/categories/Summary/"/>
+      <category term="Summary" scheme="https://www.kisscat.pro/categories/Summary/"/>
     
     
-      <category term="MessageSystem" scheme="http://amao12580.github.io/tags/MessageSystem/"/>
+      <category term="MessageSystem" scheme="https://www.kisscat.pro/tags/MessageSystem/"/>
     
-      <category term="architecture" scheme="http://amao12580.github.io/tags/architecture/"/>
+      <category term="architecture" scheme="https://www.kisscat.pro/tags/architecture/"/>
     
   </entry>
   

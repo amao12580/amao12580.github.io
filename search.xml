@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[开源贡献 - 升级Solr中文分词器 mmseg4j-solr]]></title>
-      <url>http://amao12580.github.io/post/2016/07/mmseg4j-solr-compatible-solr-6-1/</url>
+      <url>https://www.kisscat.pro/post/2016/07/mmseg4j-solr-compatible-solr-6-1/</url>
       <content type="html"><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>最近因为团队职责变动，接手了Solr的维护工作。仔细比对各个环境的使用版本才发现，都是使用的5.3，查了一下这个就快发布一年了。为什么不用最新版的6.1呢？有点忍不住技痒了，整一下升级到6.1的方案吧！</p>
 <h2 id="简单介绍Solr"><a href="#简单介绍Solr" class="headerlink" title="简单介绍Solr"></a>简单介绍Solr</h2><p>Apache Solr (读音: SOLer) 是一个开源的搜索服务器。Solr 使用 Java 语言开发，主要基于 HTTP 和 Apache Lucene 实现。Apache Solr 中存储的资源是以 Document 为对象进行存储的。每个文档由一系列的 Field 构成，每个 Field 表示资源的一个属性。Solr 中的每个 Document 需要有能唯一标识其自身的属性，默认情况下这个属性的名字是 id，在 Schema 配置文件中使用：id进行描述。 Solr是一个高性能，采用Java开发，基于Lucene的全文搜索服务器。文档通过Http利用XML加到一个搜索集合中。查询该集合也是通过 http收到一个XML/JSON响应来实现。它的主要特性包括：高效、灵活的缓存功能，垂直搜索功能，高亮显示搜索结果，通过索引复制来提高可用性，提 供一套强大Data Schema来定义字段，类型和设置文本分析，提供基于Web的管理界面等。</p>
 <h2 id="什么是mmseg4j-solr？"><a href="#什么是mmseg4j-solr？" class="headerlink" title="什么是mmseg4j-solr？"></a>什么是mmseg4j-solr？</h2><p>mmseg4j 用 Chih-Hao Tsai 的 <a href="http://technology.chtsai.org/mmseg/" target="_blank" rel="external">MMSeg 算法</a>实现的中文分词器，并实现 lucene 的 analyzer 和 solr 的TokenizerFactory 以方便在Lucene和Solr中使用。</p>
@@ -35,7 +35,7 @@
     
     <entry>
       <title><![CDATA[MySQL集锦 - IN 真会导致全表扫描吗？]]></title>
-      <url>http://amao12580.github.io/post/2016/07/MySQL-in-operator-must-lead-to-full-scan/</url>
+      <url>https://www.kisscat.pro/post/2016/07/MySQL-in-operator-must-lead-to-full-scan/</url>
       <content type="html"><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>项目版本迭代慢了下来，有了段空闲时间，就对近些阶段的代码进行Code review，主要还是保持设计正确性和易维护性吧。</p>
 <h1 id="有意思的代码"><a href="#有意思的代码" class="headerlink" title="有意思的代码"></a>有意思的代码</h1><p>由于积累了数个里程碑，review的工作量还挺大，我们分工协作，我这块主要看推荐模块，发现了几段有意思的代码，贴出来看看吧。</p>
 <figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Result&lt;Record1&lt;<span class="built_in">Integer</span>&gt;&gt; ids = create.<span class="keyword">select</span>(SITING_OPPORTUNITY_DISTRICT.OPPORTUNITY_ID).</span><br><span class="line">        from(SITING_OPPORTUNITY_DISTRICT).</span><br><span class="line">        <span class="keyword">where</span>(SITING_OPPORTUNITY_DISTRICT.DISTRICT_ID.like(districtId + <span class="string">"%"</span>)).</span><br><span class="line">        groupBy(SITING_OPPORTUNITY_DISTRICT.OPPORTUNITY_ID).</span><br><span class="line">        fetch();</span><br><span class="line"><span class="built_in">Set</span>&lt;<span class="built_in">Integer</span>&gt; opportunityIds = <span class="literal">new</span> HashSet&lt;&gt;(ids.size());</span><br><span class="line">for (Record1&lt;<span class="built_in">Integer</span>&gt; r : ids) &#123;</span><br><span class="line">    opportunityIds.add(r.getValue(SITING_OPPORTUNITY_DISTRICT.OPPORTUNITY_ID));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (opportunityIds.size() == <span class="number">1</span>) &#123;</span><br><span class="line">    condition = condition.<span class="keyword">and</span>(SITING_OPPORTUNITY.OPPORTUNITY_ID.<span class="literal">eq</span>(getSetFirstElement(opportunityIds)));</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    condition = condition.<span class="keyword">and</span>(SITING_OPPORTUNITY.OPPORTUNITY_ID.<span class="keyword">in</span>(opportunityIds));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -77,7 +77,7 @@
     
     <entry>
       <title><![CDATA[LeetCode刷题 - 求三个和为零的整数组合]]></title>
-      <url>http://amao12580.github.io/post/2016/06/LeetCode-training-3-elements-sum-zero/</url>
+      <url>https://www.kisscat.pro/post/2016/06/LeetCode-training-3-elements-sum-zero/</url>
       <content type="html"><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>完整的代码整理好了，请移步GitHub：</p>
 <ul>
 <li><a href="https://github.com/amao12580/algorithm/tree/master/src/main/java/leetcode/sumEqualZero" target="_blank" rel="external">https://github.com/amao12580/algorithm/tree/master/src/main/java/leetcode/sumEqualZero</a></li>
@@ -108,7 +108,7 @@
     
     <entry>
       <title><![CDATA[如何更开心的写博客？]]></title>
-      <url>http://amao12580.github.io/post/2016/06/How-to-better-write-the-blog/</url>
+      <url>https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/</url>
       <content type="html"><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！</p>
 <p>最开始主要依靠图形界面进行blog发布，来看看有哪些操作吧！</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">在windows DOS下的步骤是：</span><br><span class="line"></span><br><span class="line">1.按下“<span class="keyword">win</span>”+“R”键</span><br><span class="line"></span><br><span class="line">2.在打开的对话框中输入“cmd”</span><br><span class="line"></span><br><span class="line">3.在打开的黑窗口中输入：</span><br><span class="line">Microsoft Windows [版本 6.1.7601]</span><br><span class="line">版权所有 (c) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;<span class="keyword">D</span>:</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\&gt;<span class="keyword">cd</span> GitHub</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\GitHub&gt;<span class="keyword">cd</span> Hexo</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\GitHub\Hexo&gt;hexo <span class="keyword">g</span></span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Files loaded <span class="keyword">in</span> 2.14 <span class="built_in">s</span></span><br><span class="line">INFO  Generated: atom.xml</span><br><span class="line">INFO  Generated: <span class="keyword">search</span>.xml</span><br><span class="line">INFO  Generated: sitemap.xml</span><br><span class="line">INFO  Generated: <span class="keyword">about</span>/index.html</span><br><span class="line">INFO  Generated: tags/index.html</span><br><span class="line">INFO  Generated: categories/index.html</span><br><span class="line">INFO  Generated: <span class="keyword">post</span>/2016/06/What-is-a-transaction/index.html</span><br><span class="line">.........<span class="comment">//都是一些HTML Generated信息，就不贴出了。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INFO  119 files generated <span class="keyword">in</span> 4.33 <span class="built_in">s</span></span><br><span class="line"></span><br><span class="line">3.清理不必要的文件：将文件夹<span class="keyword">D</span>:\GitHub\Hexo\public\vendors删除</span><br><span class="line"></span><br><span class="line">4.将<span class="keyword">D</span>:\GitHub\Hexo\public文件夹拷贝到发布文件夹<span class="keyword">D</span>:\GitHub\amao12580.github.io</span><br><span class="line"></span><br><span class="line">5.使用GitHub <span class="keyword">For</span> Windows可视化工具进行提交和同步。</span><br></pre></td></tr></table></figure>
@@ -135,7 +135,7 @@
     
     <entry>
       <title><![CDATA[消息系统的架构演进之路]]></title>
-      <url>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</url>
+      <url>https://www.kisscat.pro/post/2016/06/Message-system-architecture-evolution/</url>
       <content type="html"><![CDATA[<p>暂时未完成</p>
 <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><h1 id="1-0版架构的问题"><a href="#1-0版架构的问题" class="headerlink" title="1.0版架构的问题"></a>1.0版架构的问题</h1><h2 id="详细说明"><a href="#详细说明" class="headerlink" title="详细说明"></a>详细说明</h2><h2 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h2><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><h1 id="2-0版如何改进？"><a href="#2-0版如何改进？" class="headerlink" title="2.0版如何改进？"></a>2.0版如何改进？</h1><h2 id="详细说明-1"><a href="#详细说明-1" class="headerlink" title="详细说明"></a>详细说明</h2><h2 id="缺陷-1"><a href="#缺陷-1" class="headerlink" title="缺陷"></a>缺陷</h2><h2 id="优势-1"><a href="#优势-1" class="headerlink" title="优势"></a>优势</h2><h1 id="展望3-0版"><a href="#展望3-0版" class="headerlink" title="展望3.0版"></a>展望3.0版</h1><h2 id="详细说明-2"><a href="#详细说明-2" class="headerlink" title="详细说明"></a>详细说明</h2><h2 id="缺陷-2"><a href="#缺陷-2" class="headerlink" title="缺陷"></a>缺陷</h2><h2 id="优势-2"><a href="#优势-2" class="headerlink" title="优势"></a>优势</h2><p><img src="/img/03-消息系统改进1阶段的总体结构.jpg" alt=""></p>
 ]]></content>
@@ -143,7 +143,7 @@
     
     <entry>
       <title><![CDATA[当我们谈事务时，我们在谈什么？]]></title>
-      <url>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</url>
+      <url>https://www.kisscat.pro/post/2016/06/What-is-a-transaction/</url>
       <content type="html"><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>写这篇文章的初衷是记录和总结关于事务的方方面面，还记得以前在面试高工时，被问到数据库事务的实现原理是什么？答了读写锁和表锁，以及myisam和innodb引擎在事务隔离级别的差异。当时面试官不是很满意，自然那家公司最终也没有谈成。面试完了，这个问题却一直萦绕在脑海中挥之不去，经过自己对存储引擎知识的补全，才知道原来事务是这样的妙不可言。如果读者需要对数据库事务进行系统的学习，我推荐一本书<a href="https://www.amazon.cn/MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-%E5%A7%9C%E6%89%BF%E5%B0%A7/dp/B00ETOV48K/ref=sr_1_1?s=digital-text&amp;ie=UTF8&amp;qid=1465707176&amp;sr=1-1&amp;keywords=MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%EF%BC%9AInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E" target="_blank" rel="external">《MySQL技术内幕  InnoDB存储引擎 第2版》</a>。</p>
 <p>讨论传统关系型数据库内的事务，以及如何与NoSQL领域结合进行事务化。</p>
 <h2 id="什么是事务？"><a href="#什么是事务？" class="headerlink" title="什么是事务？"></a>什么是事务？</h2><p>数据库事务（简称：事务）是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。这是使用Google Search以“事务”为关键字查找时，第一条是wikipedia给出的描述。通俗地讲，事务就是通过一系列操作来完成一件事情，在进行这些操作的过程中，要么这些操作完全执行，要么这些操作全不执行，不存在中间状态，事务分为事务执行阶段和事务提交阶段。</p>
@@ -205,7 +205,7 @@
     
     <entry>
       <title><![CDATA[分布式软件理论总结]]></title>
-      <url>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</url>
+      <url>https://www.kisscat.pro/post/2016/05/Summary-of-distributed-theory/</url>
       <content type="html"><![CDATA[<p><img src="/img/thinking.jpg" alt=""></p>
 <h1 id="软件系统的本质"><a href="#软件系统的本质" class="headerlink" title="软件系统的本质"></a>软件系统的本质</h1><p>软件是现实的抽象，讨论抽象的本质是困难的，让我们一起在现实中思考。小到一支笔，大到一部汽车，这些产品的出现，使我们在现实生活中得到了方便。这里说的方便，是指因为使用了这些产品，降低了成本，提高了效率。在没有笔的时代，想要记录信息需要结绳、岩画或篆刻，这是高成本的，效率也很低。同样的，没有汽车的时代，想要到达另一个城市，会因为恶劣天气而被迫中途搁置，相应的通行时间也会比现在长得多。进一步的思考，笔与汽车的共同点又在哪里呢？</p>
 <p>笔与汽车，这些产品是为了满足人们的各类生活需求而发明的。即，人们因为现实需要，而发明或改进了产品，产品是为了帮助人们更好的生活而存在。同样的，软件系统也是如此，人们出于远距离沟通交流需要，发明电话拨号系统；因为更随时随地的信息多样化交流，发明了各种互联网IM产品。</p>
@@ -256,7 +256,7 @@
     
     <entry>
       <title><![CDATA[软件重构经验总结]]></title>
-      <url>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</url>
+      <url>https://www.kisscat.pro/post/2016/05/Software-refactoring-experience-summary/</url>
       <content type="html"><![CDATA[<p>结合小旺项目的重构经历来分析</p>
 <h1 id="小旺项目：5月份重构方案"><a href="#小旺项目：5月份重构方案" class="headerlink" title="小旺项目：5月份重构方案"></a>小旺项目：5月份重构方案</h1><h2 id="转店-找店-拆表"><a href="#转店-找店-拆表" class="headerlink" title="转店/找店 拆表"></a>转店/找店 拆表</h2><p>参考：转店需求：transfer_requirement，字段requirement_id。转化为Service表的id。</p>
 <h2 id="地理位置相关业务重构"><a href="#地理位置相关业务重构" class="headerlink" title="地理位置相关业务重构"></a>地理位置相关业务重构</h2><p>读 &gt;&gt; 写</p>
@@ -381,7 +381,7 @@
     
     <entry>
       <title><![CDATA[如何更好地管理技术团队？]]></title>
-      <url>http://amao12580.github.io/post/2016/05/How-to-better-manage-the-technical-team/</url>
+      <url>https://www.kisscat.pro/post/2016/05/How-to-better-manage-the-technical-team/</url>
       <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="PM与TL的区别"><a href="#PM与TL的区别" class="headerlink" title="PM与TL的区别"></a>PM与TL的区别</h2><p>其实一个Team Leader的职责与Project Manager相像，但Team Leader更着重于技术开发方面，通常一个大型项目都会有一两个开发团队由Team Leader带领，负责开发核心部分，而其它部分分派给不同开发小组或者分派给外包公司。在网上常看到几句话，贴切地形容了PM与TL的区别：“技术人员乐于被领导；但他们不喜欢被管理，不喜欢像牛一样被驱赶或指挥。管理者强迫人们服从他们的命令，而领导者则会带领他们一起工作。管理是客观的，没有个人感情因素，它假定被管理者没有思想和感受，被告知要做什么和该如何做。领导是引领、引导，它激励人们达成目标。领导力是带有强烈个人感情色彩的，它不是你能命令的，也不是你能测量评估和测试的。”</p>
 <p>TL对于团队内的member，必须在技术上能够进行胜任领导，他就像黑夜里的灯塔，引导和修正member前进的航向。因此TL也必需保持照亮团队，保持对member的充分了解，并在技术领域投入持续的学习热情，向团队成员传道，补齐短板，让大家的核心战斗力一起提高。</p>
 <p>无论是PM与TL，对业务与技术都要有深入的了解，只是PM更侧重于业务的管理，盈利的多少，风险的大小等等，而TL则侧重于项目的成本，开发的难度，软件的架构等技术方面的问题。在某些人眼中，技术与管理就像鱼与熊掌，不可兼得，但依在下看来，两者却是秤不离砣，密不可分。只要及时提升自己对技术与管理的认识，不断地向深一层发展，要从程序员提升到技术管理人员只是时间的问题。</p>
@@ -491,7 +491,7 @@
     
     <entry>
       <title><![CDATA[Nginx与Docker容器系列 - 2.在生产环境的实践]]></title>
-      <url>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</url>
+      <url>https://www.kisscat.pro/post/2016/04/Nginx-with-docker-part-two/</url>
       <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文中的配置文件，已经整理到了GitHub：<a href="https://github.com/amao12580/docker" target="_blank" rel="external">https://github.com/amao12580/docker</a></p>
 <p>本文假设读者对Nginx、Docker已经有了比较深入的了解，并掌握了docker-compose工具的使用。</p>
 <h2 id="高性能"><a href="#高性能" class="headerlink" title="高性能"></a>高性能</h2><p>Nginx是一款面向性能设计的HTTP服务器，相较于Apache、lighttpd具有占有内存少，稳定性高等优势。与旧版本（&lt;=2.2）的Apache不同，nginx不采用每客户机一线程的设计模型，而是充分使用异步逻辑，削减了上下文调度开销，所以并发服务能力更强。整体采用模块化设计，有丰富的模块库和第三方模块库，配置灵活。 在Linux操作系统下，nginx使用epoll事件模型，得益于此，nginx在Linux操作系统下效率相当高。同时Nginx在OpenBSD或FreeBSD操作系统上采用类似于epoll的高效事件模型kqueue。nginx同时是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx 已经因为它的稳定性、丰富的功能集、示例配置文件和低系统资源的消耗而闻名了。</p>
@@ -606,7 +606,7 @@
     
     <entry>
       <title><![CDATA[Nginx与Docker容器系列 - 1.进行编译安装]]></title>
-      <url>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</url>
+      <url>https://www.kisscat.pro/post/2016/04/Nginx-with-docker-part-one/</url>
       <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Docker容器的出现，为应用运行环境一致性带来了很好的解决方案。同时也带来了远比虚拟机更好的体验，提供资源隔离(Linux namespace)和资源分配(Linux control group)的功能、应用可扩展性的功能，但是更加轻量级的运行。为了解决多容器的依赖性和互相调用，提供了docker-compose等工具进行容器编排。</p>
 <p>我们项目中，对docker的使用非常深入，在线上环境和线下的测试环境、开发环境，都使用了docker作为运行时环境一致性支持。由于linux的发行版本和内核版本的不同组合，在没有docker之前，DevOps很难为不同的运行环境编写统一的软件安装维护的脚本，几乎只能借助虚拟机来达到这一目的，虚拟机的笨重和可调度性差，扩容与缩容也无法做到快速有效，已经被逐渐淘汰。</p>
 <p>Nginx，性能已经毋庸置疑，但在docker hub上的nginx镜像，并不适合我们，没有对安全进行加固，更多的没有加入重要的功能增加，比如主动式地对后端Tomcat进行健康检查并自动failover，这个动能对HA的非常重要的，因此我们选择了在docker环境下，对官方nginx源码进行编译，并打上补丁，以符合实际生产环境的使用。</p>
@@ -680,7 +680,7 @@
     
     <entry>
       <title><![CDATA[Nginx与Tomcat 8在Docker环境的反向代理配置过程]]></title>
-      <url>http://amao12580.github.io/post/2016/04/Nginx-reverse-proxy-with-tomcat-in-docker/</url>
+      <url>https://www.kisscat.pro/post/2016/04/Nginx-reverse-proxy-with-tomcat-in-docker/</url>
       <content type="html"><![CDATA[<h1 id="需要做什么？"><a href="#需要做什么？" class="headerlink" title="需要做什么？"></a>需要做什么？</h1><p>最近接到的任务是:在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。先拿出可行性方案，以便在业务量突发时，在线上环境实施。典型的技术预研，打有准备仗。同时还提出了安全需求，在配置上，需要有安全加固。</p>
 <p>在Nginx配置时，针对不同的使用环境，配置的参数有很多不同。迫在眉睫的，我们需要先对线上的API服务系统进行反向代理与负载均衡配置。API服务系统是面向手机APP的接口系统，使用HTTP Restful+json进行数据通讯。</p>
 <p>我们在局域网环境下，有2台机器在软硬件配置方面，与线上的API服务系统类似。这2台机器的局域网IP分别是：192.168.1.158(简称为：158机器)、192.168.1.188(简称为：188机器)。由于188机器正在做压力测试，而且近期需要持续的对所有接口进行压力测试，没有办法空闲出来做实验。所以在实验之初我使用了158机器的普通账号进行，很快就因为权限不足，遭遇了很多莫名其妙的问题，而且158的使用量比较多，主要作为功能测试的机器。</p>
@@ -699,7 +699,7 @@
     
     <entry>
       <title><![CDATA[JOOQ 3.8.2 使用 教程：从入门到提高]]></title>
-      <url>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</url>
+      <url>https://www.kisscat.pro/post/2016/04/JOOQ-from-entry-to-improve/</url>
       <content type="html"><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>2016年后换了一家公司干，后台ORM框架用的JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说<a href="https://book.douban.com/subject/26586492/" target="_blank" rel="external">《火星救援》</a>，Mark侥幸在火星风暴中幸存后，一步步将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。一切看似偶然蹊跷，其实与Mark的长期知识储备分不开。所谓艺多不压身，应该在有限的时间里，得到更多成长，以期待机会来时不辜负。</p>
 <p>下文中的学习示例代码，已经整理完毕：</p>
 <ul>
@@ -826,7 +826,7 @@
     
     <entry>
       <title><![CDATA[从零开始Blogging with Hexo教程]]></title>
-      <url>http://amao12580.github.io/post/2016/04/A-new-start/</url>
+      <url>https://www.kisscat.pro/post/2016/04/A-new-start/</url>
       <content type="html"><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>　　转眼间3月份也即将过去了，在接受了众多的理论输入以及实践之后，决定要将一些值得分享的事情记录下来，一方面是避免自己重复的掉坑，另一方面也希望通过blog的方式锻炼自己的文字能力。输入+沉淀+输出，形成自我知识攫取过程的闭环。</p>
 <p>　　下面记录从零开始的Blogging with Hexo的搭建过程，有一些简单的问题，在文末也会给出答案。</p>
 <h2 id="1-你将要做什么？"><a href="#1-你将要做什么？" class="headerlink" title="1.你将要做什么？"></a>1.你将要做什么？</h2><p>　　跟我一起在GiHub上搭建免费无限流量博客，不限速，有版本追溯管理。sadly，免费的背后是低层次的服务。搭建的博客服务器在国外，国内访问的速度没法保障，后文会给出一定的解决方案。内容的维护只能以静态Html的方式发布，意味着没有数据库，因此带来了幂等性，没有各种Web攻击，算作是一件好事？</p>
@@ -893,7 +893,7 @@
     
     <entry>
       <title><![CDATA[记一次redis成功调优的过程]]></title>
-      <url>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</url>
+      <url>https://www.kisscat.pro/post/2016/03/A-successful-redis-tuning-record/</url>
       <content type="html"><![CDATA[<h2 id="我们怎么使用Redis？"><a href="#我们怎么使用Redis？" class="headerlink" title="我们怎么使用Redis？"></a>我们怎么使用Redis？</h2><p>公司目前主力开发的产品，是一个典型的平台电商型产品，包含了平台运营方、商家、消费者等角色。</p>
 <p>公司提供电商平台，同时负责系统维护和系统保障；商家与公司进行签约后，入驻平台，将商品投放到平台进行展示；平台依据商家签约信息，进行商品与消费者之间的兴趣推荐，消费者通过商品与商家达成消费订单后，平台按单依据签约与商家抽取利润。商家发现日订单分析有了提升后，可能会与平台达成更多的合作。从而演变出了良好的商业发展模式。</p>
 <p>平台电商型产品中，非常满足80/20法则(又称为:<a href="https://zh.wikipedia.org/wiki/%E5%B8%95%E9%9B%B7%E6%89%98%E6%B3%95%E5%88%99" target="_blank" rel="external">帕雷托法则</a>),查询的业务量远远多于写入的业务量，为了提高<a href="http://www.ha97.com/5095.html" target="_blank" rel="external">TPS</a>，降低对数据库的访问。我们也采取常规的做法，选用redis进行缓存常用业务数据。其中典型的就有：1.图片的信息、2.登录后的用户信息、3.全局超时锁、4.验证码。</p>
@@ -996,7 +996,7 @@
     
     <entry>
       <title><![CDATA[SQL查询提高篇：捋清连接查询的那些事儿]]></title>
-      <url>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</url>
+      <url>https://www.kisscat.pro/post/2016/03/SQL-improve-elegant-use-join-query/</url>
       <content type="html"><![CDATA[<p>数据库中的表可通过外键将彼此联系起来。主键（Primary Key）是一个列，在这个列中的每一行的值都是唯一的。在表中，每个主键的值都是唯一的。这样做的目的是在不重复每个表中的所有数据的情况下，把表间的数据交叉捆绑在一起。</p>
 <p>而在两个表之间建立关联关系，是不要求任何一个表的关联列(column)是主键的，这个关联列可以是任何类型的列，但是要求，两个表的关联列可以做关联关系的条件计算，为避免转换影响效率，两个关联列最好保持类型、长度一致。</p>
 <p>为方便说明，定义以下2张表：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">用户信息表</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user`</span> (</span><br><span class="line">  <span class="string">`uid`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户id'</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'姓名'</span>,</span><br><span class="line">  <span class="string">`sex`</span> tinyint(<span class="number">1</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'性别'</span>,</span><br><span class="line">  <span class="string">`age`</span> tinyint(<span class="number">2</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'年龄'</span>,</span><br><span class="line">  <span class="string">`mobile`</span> <span class="built_in">varchar</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'手机号码'</span>,</span><br><span class="line">  <span class="string">`password`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'密码'</span>,</span><br><span class="line">  <span class="string">`register_time`</span> datetime <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'注册时间'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`uid`</span>),</span><br><span class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`index_mobile`</span> (<span class="string">`mobile`</span>) <span class="keyword">USING</span> BTREE</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user`</span> <span class="keyword">VALUES</span> (<span class="string">'100'</span>, <span class="string">'张三'</span>, <span class="string">'1'</span>, <span class="string">'28'</span>, <span class="string">'13547521456'</span>, <span class="string">'ASDAWQ@!#SDF@#$%XCF'</span>, <span class="string">'2016-03-30 17:47:51'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user`</span> <span class="keyword">VALUES</span> (<span class="string">'101'</span>, <span class="string">'李四'</span>, <span class="string">'2'</span>, <span class="string">'35'</span>, <span class="string">'17025856329'</span>, <span class="string">'234ASD@#$@#$AFSDFRT'</span>, <span class="string">'2016-03-30 17:48:34'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user`</span> <span class="keyword">VALUES</span> (<span class="string">'102'</span>, <span class="string">'王五'</span>, <span class="string">'1'</span>, <span class="string">'48'</span>, <span class="string">'15925874536'</span>, <span class="string">'#$%SDFSDR@#$%@#$#@'</span>, <span class="string">'2016-03-30 17:53:49'</span>);</span><br><span class="line"></span><br><span class="line">订单信息表</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`order`</span> (</span><br><span class="line">  <span class="string">`order_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'订单编号'</span>,</span><br><span class="line">  <span class="string">`uid`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户Id'</span>,</span><br><span class="line">  <span class="string">`amout`</span> mediumtext <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'订单金额(单位为分)'</span>,</span><br><span class="line">  <span class="string">`status`</span> tinyint(<span class="number">2</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'订单状态'</span>,</span><br><span class="line">  <span class="string">`order_time`</span> datetime <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'订单时间'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`order_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`order`</span> <span class="keyword">VALUES</span> (<span class="string">'200'</span>, <span class="string">'100'</span>, <span class="string">'5899'</span>, <span class="string">'0'</span>, <span class="string">'2016-03-30 17:54:20'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`order`</span> <span class="keyword">VALUES</span> (<span class="string">'201'</span>, <span class="string">'100'</span>, <span class="string">'6799'</span>, <span class="string">'0'</span>, <span class="string">'2016-03-30 17:54:38'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`order`</span> <span class="keyword">VALUES</span> (<span class="string">'202'</span>, <span class="string">'101'</span>, <span class="string">'12699'</span>, <span class="string">'0'</span>, <span class="string">'2016-03-30 17:55:01'</span>);</span><br></pre></td></tr></table></figure></p>
