@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.kisscat.pro/"/>
-  <updated>2016-09-22T09:06:30.691Z</updated>
+  <updated>2016-09-22T09:34:28.775Z</updated>
   <id>https://www.kisscat.pro/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.kisscat.pro/post/2016/09/solr-design-principles/"/>
     <id>https://www.kisscat.pro/post/2016/09/solr-design-principles/</id>
     <published>2016-09-20T01:54:46.123Z</published>
-    <updated>2016-09-22T09:06:30.691Z</updated>
+    <updated>2016-09-22T09:34:28.775Z</updated>
     
     <content type="html">&lt;h1 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h1&gt;&lt;p&gt;中午追番（大力推荐【&lt;a href=&quot;https://movie.douban.com/subject/25774052/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;寄生兽&lt;/a&gt;】）没睡觉，现在有点困，洗了把脸，思路恢复清晰了。这篇文章经过数天的腹稿终于要发出来了，早上来公司简单草拟了提纲，没想着一口气写完，但下午想到blog是&lt;a href=&quot;http://amao12580.github.io/post/2016/06/How-to-better-write-the-blog/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;自动up的&lt;/a&gt;，不能给个提纲就完事啊！读者的感受在哪里？太不负责了！！！&lt;/p&gt;
 &lt;p&gt;自从接盘了离职同事的代码，一直在做搜索引擎(Solr)方面的工作，都忙成狗了，各个业务线都有搜索的需求，零零落落20多个搜索接口吧！维护的过程，看着十多年工作经验的同事写的代码，有褒有贬，自己也学到了一些小技巧，最最最主要的，对搜索引擎不再陌生了，虽然谈不上完全了解，但是日常工作中应用、调优没有问题了。&lt;/p&gt;
@@ -78,15 +78,17 @@
 &lt;p&gt;2.缓存字段与参与计算字段的关联性&lt;/p&gt;
 &lt;p&gt;latestPhotoId  VS photoNumber&lt;/p&gt;
 &lt;p&gt;3.字段的数量如何影响Solr的效率？&lt;/p&gt;
-&lt;h2 id=&quot;如何权衡混合Core？&quot;&gt;&lt;a href=&quot;#如何权衡混合Core？&quot; class=&quot;headerlink&quot; title=&quot;如何权衡混合Core？&quot;&gt;&lt;/a&gt;如何权衡混合Core？&lt;/h2&gt;&lt;p&gt;一个Core为了兼容多个业务场景使用，将不同类别的业务数据塞入。&lt;/p&gt;
-&lt;p&gt;字段级别，有字段只对特定业务才会用到（纵向）&lt;/p&gt;
-&lt;p&gt;排除使用这些字段&lt;/p&gt;
-&lt;p&gt;row级别，有些数据记录对特定业务才会用到（横向）&lt;/p&gt;
-&lt;p&gt;排除使用这些row&lt;/p&gt;
-&lt;p&gt;row数据量与index文件总大小的关系，singleton node模式。&lt;/p&gt;
-&lt;p&gt;统计了一份仿真环境的数据分布，供参考：&lt;/p&gt;
-&lt;p&gt;1.未计算dynamicField分布，实际项目中仅用作版本过渡，没有长期使用。&lt;br&gt;2.index大小和tlog大小是指相应dir所有文件大小之和。&lt;br&gt;3.不存在未commit的数据。&lt;br&gt;4.”field分布”，这一列中，”6：TrieIntField；”表示存在6个solr.TrieIntField类型的字段。&lt;/p&gt;
+&lt;h2 id=&quot;如何权衡混合Core？&quot;&gt;&lt;a href=&quot;#如何权衡混合Core？&quot; class=&quot;headerlink&quot; title=&quot;如何权衡混合Core？&quot;&gt;&lt;/a&gt;如何权衡混合Core？&lt;/h2&gt;&lt;p&gt;单个Core为了兼容多个业务场景使用，将不同类别的业务数据塞入互不干扰，不同的业务场景之间同时存在重叠和交叉的情况（不存在业务重叠时，是不需要放到一起的）。为了达到数据兼容，程序在index和query两个阶段都需要进行compatible。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;field级别，有字段只对特定业务才会用到（纵向）&lt;br&gt;典型场景，针对不同类型的用户提供不同级别的query&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;row级别，有些数据记录对特定业务才会用到（横向）&lt;br&gt;在多中数据聚合类应用中，对所有结果进行计算：top N、sort、groupBy&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由于Solr高效检索的前提是将index文件load到内存进行计算，为了说明row数据量以及field分布与index大小的关系（间接分析memory以及disk的占用关系），统计了一份仿真环境的数据分布，供参考：&lt;/p&gt;
+&lt;figure class=&quot;highlight crmsh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;我们的仿真环境是：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;.未计算dynamicField分布，实际项目中仅用作版本过渡，没有长期使用。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;.index大小和tlog大小是指相应dir所有文件大小之和。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;.不存在未commit的数据。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;.&lt;span class=&quot;string&quot;&gt;&quot;field分布&quot;&lt;/span&gt;，这一列中，&lt;span class=&quot;string&quot;&gt;&quot;6：TrieIntField；&quot;&lt;/span&gt;表示存在&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;个solr.TrieIntField类型的字段。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;.仅一个solr节点（singleton &lt;span class=&quot;keyword&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;title&quot;&gt;模式），不启用cloud&lt;/span&gt;模式，也意味着没有replica。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;.所有类型的field的length均不超过&lt;span class=&quot;number&quot;&gt;256&lt;/span&gt;位，多数在&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;位以内。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;&lt;img src=&quot;/img/Solr-core-field-analysis.jpg&quot; alt=&quot;仿真环境的数据分布&quot;&gt;&lt;/p&gt;
+&lt;p&gt;可以分析到1个普通row约占用1 KB的空间，由于需要在数据量增长时，不线性降低solr查询性能。我们需要保持混合核心，在业务重叠部分的field和row级别处于大比例，仅仅将极少数的数据用作业务兼容！&lt;/p&gt;
 &lt;h1 id=&quot;数据维护原则&quot;&gt;&lt;a href=&quot;#数据维护原则&quot; class=&quot;headerlink&quot; title=&quot;数据维护原则&quot;&gt;&lt;/a&gt;数据维护原则&lt;/h1&gt;&lt;h2 id=&quot;局部更新&quot;&gt;&lt;a href=&quot;#局部更新&quot; class=&quot;headerlink&quot; title=&quot;局部更新&quot;&gt;&lt;/a&gt;局部更新&lt;/h2&gt;&lt;p&gt;更新一部分的字段&lt;/p&gt;
 &lt;h2 id=&quot;Delete-and-add&quot;&gt;&lt;a href=&quot;#Delete-and-add&quot; class=&quot;headerlink&quot; title=&quot;Delete and add&quot;&gt;&lt;/a&gt;Delete and add&lt;/h2&gt;&lt;h1 id=&quot;索引重建原则&quot;&gt;&lt;a href=&quot;#索引重建原则&quot; class=&quot;headerlink&quot; title=&quot;索引重建原则&quot;&gt;&lt;/a&gt;索引重建原则&lt;/h1&gt;&lt;p&gt;减少服务中断时间&lt;/p&gt;
 &lt;p&gt;C端流量控制&lt;/p&gt;

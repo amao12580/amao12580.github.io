@@ -62,15 +62,17 @@
 <p>2.缓存字段与参与计算字段的关联性</p>
 <p>latestPhotoId  VS photoNumber</p>
 <p>3.字段的数量如何影响Solr的效率？</p>
-<h2 id="如何权衡混合Core？"><a href="#如何权衡混合Core？" class="headerlink" title="如何权衡混合Core？"></a>如何权衡混合Core？</h2><p>一个Core为了兼容多个业务场景使用，将不同类别的业务数据塞入。</p>
-<p>字段级别，有字段只对特定业务才会用到（纵向）</p>
-<p>排除使用这些字段</p>
-<p>row级别，有些数据记录对特定业务才会用到（横向）</p>
-<p>排除使用这些row</p>
-<p>row数据量与index文件总大小的关系，singleton node模式。</p>
-<p>统计了一份仿真环境的数据分布，供参考：</p>
-<p>1.未计算dynamicField分布，实际项目中仅用作版本过渡，没有长期使用。<br>2.index大小和tlog大小是指相应dir所有文件大小之和。<br>3.不存在未commit的数据。<br>4.”field分布”，这一列中，”6：TrieIntField；”表示存在6个solr.TrieIntField类型的字段。</p>
+<h2 id="如何权衡混合Core？"><a href="#如何权衡混合Core？" class="headerlink" title="如何权衡混合Core？"></a>如何权衡混合Core？</h2><p>单个Core为了兼容多个业务场景使用，将不同类别的业务数据塞入互不干扰，不同的业务场景之间同时存在重叠和交叉的情况（不存在业务重叠时，是不需要放到一起的）。为了达到数据兼容，程序在index和query两个阶段都需要进行compatible。</p>
+<ul>
+<li><p>field级别，有字段只对特定业务才会用到（纵向）<br>典型场景，针对不同类型的用户提供不同级别的query</p>
+</li>
+<li><p>row级别，有些数据记录对特定业务才会用到（横向）<br>在多中数据聚合类应用中，对所有结果进行计算：top N、sort、groupBy</p>
+</li>
+</ul>
+<p>由于Solr高效检索的前提是将index文件load到内存进行计算，为了说明row数据量以及field分布与index大小的关系（间接分析memory以及disk的占用关系），统计了一份仿真环境的数据分布，供参考：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">我们的仿真环境是：</span><br><span class="line"><span class="number">1</span>.未计算dynamicField分布，实际项目中仅用作版本过渡，没有长期使用。</span><br><span class="line"><span class="number">2</span>.index大小和tlog大小是指相应dir所有文件大小之和。</span><br><span class="line"><span class="number">3</span>.不存在未commit的数据。</span><br><span class="line"><span class="number">4</span>.<span class="string">"field分布"</span>，这一列中，<span class="string">"6：TrieIntField；"</span>表示存在<span class="number">6</span>个solr.TrieIntField类型的字段。</span><br><span class="line"><span class="number">5</span>.仅一个solr节点（singleton <span class="keyword">node</span><span class="title">模式），不启用cloud</span>模式，也意味着没有replica。</span><br><span class="line"><span class="number">6</span>.所有类型的field的length均不超过<span class="number">256</span>位，多数在<span class="number">11</span>位以内。</span><br></pre></td></tr></table></figure>
 <p><img src="/img/Solr-core-field-analysis.jpg" alt="仿真环境的数据分布"></p>
+<p>可以分析到1个普通row约占用1 KB的空间，由于需要在数据量增长时，不线性降低solr查询性能。我们需要保持混合核心，在业务重叠部分的field和row级别处于大比例，仅仅将极少数的数据用作业务兼容！</p>
 <h1 id="数据维护原则"><a href="#数据维护原则" class="headerlink" title="数据维护原则"></a>数据维护原则</h1><h2 id="局部更新"><a href="#局部更新" class="headerlink" title="局部更新"></a>局部更新</h2><p>更新一部分的字段</p>
 <h2 id="Delete-and-add"><a href="#Delete-and-add" class="headerlink" title="Delete and add"></a>Delete and add</h2><h1 id="索引重建原则"><a href="#索引重建原则" class="headerlink" title="索引重建原则"></a>索引重建原则</h1><p>减少服务中断时间</p>
 <p>C端流量控制</p>
