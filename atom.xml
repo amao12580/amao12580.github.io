@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.kisscat.pro/"/>
-  <updated>2016-09-26T10:07:25.652Z</updated>
+  <updated>2016-09-27T07:00:58.014Z</updated>
   <id>https://www.kisscat.pro/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.kisscat.pro/post/2016/09/solr-design-principles/"/>
     <id>https://www.kisscat.pro/post/2016/09/solr-design-principles/</id>
     <published>2016-09-20T01:54:46.123Z</published>
-    <updated>2016-09-26T10:07:25.652Z</updated>
+    <updated>2016-09-27T07:00:58.014Z</updated>
     
     <content type="html">&lt;h1 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h1&gt;&lt;p&gt;中午追番（大力推荐【&lt;a href=&quot;https://movie.douban.com/subject/25774052/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;寄生兽&lt;/a&gt;】）没睡觉，现在有点困，洗了把脸，思路恢复清晰了。这篇文章经过数天的腹稿终于要发出来，早上来公司草拟了提纲就先搁置了，没想着一口气写完，但下午想到blog是&lt;a href=&quot;http://amao12580.github.io/post/2016/06/How-to-better-write-the-blog/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;自动up to date的&lt;/a&gt;，不能给个提纲就完事啊！读者的感受在哪里？太不负责了！！！&lt;/p&gt;
 &lt;p&gt;自从接盘离职同事的代码，一直在做搜索引擎(Solr)方面的工作，都忙成狗了，各个业务线都有搜索的需求，零零碎碎20多个接口吧！维护的过程，看着十多年经验的同事写的代码，有褒有贬，自己也学到了一些小技巧，最最最主要的，对搜索引擎不再陌生，在工作中应用、调优没有问题了。&lt;/p&gt;
@@ -28,7 +28,7 @@
 &lt;p&gt;&lt;img src=&quot;/img/rough-and-tumble.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;Core设计原则&quot;&gt;&lt;a href=&quot;#Core设计原则&quot; class=&quot;headerlink&quot; title=&quot;Core设计原则&quot;&gt;&lt;/a&gt;Core设计原则&lt;/h1&gt;&lt;h2 id=&quot;理解Core&quot;&gt;&lt;a href=&quot;#理解Core&quot; class=&quot;headerlink&quot; title=&quot;理解Core&quot;&gt;&lt;/a&gt;理解Core&lt;/h2&gt;&lt;p&gt;在Client操作Solr时，通过HTTP RESTful接口完成request-response，使用Core指明操作范围，Core还是RESTful中最后一级资源路径。&lt;/p&gt;
 &lt;p&gt;Client常用的操作有5种：index、delete、query、optimize，含义同字面意义（自描述）。还有不常用的操作：create、rename、unload、reload、swap、ping、commit、rollback、flush。其中index、delete、query、optimize、rename、unload、reload、swap需要指定Core才可以操作，delete和optimize、flush有些特殊，可以不指定Core，默认对所有Core执行。而create、rename、unload、reload、swap仅在Solr-Admin页面(http ://your solr ip:8983/)上提供，在SolrJ客户端(面向Java语言)无法直接使用，不过可以使用HTTPClient组装HTTP报文模拟操作！&lt;/p&gt;
-&lt;p&gt;何不将Core想象成MySQL中的Table？在MySQL中，对Table进行CURD操作时，不是也要加上table name吗？create table “test”… 、alter table “test” … 、select * from “test”…、delete from “test”…大多数的sql需要指定表名，但也有例外：show process list、show variables like ‘character ‘、show innodb engine status;等等。除了在查询时，solr的Core与MySQL的表有相同的功能（事实上Solr的查询远比MySQL的查询强大）。Solr就像是个操作系统，安装在操作系统中的软件就是Core，每个Core有自身的配置文件及数据。在磁盘的角度看，Core是一个文件夹，比如我在线上有名为user和order的2个Core，在Solr的工作目录(%SolrHome%/server/solr)下，有类似的文件目录：&lt;/p&gt;
+&lt;p&gt;何不将Core想象成MySQL中的Table？在MySQL中，对Table进行CRUD操作时，不是也要加上table name吗？create table “test”… 、alter table “test” … 、select * from “test”…、delete from “test”…大多数的sql需要指定表名，但也有例外：show process list、show variables like ‘character ‘、show innodb engine status;等等。除了在查询时，solr的Core与MySQL的表有相同的功能（事实上Solr的查询远比MySQL的查询强大）。Solr就像是个操作系统，安装在操作系统中的软件就是Core，每个Core有自身的配置文件及数据。在磁盘的角度看，Core是一个文件夹，比如我在线上有名为user和order的2个Core，在Solr的工作目录(%SolrHome%/server/solr)下，有类似的文件目录：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/img/Solr-core-dir-desc.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;可以看到Solr依靠文件夹管理索引文件和日志文件，我们将在后文中说明这些文件的作用和相对路径配置！&lt;/p&gt;
 &lt;h2 id=&quot;设计Core&quot;&gt;&lt;a href=&quot;#设计Core&quot; class=&quot;headerlink&quot; title=&quot;设计Core&quot;&gt;&lt;/a&gt;设计Core&lt;/h2&gt;&lt;p&gt;既然Core与Table类似，那我们是不是按照传统在MySQL的思路，按照业务功能，拆分出符合三范式的Table呢？例如在MySQL中有user和order两张表。按照这种思路，我们也在Solr建立两个核心user、order，数据一一对应即可？&lt;/p&gt;
 &lt;p&gt;值得注意的是，Solr对多核心join提供非常有限的支持。&lt;/p&gt;
@@ -259,9 +259,9 @@
       <category term="CodeReview" scheme="https://www.kisscat.pro/categories/CodeReview/"/>
     
     
-      <category term="MySQL" scheme="https://www.kisscat.pro/tags/MySQL/"/>
-    
       <category term="SQL" scheme="https://www.kisscat.pro/tags/SQL/"/>
+    
+      <category term="MySQL" scheme="https://www.kisscat.pro/tags/MySQL/"/>
     
   </entry>
   
