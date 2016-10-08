@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.kisscat.pro/index/index.html</loc>
+    
+    <lastmod>2016-10-08T03:20:22.103Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.kisscat.pro/post/2016/09/flyme-broswer-bookmarks-export/</loc>
     
     <lastmod>2016-09-30T07:00:41.849Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://www.kisscat.pro/post/2016/09/solr-design-principles/</loc>
     
     <lastmod>2016-09-27T07:04:44.169Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.kisscat.pro/index/index.html</loc>
-    
-    <lastmod>2016-09-27T07:03:13.917Z</lastmod>
     
   </url>
   
