@@ -109,7 +109,7 @@
 <p>在“\chromium\src\chrome\android\”目录下，并没有关于jni的代码实现，我们使用EditPlus，对整个chromium src层级目录“\chromium\src\”，进行递归搜索“nativeAddBookmark”关键字，范围限定为：“<em>.cc </em>.h”。耗时 1 分 14 秒完成搜索，但一无所获，难道jni部分并未开源吗？或者在其他路径下开源，未囊括到chromium项目？前一种有可能，后一种可能性很低。</p>
 <p>我们都知道，JNI函数的注册有两种方法，一种是静态方法，需要用javah为每个声明了native函数的java类编译出的class文件生成一个头文件，另一种是动态注册，通过数据结构保存关联关系实现注册。搜索“nativeAddBookmark”关键字进行jni函数查找的方式，是以静态方法为前提的。那目标jni函数可能是采用动态的方式注册的吗？</p>
 <p>在搜索jni函数的过程中，发现android与ios（”\chromium\src\ios\chrome）共用了同一jni函数，不知道pc版是不是也会共用？一方面性能相比上层代码高，另一方面OS底层都对c代码有支持，产生了一定的跨平台性。</p>
-<h2 id="content-provider事务性思考"><a href="#content-provider事务性思考" class="headerlink" title="content provider事务性思考"></a>content provider事务性思考</h2><p>——————-还没写完，持续更新中。2017年1月15日17:08:53——————-</p>
+<h2 id="content-provider事务性思考"><a href="#content-provider事务性思考" class="headerlink" title="content provider事务性思考"></a>content provider事务性思考</h2><p>——————-还没写完，持续更新中。2017年1月16日10:01:51——————-</p>
 <h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ul>
 <li><p><a href="http://stackoverflow.com/questions/14433480/add-bookmark-to-chrome-browser-on-android?rq=1" target="_blank" rel="external">stackoverflow:about use content provider way to add bookmarks</a></p>
 </li>

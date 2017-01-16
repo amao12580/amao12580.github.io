@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.kisscat.pro/"/>
-  <updated>2017-01-15T09:08:55.321Z</updated>
+  <updated>2017-01-16T02:01:53.964Z</updated>
   <id>https://www.kisscat.pro/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.kisscat.pro/post/2017/01/Propose-a-perfect-solution-to-crack-android-chrome-browser's-bookmarks-function/"/>
     <id>https://www.kisscat.pro/post/2017/01/Propose-a-perfect-solution-to-crack-android-chrome-browser's-bookmarks-function/</id>
     <published>2017-01-10T06:43:48.340Z</published>
-    <updated>2017-01-15T09:08:55.321Z</updated>
+    <updated>2017-01-16T02:01:53.964Z</updated>
     
     <content type="html">&lt;h1 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h1&gt;&lt;p&gt;很久没更博了，自从16年国庆节后开始着手&lt;a href=&quot;http://www.coolapk.com/apk/pro.kisscat.www.bookmarkhelper&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;书签助手APP&lt;/a&gt;的开发，更新了二十余个版本后，正逢年底，工作一下子紧张起来，暂时将APP的开发工作搁置了近一个月。&lt;/p&gt;
 &lt;h1 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h1&gt;&lt;p&gt;最近几天有了时间来继续开发，计划17年的第一版更新，完成23款浏览器的书签合并到Android Chrome浏览器，尽最大努力，保持合并后的Chrome浏览器不出现FC、ANR等问题，最好能支持使用Android Google Accout同步到云端。而书签功能作为浏览器的底层基础，很多上层功能需要以此为基点，什么样的方案才能避免蝴蝶效应引起牵一发而动全身呢？&lt;/p&gt;
@@ -125,7 +125,7 @@
 &lt;p&gt;在“\chromium\src\chrome\android\”目录下，并没有关于jni的代码实现，我们使用EditPlus，对整个chromium src层级目录“\chromium\src\”，进行递归搜索“nativeAddBookmark”关键字，范围限定为：“&lt;em&gt;.cc &lt;/em&gt;.h”。耗时 1 分 14 秒完成搜索，但一无所获，难道jni部分并未开源吗？或者在其他路径下开源，未囊括到chromium项目？前一种有可能，后一种可能性很低。&lt;/p&gt;
 &lt;p&gt;我们都知道，JNI函数的注册有两种方法，一种是静态方法，需要用javah为每个声明了native函数的java类编译出的class文件生成一个头文件，另一种是动态注册，通过数据结构保存关联关系实现注册。搜索“nativeAddBookmark”关键字进行jni函数查找的方式，是以静态方法为前提的。那目标jni函数可能是采用动态的方式注册的吗？&lt;/p&gt;
 &lt;p&gt;在搜索jni函数的过程中，发现android与ios（”\chromium\src\ios\chrome）共用了同一jni函数，不知道pc版是不是也会共用？一方面性能相比上层代码高，另一方面OS底层都对c代码有支持，产生了一定的跨平台性。&lt;/p&gt;
-&lt;h2 id=&quot;content-provider事务性思考&quot;&gt;&lt;a href=&quot;#content-provider事务性思考&quot; class=&quot;headerlink&quot; title=&quot;content provider事务性思考&quot;&gt;&lt;/a&gt;content provider事务性思考&lt;/h2&gt;&lt;p&gt;——————-还没写完，持续更新中。2017年1月15日17:08:53——————-&lt;/p&gt;
+&lt;h2 id=&quot;content-provider事务性思考&quot;&gt;&lt;a href=&quot;#content-provider事务性思考&quot; class=&quot;headerlink&quot; title=&quot;content provider事务性思考&quot;&gt;&lt;/a&gt;content provider事务性思考&lt;/h2&gt;&lt;p&gt;——————-还没写完，持续更新中。2017年1月16日10:01:51——————-&lt;/p&gt;
 &lt;h1 id=&quot;解决方案&quot;&gt;&lt;a href=&quot;#解决方案&quot; class=&quot;headerlink&quot; title=&quot;解决方案&quot;&gt;&lt;/a&gt;解决方案&lt;/h1&gt;&lt;h1 id=&quot;Reference&quot;&gt;&lt;a href=&quot;#Reference&quot; class=&quot;headerlink&quot; title=&quot;Reference&quot;&gt;&lt;/a&gt;Reference&lt;/h1&gt;&lt;h2 id=&quot;思路&quot;&gt;&lt;a href=&quot;#思路&quot; class=&quot;headerlink&quot; title=&quot;思路&quot;&gt;&lt;/a&gt;思路&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/14433480/add-bookmark-to-chrome-browser-on-android?rq=1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;stackoverflow:about use content provider way to add bookmarks&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
