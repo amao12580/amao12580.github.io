@@ -176,6 +176,12 @@
     
       <category term="Geek" scheme="https://www.kisscat.pro/tags/Geek/"/>
     
+      <category term="SQLite" scheme="https://www.kisscat.pro/tags/SQLite/"/>
+    
+      <category term="JSON" scheme="https://www.kisscat.pro/tags/JSON/"/>
+    
+      <category term="Java" scheme="https://www.kisscat.pro/tags/Java/"/>
+    
       <category term="Android" scheme="https://www.kisscat.pro/tags/Android/"/>
     
       <category term="Chrome" scheme="https://www.kisscat.pro/tags/Chrome/"/>
@@ -184,13 +190,7 @@
     
       <category term="SourceCode" scheme="https://www.kisscat.pro/tags/SourceCode/"/>
     
-      <category term="SQLite" scheme="https://www.kisscat.pro/tags/SQLite/"/>
-    
-      <category term="JSON" scheme="https://www.kisscat.pro/tags/JSON/"/>
-    
       <category term="Fastjson" scheme="https://www.kisscat.pro/tags/Fastjson/"/>
-    
-      <category term="Java" scheme="https://www.kisscat.pro/tags/Java/"/>
     
       <category term="C++" scheme="https://www.kisscat.pro/tags/C/"/>
     
@@ -244,15 +244,15 @@
     
       <category term="Geek" scheme="https://www.kisscat.pro/tags/Geek/"/>
     
+      <category term="Flyme" scheme="https://www.kisscat.pro/tags/Flyme/"/>
+    
+      <category term="Bookmarks" scheme="https://www.kisscat.pro/tags/Bookmarks/"/>
+    
       <category term="SQLite" scheme="https://www.kisscat.pro/tags/SQLite/"/>
     
       <category term="JSON" scheme="https://www.kisscat.pro/tags/JSON/"/>
     
       <category term="Java" scheme="https://www.kisscat.pro/tags/Java/"/>
-    
-      <category term="Flyme" scheme="https://www.kisscat.pro/tags/Flyme/"/>
-    
-      <category term="Bookmarks" scheme="https://www.kisscat.pro/tags/Bookmarks/"/>
     
   </entry>
   
