@@ -500,9 +500,9 @@
       <category term="CodeReview" scheme="https://www.kisscat.pro/categories/CodeReview/"/>
     
     
-      <category term="MySQL" scheme="https://www.kisscat.pro/tags/MySQL/"/>
-    
       <category term="SQL" scheme="https://www.kisscat.pro/tags/SQL/"/>
+    
+      <category term="MySQL" scheme="https://www.kisscat.pro/tags/MySQL/"/>
     
   </entry>
   
