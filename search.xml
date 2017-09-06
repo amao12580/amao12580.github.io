@@ -674,6 +674,8 @@
         
         <tags>
             
+            <tag> Redis </tag>
+            
             <tag> Transaction </tag>
             
             <tag> Spring </tag>
@@ -689,8 +691,6 @@
             <tag> RelayLog </tag>
             
             <tag> Checkpoint </tag>
-            
-            <tag> Redis </tag>
             
             <tag> Gossip </tag>
             
