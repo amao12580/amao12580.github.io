@@ -674,9 +674,9 @@
         
         <tags>
             
-            <tag> Redis </tag>
-            
             <tag> Transaction </tag>
+            
+            <tag> Redis </tag>
             
             <tag> Spring </tag>
             
@@ -1255,9 +1255,9 @@
             
             <tag> Nginx </tag>
             
-            <tag> Alpine </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Alpine </tag>
             
             <tag> Centos </tag>
             
@@ -1296,9 +1296,9 @@
             
             <tag> Nginx </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Tomcat </tag>
+            
+            <tag> Docker </tag>
             
             <tag> SSL </tag>
             
