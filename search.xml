@@ -476,9 +476,9 @@
         
         <tags>
             
-            <tag> SQL </tag>
-            
             <tag> MySQL </tag>
+            
+            <tag> SQL </tag>
             
         </tags>
         
@@ -674,9 +674,9 @@
         
         <tags>
             
-            <tag> Redis </tag>
-            
             <tag> Transaction </tag>
+            
+            <tag> Redis </tag>
             
             <tag> Spring </tag>
             
@@ -1255,9 +1255,9 @@
             
             <tag> Nginx </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Alpine </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Centos </tag>
             
@@ -1296,9 +1296,9 @@
             
             <tag> Nginx </tag>
             
-            <tag> Tomcat </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Tomcat </tag>
             
             <tag> SSL </tag>
             
@@ -1443,9 +1443,9 @@
         
         <tags>
             
-            <tag> JOOQ </tag>
-            
             <tag> SQL </tag>
+            
+            <tag> JOOQ </tag>
             
             <tag> ARM </tag>
             
