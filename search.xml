@@ -676,6 +676,8 @@
             
             <tag> Transaction </tag>
             
+            <tag> Redis </tag>
+            
             <tag> Spring </tag>
             
             <tag> MVCC </tag>
@@ -689,8 +691,6 @@
             <tag> RelayLog </tag>
             
             <tag> Checkpoint </tag>
-            
-            <tag> Redis </tag>
             
             <tag> Gossip </tag>
             
