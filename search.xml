@@ -476,9 +476,9 @@
         
         <tags>
             
-            <tag> SQL </tag>
-            
             <tag> MySQL </tag>
+            
+            <tag> SQL </tag>
             
         </tags>
         
@@ -1443,15 +1443,15 @@
         
         <tags>
             
-            <tag> JOOQ </tag>
-            
             <tag> SQL </tag>
+            
+            <tag> Transaction </tag>
+            
+            <tag> JOOQ </tag>
             
             <tag> ARM </tag>
             
             <tag> ORM </tag>
-            
-            <tag> Transaction </tag>
             
         </tags>
         
