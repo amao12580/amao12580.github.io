@@ -476,9 +476,9 @@
         
         <tags>
             
-            <tag> MySQL </tag>
-            
             <tag> SQL </tag>
+            
+            <tag> MySQL </tag>
             
         </tags>
         
@@ -1157,13 +1157,13 @@
             
             <tag> Nginx </tag>
             
-            <tag> Docker </tag>
-            
-            <tag> Patch </tag>
-            
             <tag> Keepalived </tag>
             
+            <tag> Docker </tag>
+            
             <tag> MicroKernel </tag>
+            
+            <tag> Patch </tag>
             
             <tag> Failover </tag>
             
@@ -1255,13 +1255,13 @@
             
             <tag> Nginx </tag>
             
-            <tag> Alpine </tag>
-            
             <tag> Docker </tag>
             
-            <tag> Centos </tag>
-            
             <tag> Patch </tag>
+            
+            <tag> Alpine </tag>
+            
+            <tag> Centos </tag>
             
         </tags>
         
@@ -1443,15 +1443,15 @@
         
         <tags>
             
-            <tag> SQL </tag>
-            
-            <tag> Transaction </tag>
-            
             <tag> JOOQ </tag>
+            
+            <tag> SQL </tag>
             
             <tag> ARM </tag>
             
             <tag> ORM </tag>
+            
+            <tag> Transaction </tag>
             
         </tags>
         
