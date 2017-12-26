@@ -1157,13 +1157,13 @@
             
             <tag> Nginx </tag>
             
-            <tag> Docker </tag>
-            
-            <tag> Patch </tag>
-            
             <tag> Keepalived </tag>
             
+            <tag> Docker </tag>
+            
             <tag> MicroKernel </tag>
+            
+            <tag> Patch </tag>
             
             <tag> Failover </tag>
             
@@ -1255,13 +1255,13 @@
             
             <tag> Nginx </tag>
             
-            <tag> Alpine </tag>
-            
             <tag> Docker </tag>
             
-            <tag> Centos </tag>
-            
             <tag> Patch </tag>
+            
+            <tag> Alpine </tag>
+            
+            <tag> Centos </tag>
             
         </tags>
         
