@@ -160,12 +160,6 @@
             
             <tag> Geek </tag>
             
-            <tag> SQLite </tag>
-            
-            <tag> JSON </tag>
-            
-            <tag> Java </tag>
-            
             <tag> Android </tag>
             
             <tag> Chrome </tag>
@@ -174,7 +168,13 @@
             
             <tag> SourceCode </tag>
             
+            <tag> SQLite </tag>
+            
+            <tag> JSON </tag>
+            
             <tag> Fastjson </tag>
+            
+            <tag> Java </tag>
             
             <tag> C++ </tag>
             
@@ -226,15 +226,15 @@
             
             <tag> Geek </tag>
             
-            <tag> Flyme </tag>
-            
-            <tag> Bookmarks </tag>
-            
             <tag> SQLite </tag>
             
             <tag> JSON </tag>
             
             <tag> Java </tag>
+            
+            <tag> Flyme </tag>
+            
+            <tag> Bookmarks </tag>
             
         </tags>
         
@@ -1157,13 +1157,13 @@
             
             <tag> Nginx </tag>
             
-            <tag> Docker </tag>
-            
-            <tag> Patch </tag>
-            
             <tag> Keepalived </tag>
             
+            <tag> Docker </tag>
+            
             <tag> MicroKernel </tag>
+            
+            <tag> Patch </tag>
             
             <tag> Failover </tag>
             
@@ -1257,11 +1257,11 @@
             
             <tag> Docker </tag>
             
+            <tag> Patch </tag>
+            
             <tag> Alpine </tag>
             
             <tag> Centos </tag>
-            
-            <tag> Patch </tag>
             
         </tags>
         
@@ -1296,9 +1296,9 @@
             
             <tag> Nginx </tag>
             
-            <tag> Tomcat </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Tomcat </tag>
             
             <tag> SSL </tag>
             
