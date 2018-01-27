@@ -674,9 +674,9 @@
         
         <tags>
             
-            <tag> Transaction </tag>
-            
             <tag> Redis </tag>
+            
+            <tag> Transaction </tag>
             
             <tag> Spring </tag>
             
@@ -1159,11 +1159,11 @@
             
             <tag> Docker </tag>
             
-            <tag> Patch </tag>
-            
             <tag> Keepalived </tag>
             
             <tag> MicroKernel </tag>
+            
+            <tag> Patch </tag>
             
             <tag> Failover </tag>
             
@@ -1257,11 +1257,11 @@
             
             <tag> Docker </tag>
             
+            <tag> Patch </tag>
+            
             <tag> Alpine </tag>
             
             <tag> Centos </tag>
-            
-            <tag> Patch </tag>
             
         </tags>
         
