@@ -176,6 +176,12 @@
     
       <category term="Geek" scheme="https://amao12580.github.io/tags/Geek/"/>
     
+      <category term="SQLite" scheme="https://amao12580.github.io/tags/SQLite/"/>
+    
+      <category term="JSON" scheme="https://amao12580.github.io/tags/JSON/"/>
+    
+      <category term="Java" scheme="https://amao12580.github.io/tags/Java/"/>
+    
       <category term="Android" scheme="https://amao12580.github.io/tags/Android/"/>
     
       <category term="Chrome" scheme="https://amao12580.github.io/tags/Chrome/"/>
@@ -184,13 +190,7 @@
     
       <category term="SourceCode" scheme="https://amao12580.github.io/tags/SourceCode/"/>
     
-      <category term="SQLite" scheme="https://amao12580.github.io/tags/SQLite/"/>
-    
-      <category term="JSON" scheme="https://amao12580.github.io/tags/JSON/"/>
-    
       <category term="Fastjson" scheme="https://amao12580.github.io/tags/Fastjson/"/>
-    
-      <category term="Java" scheme="https://amao12580.github.io/tags/Java/"/>
     
       <category term="C++" scheme="https://amao12580.github.io/tags/C/"/>
     
@@ -244,15 +244,15 @@
     
       <category term="Geek" scheme="https://amao12580.github.io/tags/Geek/"/>
     
+      <category term="Flyme" scheme="https://amao12580.github.io/tags/Flyme/"/>
+    
+      <category term="Bookmarks" scheme="https://amao12580.github.io/tags/Bookmarks/"/>
+    
       <category term="SQLite" scheme="https://amao12580.github.io/tags/SQLite/"/>
     
       <category term="JSON" scheme="https://amao12580.github.io/tags/JSON/"/>
     
       <category term="Java" scheme="https://amao12580.github.io/tags/Java/"/>
-    
-      <category term="Flyme" scheme="https://amao12580.github.io/tags/Flyme/"/>
-    
-      <category term="Bookmarks" scheme="https://amao12580.github.io/tags/Bookmarks/"/>
     
   </entry>
   
