@@ -160,12 +160,6 @@
             
             <tag> Geek </tag>
             
-            <tag> SQLite </tag>
-            
-            <tag> JSON </tag>
-            
-            <tag> Java </tag>
-            
             <tag> Android </tag>
             
             <tag> Chrome </tag>
@@ -174,7 +168,13 @@
             
             <tag> SourceCode </tag>
             
+            <tag> SQLite </tag>
+            
+            <tag> JSON </tag>
+            
             <tag> Fastjson </tag>
+            
+            <tag> Java </tag>
             
             <tag> C++ </tag>
             
@@ -226,15 +226,15 @@
             
             <tag> Geek </tag>
             
-            <tag> Flyme </tag>
-            
-            <tag> Bookmarks </tag>
-            
             <tag> SQLite </tag>
             
             <tag> JSON </tag>
             
             <tag> Java </tag>
+            
+            <tag> Flyme </tag>
+            
+            <tag> Bookmarks </tag>
             
         </tags>
         
